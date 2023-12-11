@@ -8,6 +8,10 @@
   font-family: "Press Start 2P";
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
   overflow: hidden;
   background-color: #5c94fc;
@@ -33,15 +37,50 @@ input:focus-visible {
   outline: none;
 }
 
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 25px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1224px;
   margin-inline: auto;
   padding-inline: 12px;
 }
 
 .container-big {
   max-width: 1200px;
+}
+
+.mi-auto {
+  margin-inline: auto;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mt-40 {
+  margin-top: 40px;
 }
 
 .mb-10 {
@@ -72,19 +111,8 @@ input:focus-visible {
   display: block;
 }
 
-h1 {
-  font-size: 30px;
-}
-
-h1,
-h2 {
-  text-shadow: 0px 4px 0px #000000;
-}
-
-h3,
-h4,
-p {
-  text-shadow: 0px 3px 0px #000000;
+.d-none {
+  display: none;
 }
 
 .button {
@@ -140,10 +168,10 @@ p {
 .input::before,
 .text-block::before,
 .item-list::before {
-  width: calc(100% + 6px);
+  width: calc(100% + 8px);
   height: 100%;
   top: 0;
-  left: -3px;
+  left: -4px;
   z-index: -1;
 }
 .button::after,
@@ -151,20 +179,43 @@ p {
 .text-block::after,
 .item-list::after {
   width: 100%;
-  height: calc(100% + 6px);
-  top: -3px;
+  height: calc(100% + 8px);
+  top: -4px;
   left: 0;
   z-index: -1;
 }
 
+h1,
+h2 {
+  text-shadow: 0px 4px 0px #000000;
+}
+
+h3,
+h4,
+p {
+  text-shadow: 0px 2px 0px #000000;
+}
+
 .allow-scroll {
   overflow-y: auto;
-  max-height: 100vh;
+  max-height: calc(100vh - 150px);
+}
+.allow-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.allow-scroll::-webkit-scrollbar-thumb {
+  background-color: black;
+}
+.allow-scroll::-webkit-scrollbar-track {
+  background-color: white;
 }
 
 .text-block {
   background-color: #d9d9d9;
   color: black;
+  width: 100%;
+  padding: 15px;
 }
 
 label {
@@ -173,17 +224,112 @@ label {
 
 input {
   background-color: #d9d9d9;
-  padding: 5px 8px;
+  padding: 10px 15px;
+  font-size: 16px;
+  max-width: 250px;
 }
 
 .item-list {
   padding: 15px;
   background-color: #d9d9d9;
   color: black;
+  width: 100%;
+  max-width: 400px;
+}
+.item-list a {
+  font-size: 14px;
 }
 .item-list .button {
   border: 2px solid black;
 }
 .item-list .button:after {
   z-index: -1;
+}
+
+.burger-menu {
+  position: fixed;
+  bottom: 25px;
+  width: 100%;
+  height: 58px;
+  background-color: #d43000;
+  background-image: url("/src/assets/brick.png");
+  background-size: 57px 58px;
+  background-repeat: repeat;
+  background-position: left bottom;
+}
+.burger-menu nav {
+  opacity: 0;
+  position: absolute;
+  z-index: -100;
+  top: 25px;
+  height: calc(100vh - 107px);
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-evenly;
+}
+.burger-menu nav a {
+  display: block;
+  text-decoration: none;
+  font-size: 21px;
+}
+.burger-menu nav a.active {
+  text-decoration: underline;
+}
+.burger-menu.active {
+  height: calc(100vh - 25px);
+}
+.burger-menu.active nav {
+  opacity: 1;
+  z-index: 100;
+  transition: all 0.1s ease-in-out 0.2s;
+}
+.burger-menu,
+.burger-menu.active {
+  transition: height 0.2s linear;
+}
+.burger-menu .burger-button {
+  position: fixed;
+  left: 16px;
+  bottom: 25px;
+  width: 57px;
+  height: 58px;
+  background-image: url("/src/assets/question-block.png");
+  background-size: contain;
+}
+.burger-menu .burger-button:after {
+  content: "Menu";
+  display: block;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 2px;
+  color: white;
+}
+.burger-menu .burger-button.active {
+  background-image: url("/src/assets/cross-block.png");
+}
+.burger-menu .burger-button.active:after {
+  content: "Fermer";
+}
+
+@media screen and (min-width: 767px) {
+  .burger-menu.active {
+    height: 174px;
+  }
+  .burger-menu nav {
+    top: 0;
+    left: 74px;
+    height: 100%;
+    width: calc(100% - 148px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-inline: auto;
+    gap: 40px;
+  }
+  .burger-menu nav a {
+    font-size: 16px;
+  }
 } /*# sourceMappingURL=main.css.map */

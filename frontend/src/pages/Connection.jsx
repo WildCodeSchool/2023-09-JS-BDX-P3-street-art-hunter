@@ -1,3 +1,3 @@
 export default function Connection() {
-  return <h1>Connection</h1>;
+  return <h1>Connexion</h1>;
 }
