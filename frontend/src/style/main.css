@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: "Press Start 2P";
+}
+
+body {
+  overflow: hidden;
+  background-color: #5c94fc;
+  color: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+button {
+  display: block;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  border: none;
+}
+input:focus-visible {
+  outline: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin-inline: auto;
+  padding-inline: 12px;
+}
+
+.container-big {
+  max-width: 1200px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.mb-40 {
+  margin-bottom: 40px;
+}
+
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+.mb-60 {
+  margin-bottom: 60px;
+}
+
+.d-block {
+  display: block;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h1,
+h2 {
+  text-shadow: 0px 4px 0px #000000;
+}
+
+h3,
+h4,
+p {
+  text-shadow: 0px 3px 0px #000000;
+}
+
+.button {
+  background-color: #92cd41;
+  color: white;
+  box-shadow: inset -3px -3px 0px 0px #4aa52e;
+  padding: 12px;
+  font-size: 14px;
+}
+.button:hover {
+  background-color: #76c442;
+  box-shadow: inset -6px -6px 0px 0px #4aa52e;
+}
+.button.red-button {
+  background-color: #e76e55;
+  box-shadow: inset -3px -3px 0px 0px #8c2022;
+}
+.button.red-button:hover {
+  background-color: #ce372b;
+  box-shadow: inset -6px -6px 0px 0px #8c2022;
+}
+.button.tiny-button {
+  padding: 8px;
+  font-size: 12px;
+  box-shadow: inset -2px -2px 0px 0px #4aa52e;
+}
+.button.tiny-button:hover.tiny-button {
+  box-shadow: inset -4px -4px 0px 0px #4aa52e;
+}
+
+.button,
+.input,
+.text-block,
+.item-list {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.button::after,
+.button::before,
+.input::after,
+.input::before,
+.text-block::after,
+.text-block::before,
+.item-list::after,
+.item-list::before {
+  background-color: black;
+  display: block;
+  position: absolute;
+  content: "";
+}
+.button::before,
+.input::before,
+.text-block::before,
+.item-list::before {
+  width: calc(100% + 6px);
+  height: 100%;
+  top: 0;
+  left: -3px;
+  z-index: -1;
+}
+.button::after,
+.input::after,
+.text-block::after,
+.item-list::after {
+  width: 100%;
+  height: calc(100% + 6px);
+  top: -3px;
+  left: 0;
+  z-index: -1;
+}
+
+.allow-scroll {
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+.text-block {
+  background-color: #d9d9d9;
+  color: black;
+}
+
+label {
+  display: block;
+}
+
+input {
+  background-color: #d9d9d9;
+  padding: 5px 8px;
+}
+
+.item-list {
+  padding: 15px;
+  background-color: #d9d9d9;
+  color: black;
+}
+.item-list .button {
+  border: 2px solid black;
+}
+.item-list .button:after {
+  z-index: -1;
+} /*# sourceMappingURL=main.css.map */
