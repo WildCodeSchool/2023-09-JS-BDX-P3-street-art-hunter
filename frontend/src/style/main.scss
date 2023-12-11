@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import "_variables.scss";
+
+//// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: "Press Start 2P";
+}
+body {
+  overflow: hidden;
+  background-color: $bluesky;
+  color: white;
+}
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+button {
+  display: block;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+input {
+  border: none;
+  &:focus-visible {
+    outline: none;
+  }
+}
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin-inline: auto;
+  padding-inline: 12px;
+}
+.container-big {
+  max-width: 1200px;
+}
+
+//// Spacing / Margins
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+.mb-40 {
+  margin-bottom: 40px;
+}
+.mb-50 {
+  margin-bottom: 50px;
+}
+.mb-60 {
+  margin-bottom: 60px;
+}
+
+//// Displays
+
+.d-block {
+  display: block;
+}
+
+//// General
+
+// texts
+h1 {
+  font-size: 30px;
+}
+
+// shadows
+
+h1,
+h2 {
+  text-shadow: 0px 4px 0px #000000;
+}
+h3,
+h4,
+p {
+  text-shadow: 0px 3px 0px #000000;
+}
+
+// buttons
+
+.button {
+  background-color: $green;
+  color: white;
+  box-shadow: inset -3px -3px 0px 0px $dark-green;
+  padding: 12px;
+  font-size: 14px;
+
+  &:hover {
+    background-color: $medium-green;
+    box-shadow: inset -6px -6px 0px 0px $dark-green;
+  }
+
+  &.red-button {
+    background-color: $red;
+    box-shadow: inset -3px -3px 0px 0px $dark-red;
+    &:hover {
+      background-color: $medium-red;
+      box-shadow: inset -6px -6px 0px 0px $dark-red;
+    }
+  }
+
+  &.tiny-button {
+    padding: 8px;
+    font-size: 12px;
+    box-shadow: inset -2px -2px 0px 0px $dark-green;
+
+    &:hover.tiny-button {
+      box-shadow: inset -4px -4px 0px 0px $dark-green;
+    }
+  }
+}
+
+// borders
+
+.button,
+.input,
+.text-block,
+.item-list {
+  position: relative;
+  width: fit-content;
+
+  &::after,
+  &::before {
+    background-color: black;
+    display: block;
+    position: absolute;
+    content: "";
+  }
+  &::before {
+    width: calc(100% + 6px);
+    height: 100%;
+    top: 0;
+    left: -3px;
+    z-index: -1;
+  }
+  &::after {
+    width: 100%;
+    height: calc(100% + 6px);
+    top: -3px;
+    left: 0;
+    z-index: -1;
+  }
+}
+
+.allow-scroll {
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+// blocks
+
+.text-block {
+  background-color: $grey;
+  color: black;
+}
+
+// form
+
+label {
+  display: block;
+}
+input {
+  background-color: $grey;
+  padding: 5px 8px;
+}
+
+// item-list
+
+.item-list {
+  padding: 15px;
+  background-color: $grey;
+  color: black;
+
+  .button {
+    border: 2px solid black;
+    &:after {
+      z-index: -1;
+    }
+  }
+}
+
+//// Pages
+
+// Home
+
+//// Responsive
