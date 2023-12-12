@@ -333,6 +333,15 @@ input {
   height: 58px;
   background-image: url("/src/assets/exclamation-block.png");
   background-size: contain;
+
+  &:after {
+    content: "Signaler";
+    display: block;
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 2px;
+    color: white;
+  }
 }
 
 // Register

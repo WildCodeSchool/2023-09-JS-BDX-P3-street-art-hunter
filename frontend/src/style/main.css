@@ -321,6 +321,14 @@ input {
   background-image: url("/src/assets/exclamation-block.png");
   background-size: contain;
 }
+.exclamation-button:after {
+  content: "Signaler";
+  display: block;
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 2px;
+  color: white;
+}
 
 label {
   text-shadow: 0px 2px 0px #000000;
