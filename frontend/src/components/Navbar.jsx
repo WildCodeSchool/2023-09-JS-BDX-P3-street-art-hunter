@@ -10,7 +10,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className={`burger-menu${openMenu ? " active" : ""}`}>
+    <footer className={`burger-menu${openMenu ? " active" : ""}`}>
       <button
         className={`burger-button${openMenu ? " active" : ""}`}
         onClick={() => setOpenMenu(!openMenu)}
@@ -26,8 +26,13 @@ export default function Navbar() {
           Accueil
         </Link>
         <Link
-          to="/galerie"
-          className={location.pathname === "/galerie" ? "active" : ""}
+          to="/galerie/arts"
+          className={
+            location.pathname.endsWith("/galerie/arts") ||
+            location.pathname.endsWith("/galerie/artistes")
+              ? "active"
+              : ""
+          }
           onClick={handleLinkClick}
         >
           Galerie
@@ -75,6 +80,6 @@ export default function Navbar() {
           Style
         </Link>
       </nav>
-    </header>
+    </footer>
   );
 }
