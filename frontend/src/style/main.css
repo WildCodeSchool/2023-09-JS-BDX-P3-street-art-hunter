@@ -322,6 +322,12 @@ input {
   background-size: contain;
 }
 
+label {
+  text-shadow: 0px 2px 0px #000000;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 @media screen and (min-width: 767px) {
   .burger-menu.active {
     height: 174px;

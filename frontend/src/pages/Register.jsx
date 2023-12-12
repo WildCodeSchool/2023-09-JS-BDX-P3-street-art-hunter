@@ -3,38 +3,43 @@ import Button from "../components/Button";
 export default function Register() {
   return (
     <div>
-      <h1>Inscription</h1>
+      <h1 className="mb-20">Inscription</h1>
       <div className="container allow-scroll">
         <form className="mb-20">
-          <label htmlFor="pseudo" className="mt-30">
+          <label htmlFor="pseudo" className="mb-10 ">
             Pseudo
           </label>
-          <input type="text" name="pseudo" className="mt-10" />
-          <label htmlFor="email" className="mt-10">
+          <input type="text" name="pseudo" id="pseudo" className="mb-10" />
+          <label htmlFor="email" className="mb-10">
             Adresse email
           </label>
-          <input type="text" name="email" className="mt-10" />
-          <label htmlFor="postal" className="mt-10">
+          <input type="text" name="email" id="email" className="mb-10" />
+          <label htmlFor="postal" className="mb-10">
             Code Postal
           </label>
-          <input type="text" name="postal" className="mt-10" />
-          <label htmlFor="city" className="mt-10">
+          <input type="text" name="postal" id="postal" className="mb-10" />
+          <label htmlFor="city" className="mb-10">
             Ville
           </label>
-          <input type="text" name="city" className="mt-10" />
-          <label htmlFor="password" className="mt-10">
+          <input type="text" name="city" id="city" className="mb-10" />
+          <label htmlFor="password" className="mb-10">
             Mot de passe
           </label>
-          <input type="text" name="password" className="mt-10" />
-          <label htmlFor="confirmation" className="mt-10">
+          <input type="text" name="password" id="password" className="mb-10" />
+          <label htmlFor="confirmation" className="mb-10">
             Confirmer le mot de passe
           </label>
-          <input type="text" name="confirmation" className="mt-10" />
+          <input
+            type="text"
+            name="confirmation"
+            id="confirmation"
+            className="mb-10"
+          />
         </form>
+        <Button className="button mb-20">Valider</Button>
+        <p className="mb-10">Déjà inscrit ?</p>
+        <p className="mb-10">Connectez-vous !</p>
       </div>
-      <Button className="button mb-20">Valider</Button>
-      <p>Déjà inscrit ?</p>
-      <p>Connectez-vous!</p>
     </div>
   );
 }
