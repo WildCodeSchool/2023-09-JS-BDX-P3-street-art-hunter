@@ -75,36 +75,39 @@ export default function Administration() {
           </button>
         ))}
       </div>
-      <div className="container allow-scroll mt-40">
-        <div className="text-block items">
-          {exemple.map((item) => (
-            <div className="validation-item">
-              <div className="base-container">
-                <img src={item.image} alt={`Button ${item.id}`} />
-                <p>
-                  X : 04,7689
-                  <br />Y : 04,7689
-                </p>
+      {activeButton ===
+        buttons.find((button) => button.name === "Validations").id && (
+        <div className="container allow-scroll mt-40">
+          <div className="text-block items">
+            {exemple.map((item) => (
+              <div className="validation-item">
+                <div className="base-container">
+                  <img src={item.image} alt={`Button ${item.id}`} />
+                  <p>
+                    X : 04,7689
+                    <br />Y : 04,7689
+                  </p>
+                </div>
+                <div className="user-container">
+                  <img src={item.image} alt={`Button ${item.id}`} />
+                  <p>
+                    X : 04,7689
+                    <br />Y : 04,7689
+                  </p>
+                </div>
+                <div className="button-container">
+                  <button className="button" type="button">
+                    Valider
+                  </button>
+                  <button className="button red-button" type="button">
+                    Refuser
+                  </button>
+                </div>
               </div>
-              <div className="user-container">
-                <img src={item.image} alt={`Button ${item.id}`} />
-                <p>
-                  X : 04,7689
-                  <br />Y : 04,7689
-                </p>
-              </div>
-              <div className="button-container">
-                <button className="button" type="button">
-                  Valider
-                </button>
-                <button className="button red-button" type="button">
-                  Refuser
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
