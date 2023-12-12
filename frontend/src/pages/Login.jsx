@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Login() {
   return (
     <>
@@ -20,10 +22,14 @@ export default function Login() {
         <button className="button mb-10 mt-40" type="button">
           Valider
         </button>
-        <p className="mt-30">
-          Pas encore de compte ?<br />
-          Inscrivez vous !
-        </p>
+        <div>
+          <Link to="/inscription">
+            <p className="mt-30">
+              Pas encore de compte ?<br />
+              Inscrivez vous !
+            </p>
+          </Link>
+        </div>
       </div>
     </>
   );
