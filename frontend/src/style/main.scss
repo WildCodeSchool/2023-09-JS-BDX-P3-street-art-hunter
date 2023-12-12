@@ -145,7 +145,7 @@ p {
 // borders
 
 .button,
-.input,
+input,
 .text-block,
 .item-list {
   position: relative;
@@ -324,6 +324,16 @@ input {
 //// Pages
 
 // Home
+
+.exclamation-button {
+  position: fixed;
+  right: 16px;
+  bottom: 25px;
+  width: 57px;
+  height: 58px;
+  background-image: url("/src/assets/exclamation-block.png");
+  background-size: contain;
+}
 
 //// Responsive
 
