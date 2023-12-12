@@ -7,7 +7,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import Account from "./pages/Account";
-import Connection from "./pages/Connection";
+import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/connexion",
-        element: <Connection />,
+        element: <Login />,
       },
       {
         path: "/inscription",
