@@ -380,6 +380,42 @@ input {
   border: none;
 }
 
+.user-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 15px;
+  border-bottom: 4px solid black;
+}
+.user-item .user-container,
+.user-item .base-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 126px);
+}
+.user-item .user-container img,
+.user-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.user-item .user-container p,
+.user-item .base-container p {
+  line-height: 30px;
+}
+.user-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.user-item:last-child {
+  border: none;
+}
+
 @media screen and (min-width: 767px) {
   .burger-menu.active {
     height: 174px;
