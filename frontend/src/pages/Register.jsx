@@ -38,7 +38,7 @@ export default function Register() {
         </form>
         <Button className="button mb-20">Valider</Button>
         <p className="mb-10">Déjà inscrit ?</p>
-        <p className="mb-10">Connectez-vous !</p>
+        <p className="mb-20">Connectez-vous !</p>
       </div>
     </div>
   );
