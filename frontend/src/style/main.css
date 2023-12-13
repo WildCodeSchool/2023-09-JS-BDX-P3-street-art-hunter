@@ -234,12 +234,9 @@ p {
   width: fit-content;
   margin-left: 4px;
 }
-
-.button::after,
-.button::before,
-input::after,
-input::before,
-
+.button::after, .button::before,
+.input::after,
+.input::before,
 .text-block::after,
 .text-block::before,
 .item-list::after,
@@ -429,8 +426,7 @@ input {
   z-index: 100;
   transition: all 0.1s ease-in-out 0.2s;
 }
-.burger-menu,
-.burger-menu.active {
+.burger-menu, .burger-menu.active {
   transition: height 0.2s linear;
 }
 .burger-menu .burger-button {
@@ -472,6 +468,7 @@ input {
   position: absolute;
   top: calc(100% + 5px);
   right: 2px;
+  color: white;
 }
 
 .block {
@@ -487,6 +484,10 @@ input {
 }
 .buttons .button-name {
   color: white;
+}
+
+.ranking-page p span {
+  width: 190px;
 }
 
 label {
@@ -675,6 +676,7 @@ label {
     font-size: 16px;
   }
 }
+
 @media (max-width: 1000px) {
   .validation-item {
     flex-direction: column;
@@ -725,4 +727,4 @@ label {
     width: 100%;
     margin-top: 20px;
   }
-} /*# sourceMappingURL=main.css.map */
+} 
