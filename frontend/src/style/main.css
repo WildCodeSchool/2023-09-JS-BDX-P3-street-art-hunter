@@ -152,17 +152,16 @@ p {
 }
 
 .button,
-.input,
+input,
 .text-block,
 .item-list {
   position: relative;
   width: -moz-fit-content;
   width: fit-content;
 }
-.button::after,
-.button::before,
-.input::after,
-.input::before,
+.button::after, .button::before,
+input::after,
+input::before,
 .text-block::after,
 .text-block::before,
 .item-list::after,
@@ -173,7 +172,7 @@ p {
   content: "";
 }
 .button::before,
-.input::before,
+input::before,
 .text-block::before,
 .item-list::before {
   width: calc(100% + 8px);
@@ -183,7 +182,7 @@ p {
   z-index: -1;
 }
 .button::after,
-.input::after,
+input::after,
 .text-block::after,
 .item-list::after {
   width: 100%;
@@ -301,8 +300,7 @@ input {
   z-index: 100;
   transition: all 0.1s ease-in-out 0.2s;
 }
-.burger-menu,
-.burger-menu.active {
+.burger-menu, .burger-menu.active {
   transition: height 0.2s linear;
 }
 .burger-menu .burger-button {
@@ -328,6 +326,29 @@ input {
 .burger-menu .burger-button.active:after {
   content: "Fermer";
 }
+
+.exclamation-button {
+  position: fixed;
+  right: 16px;
+  bottom: 25px;
+  width: 57px;
+  height: 58px;
+  background-image: url("/src/assets/exclamation-block.png");
+  background-size: contain;
+}
+.exclamation-button:after {
+  content: "Signaler";
+  display: block;
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 2px;
+  color: white;
+}
+
+label {
+  text-shadow: 0px 2px 0px #000000;
+  font-size: 1rem;
+  line-height: 1.5rem;
 
 .block {
   height: 57px;
@@ -414,6 +435,7 @@ input {
 }
 .user-item:last-child {
   border: none;
+
 }
 
 @media screen and (min-width: 767px) {
@@ -434,4 +456,4 @@ input {
   .burger-menu nav a {
     font-size: 16px;
   }
-} /*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */

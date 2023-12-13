@@ -151,7 +151,7 @@ p {
 // borders
 
 .button,
-.input,
+input,
 .text-block,
 .item-list {
   position: relative;
@@ -338,6 +338,23 @@ input {
 
 // Home
 
+
+.exclamation-button {
+  position: fixed;
+  right: 16px;
+  bottom: 25px;
+  width: 57px;
+  height: 58px;
+  background-image: url("/src/assets/exclamation-block.png");
+  background-size: contain;
+
+  &:after {
+    content: "Signaler";
+    display: block;
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 2px;
+
 // Administration
 
 .block {
@@ -352,10 +369,19 @@ input {
   gap: 20px;
 
   .button-name {
+
     color: white;
   }
 }
 
+
+// Register
+
+label {
+  text-shadow: 0px 2px 0px #000000;
+  font-size: 1rem;
+  line-height: 1.5rem;
+    }
 .validation-item {
   display: flex;
   justify-content: space-evenly;
@@ -421,6 +447,7 @@ input {
   &:last-child {
     border: none;
   }
+
 }
 
 //// Responsive
