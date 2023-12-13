@@ -19,7 +19,11 @@ export default function Navbar() {
       />
 
       {location.pathname === "/" ? (
-        <button className="exclamation-button" />
+        <button
+          className="exclamation-button"
+          type="button"
+          aria-label="Toggle report"
+        />
       ) : (
         ""
       )}
@@ -45,8 +49,13 @@ export default function Navbar() {
           Galerie
         </Link>
         <Link
-          to="/mon-compte"
-          className={location.pathname === "/mon-compte" ? "active" : ""}
+          to="/mon-compte/informations"
+          className={
+            location.pathname.endsWith("/mon-compte/informations") ||
+            location.pathname.endsWith("/mon-compte/arts")
+              ? "active"
+              : ""
+          }
           onClick={handleLinkClick}
         >
           Mon compte

@@ -47,8 +47,12 @@ export default function Register() {
             </div>
           </form>
           <Button className="button mb-20">Valider</Button>
-          <p className="mb-10">Déjà inscrit ?</p>
-          <p className="mb-20">Connectez-vous !</p>
+          <Link to="/connexion">
+            <p className="mb-10">
+              Déjà inscrit ? <br />
+              Connectez-vous !
+            </p>
+          </Link>
         </div>
       </div>
     </div>

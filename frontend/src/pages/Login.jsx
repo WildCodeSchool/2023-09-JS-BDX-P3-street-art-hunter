@@ -22,14 +22,12 @@ export default function Login() {
         <button className="button mb-10 mt-40" type="button">
           Valider
         </button>
-        <div>
-          <Link to="/inscription">
-            <p className="mt-30">
-              Pas encore de compte ?<br />
-              Inscrivez vous !
-            </p>
-          </Link>
-        </div>
+        <Link to="/inscription">
+          <p className="mt-30">
+            Pas encore de compte ?<br />
+            Inscrivez vous !
+          </p>
+        </Link>
       </div>
     </>
   );
