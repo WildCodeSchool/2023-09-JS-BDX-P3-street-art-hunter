@@ -8,7 +8,6 @@ export default function Slider({ children, leftValue, rightValue }) {
 
   const toggleSwitchButton = () => {
     setSwitchButton(!switchButton);
-    // Utiliser useNavigate pour changer l'URL lors du clic sur le bouton
     navigate(switchButton ? "/galerie/arts" : "/galerie/artistes");
   };
 
