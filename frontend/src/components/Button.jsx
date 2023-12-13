@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
 
-export default function Button({ children, className }) {
+export default function Button({ children, className, color = "green" }) {
   return (
-    <button className={className} type="button">
+    <button
+      className={`${className}${color === "red" ? " red-button" : ""}`}
+      type="button"
+    >
       {children}
     </button>
   );
@@ -11,4 +14,5 @@ export default function Button({ children, className }) {
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };
