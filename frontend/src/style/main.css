@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 * {
   margin: 0;
@@ -227,24 +228,23 @@ p {
 .switch-button.active a:nth-child(2) {
   opacity: 1;
 }
-.switch-button div,
-.switch-button.active div {
+.switch-button div, .switch-button.active div {
   transition: all 0.15s;
 }
 
 .button,
-input,
+.input,
 .text-block,
 .item-list,
 .switch-button {
   position: relative;
   width: -moz-fit-content;
   width: fit-content;
+  margin-left: 4px;
 }
-.button::after,
-.button::before,
-input::after,
-input::before,
+.button::after, .button::before,
+.input::after,
+.input::before,
 .text-block::after,
 .text-block::before,
 .item-list::after,
@@ -262,7 +262,7 @@ input::before,
   border: 0 solid black;
 }
 .button::before,
-input::before,
+.input::before,
 .text-block::before,
 .item-list::before,
 .switch-button::before {
@@ -271,7 +271,7 @@ input::before,
   top: -4px;
 }
 .button::after,
-input::after,
+.input::after,
 .text-block::after,
 .item-list::after,
 .switch-button::after {
@@ -371,9 +371,9 @@ input {
   width: 140px;
   aspect-ratio: 4/3;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   -o-object-position: center;
-  object-position: center;
+     object-position: center;
   float: left;
   margin-right: 16px;
 }
@@ -382,8 +382,7 @@ input {
   font-size: 13px;
   text-shadow: none;
 }
-.item-list .button:after,
-.item-list .button:before {
+.item-list .button:after, .item-list .button:before {
   z-index: 1;
 }
 .item-list .button:before {
@@ -438,8 +437,7 @@ input {
   z-index: 100;
   transition: all 0.1s ease-in-out 0.2s;
 }
-.burger-menu,
-.burger-menu.active {
+.burger-menu, .burger-menu.active {
   transition: height 0.2s linear;
 }
 .burger-menu .burger-button {
@@ -481,6 +479,7 @@ input {
   position: absolute;
   top: calc(100% + 5px);
   right: 2px;
+  color: white;
 }
 
 .block {
@@ -498,6 +497,10 @@ input {
   color: white;
 }
 
+.ranking-page p span {
+  width: 190px;
+}
+
 label {
   text-shadow: 0px 2px 0px #000000;
   font-size: 1rem;
@@ -510,6 +513,11 @@ label {
   padding-block: 40px;
   border-bottom: 4px solid black;
 }
+.validation-item .image-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
 .validation-item .user-container,
 .validation-item .base-container {
   display: flex;
@@ -519,9 +527,9 @@ label {
 .validation-item .user-container img,
 .validation-item .base-container img {
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   -o-object-position: center center;
-  object-position: center center;
+     object-position: center center;
   aspect-ratio: 16/9;
   width: 200px;
   height: 112px;
@@ -555,9 +563,9 @@ label {
 .user-item .user-container img,
 .user-item .base-container img {
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   -o-object-position: center center;
-  object-position: center center;
+     object-position: center center;
   aspect-ratio: 16/9;
   width: 200px;
   height: 112px;
@@ -579,6 +587,90 @@ label {
 .score img {
   width: 22px;
 }
+.street-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 30px;
+  border-bottom: 4px solid black;
+}
+.street-item .user-container,
+.street-item .base-container {
+  display: flex;
+  flex-direction: row;
+  width: calc(50% - 126px);
+}
+.street-item .user-container img,
+.street-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.street-item .user-container p,
+.street-item .base-container p {
+  line-height: 30px;
+}
+.street-item .user-container .text-container,
+.street-item .base-container .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.street-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.street-item:last-child {
+  border: none;
+}
+
+.artist-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 30px;
+  border-bottom: 4px solid black;
+}
+.artist-item .user-container,
+.artist-item .base-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 126px);
+}
+.artist-item .user-container img,
+.artist-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.artist-item .user-container p,
+.artist-item .base-container p {
+  line-height: 30px;
+  font-size: 20px;
+}
+.artist-item .user-container .text-container,
+.artist-item .base-container .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.artist-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.artist-item:last-child {
+  border: none;
+}
 
 @media screen and (min-width: 767px) {
   .burger-menu.active {
@@ -597,4 +689,56 @@ label {
   .burger-menu nav a {
     font-size: 16px;
   }
-} /*# sourceMappingURL=main.css.map */
+}
+
+@media (max-width: 1000px) {
+  .validation-item {
+    flex-direction: column;
+    align-items: center;
+  }
+  .validation-item .image-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  .validation-item .base-container,
+  .validation-item .user-container {
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .validation-item .base-container img,
+  .validation-item .user-container img {
+    width: 100px;
+    height: auto;
+  }
+  .validation-item .button-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+}
+@media (max-width: 1000px) {
+  .street-item {
+    flex-direction: column;
+    align-items: center;
+  }
+  .street-item .base-container {
+    width: 100%; /* Ajustez la largeur pour les appareils mobiles */
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0; /* Supprimez la marge à droite pour les mobiles */
+  }
+  .street-item .base-container img {
+    width: 150px; /* Taille plus petite pour les images */
+    height: auto; /* Gardez l'aspect ratio de l'image */
+    margin-bottom: 10px; /* Ajoutez de l'espace entre l'image et le texte */
+  }
+  .street-item .button-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 20px;
+  }
+} 
