@@ -17,6 +17,13 @@ export default function Navbar() {
         type="button"
         aria-label="Toggle Menu"
       />
+
+      {location.pathname === "/" ? (
+        <button className="exclamation-button" />
+      ) : (
+        ""
+      )}
+
       <nav>
         <Link
           to="/"

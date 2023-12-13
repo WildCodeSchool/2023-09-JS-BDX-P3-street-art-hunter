@@ -1,3 +1,11 @@
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
+
 export default function Home() {
-  return <h1>Accueil</h1>;
+  return (
+    <div style={{ height: "80vh" }}>
+      <APIProvider apiKey={"AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo"}>
+        <Map zoom={10} center={{ lat: 44.837789, lng: -0.57918 }}></Map>
+      </APIProvider>
+    </div>
+  );
 }

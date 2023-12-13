@@ -103,6 +103,14 @@ p {
   margin-top: 40px;
 }
 
+.mt-50 {
+  margin-top: 50px;
+}
+
+.mt-60 {
+  margin-top: 60px;
+}
+
 .mb-10 {
   margin-bottom: 10px;
 }
@@ -217,7 +225,7 @@ p {
 }
 
 .button,
-.input,
+input,
 .text-block,
 .item-list,
 .switch-button {
@@ -225,10 +233,9 @@ p {
   width: -moz-fit-content;
   width: fit-content;
 }
-.button::after,
-.button::before,
-.input::after,
-.input::before,
+.button::after, .button::before,
+input::after,
+input::before,
 .text-block::after,
 .text-block::before,
 .item-list::after,
@@ -246,7 +253,7 @@ p {
   border: 0 solid black;
 }
 .button::before,
-.input::before,
+input::before,
 .text-block::before,
 .item-list::before,
 .switch-button::before {
@@ -255,13 +262,26 @@ p {
   top: -4px;
 }
 .button::after,
-.input::after,
+input::after,
 .text-block::after,
 .item-list::after,
 .switch-button::after {
   border-left-width: 4px;
   border-right-width: 4px;
   left: -4px;
+}
+
+.item-list .button,
+.text-block .button {
+  border: 2px solid black;
+}
+.item-list .button:after,
+.text-block .button:after {
+  z-index: -1;
+}
+.item-list p,
+.text-block p {
+  text-shadow: none;
 }
 
 h1,
@@ -406,8 +426,7 @@ input {
   z-index: 100;
   transition: all 0.1s ease-in-out 0.2s;
 }
-.burger-menu,
-.burger-menu.active {
+.burger-menu, .burger-menu.active {
   transition: height 0.2s linear;
 }
 .burger-menu .burger-button {
@@ -434,6 +453,117 @@ input {
   content: "Fermer";
 }
 
+.exclamation-button {
+  position: fixed;
+  right: 16px;
+  bottom: 25px;
+  width: 57px;
+  height: 58px;
+  background-image: url("/src/assets/exclamation-block.png");
+  background-size: contain;
+}
+.exclamation-button:after {
+  content: "Signaler";
+  display: block;
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 2px;
+  color: white;
+}
+
+label {
+  text-shadow: 0px 2px 0px #000000;
+  font-size: 1rem;
+  line-height: 1.5rem;
+
+.block {
+  height: 57px;
+  width: 58px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.buttons .button-name {
+  color: white;
+}
+
+.validation-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 40px;
+  border-bottom: 4px solid black;
+}
+.validation-item .user-container,
+.validation-item .base-container {
+  display: flex;
+  flex-direction: row;
+  width: calc(50% - 126px);
+}
+.validation-item .user-container img,
+.validation-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.validation-item .user-container p,
+.validation-item .base-container p {
+  line-height: 30px;
+}
+.validation-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.validation-item:last-child {
+  border: none;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 15px;
+  border-bottom: 4px solid black;
+}
+.user-item .user-container,
+.user-item .base-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 126px);
+}
+.user-item .user-container img,
+.user-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.user-item .user-container p,
+.user-item .base-container p {
+  line-height: 30px;
+}
+.user-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.user-item:last-child {
+  border: none;
+
+}
+
 @media screen and (min-width: 767px) {
   .burger-menu.active {
     height: 174px;
@@ -451,4 +581,4 @@ input {
   .burger-menu nav a {
     font-size: 16px;
   }
-} /*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */
