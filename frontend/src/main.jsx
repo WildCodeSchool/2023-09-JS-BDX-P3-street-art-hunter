@@ -30,7 +30,11 @@ const router = createBrowserRouter([
         element: <Gallery />,
       },
       {
-        path: "/mon-compte",
+        path: "/mon-compte/informations",
+        element: <Account />,
+      },
+      {
+        path: "/mon-compte/arts",
         element: <Account />,
       },
       {

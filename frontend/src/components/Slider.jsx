@@ -2,14 +2,19 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Slider({ children, leftValue, rightValue }) {
+export default function Slider({
+  children,
+  leftValue,
+  rightValue,
+  linkOne,
+  linkTwo,
+}) {
   const navigate = useNavigate();
   const [switchButton, setSwitchButton] = useState(false);
 
   const toggleSwitchButton = () => {
     setSwitchButton(!switchButton);
-    // Utiliser useNavigate pour changer l'URL lors du clic sur le bouton
-    navigate(switchButton ? "/galerie/arts" : "/galerie/artistes");
+    navigate(switchButton ? linkOne : linkTwo);
   };
 
   return (
@@ -23,10 +28,8 @@ export default function Slider({ children, leftValue, rightValue }) {
         type="button"
         className={`switch-button${switchButton ? " active" : ""}`}
       >
-        <Link to={switchButton ? "/galerie/arts" : "/galerie/artistes"}>
-          {leftValue}
-        </Link>
-        <Link to={switchButton ? "/galerie/artistes" : "/galerie/arts"}>
+        <Link to={switchButton ? linkOne : linkTwo}>{leftValue}</Link>
+        <Link to={switchButton ? linkTwo : linkOne}>
           <span>{rightValue}</span>
         </Link>
         <div className="switch-item" />
@@ -40,4 +43,6 @@ Slider.propTypes = {
   children: PropTypes.node.isRequired,
   leftValue: PropTypes.string.isRequired,
   rightValue: PropTypes.string.isRequired,
+  linkOne: PropTypes.string.isRequired,
+  linkTwo: PropTypes.string.isRequired,
 };

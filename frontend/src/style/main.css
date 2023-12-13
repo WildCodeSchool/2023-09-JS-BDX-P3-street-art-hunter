@@ -39,6 +39,10 @@ input:focus-visible {
   outline: none;
 }
 
+.t-center {
+  text-align: center;
+}
+
 h1 {
   font-size: 24px;
   text-align: center;
@@ -177,6 +181,10 @@ p {
 .switch-button.tiny-button:hover.tiny-button {
   box-shadow: inset -4px -4px 0px 0px #4aa52e;
 }
+.button.tiny-button.red-button.tiny-button,
+.switch-button.tiny-button.red-button.tiny-button {
+  box-shadow: inset -4px -4px 0px 0px #8c2022;
+}
 
 .switch-button {
   position: relative;
@@ -313,6 +321,9 @@ p {
 }
 .allow-scroll.tiny-allow-scroll {
   max-height: calc(100vh - 300px);
+}
+.allow-scroll.minus-allow-scroll {
+  max-height: calc(100vh - 350px);
 }
 
 .text-block {
@@ -573,6 +584,9 @@ label {
   border: none;
 }
 
+.score img {
+  width: 22px;
+}
 .street-item {
   display: flex;
   justify-content: space-evenly;
