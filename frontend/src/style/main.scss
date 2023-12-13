@@ -297,7 +297,7 @@ p {
 .allow-scroll {
   overflow-y: auto;
   height: 100vh;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 190px);
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -573,6 +573,44 @@ label {
     }
     p {
       line-height: 30px;
+    }
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  &:last-child {
+    border: none;
+  }
+}
+
+.street-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 30px;
+  border-bottom: 4px solid black;
+
+  .user-container,
+  .base-container {
+    display: flex;
+    flex-direction: row;
+    width: calc(50% - 126px);
+    img {
+      object-fit: cover;
+      object-position: center center;
+      aspect-ratio: 16 / 9;
+      width: 200px;
+      height: 112px;
+      margin-right: 20px;
+    }
+    p {
+      line-height: 30px;
+    }
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   }
   .button-container {

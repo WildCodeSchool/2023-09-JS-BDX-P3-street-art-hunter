@@ -64,6 +64,23 @@ export default function Administration() {
     },
   ];
 
+  const street = [
+    {
+      id: 1,
+      image:
+        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
+      name: "Le Pigeon",
+      artist: "A-Mo",
+    },
+    {
+      id: 2,
+      image:
+        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
+      name: "Le Pigeon",
+      artist: "A-Mo",
+    },
+  ];
+
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
   const handleOptionClick = (id) => {
@@ -146,6 +163,32 @@ export default function Administration() {
                   </button>
                   <button className="button red-button" type="button">
                     Exclure
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {activeButton ===
+        buttons.find((button) => button.name === "Street-Arts").id && (
+        <div className="container allow-scroll mt-40">
+          <div className="text-block items">
+            {street.map((art) => (
+              <div className="street-item">
+                <div className="base-container">
+                  <img src={art.image} alt={`Button ${art.id}`} />
+                  <div className="text-container">
+                    <p>{art.name}</p>
+                    <p>Par {art.artist}</p>
+                  </div>
+                </div>
+                <div className="button-container">
+                  <button className="button" type="button">
+                    Modifier
+                  </button>
+                  <button className="button red-button" type="button">
+                    Supprimer
                   </button>
                 </div>
               </div>

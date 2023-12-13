@@ -299,7 +299,7 @@ p {
 .allow-scroll {
   overflow-y: auto;
   height: 100vh;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 190px);
 }
 .allow-scroll::-webkit-scrollbar {
   width: 6px;
@@ -562,6 +562,48 @@ label {
   justify-content: space-evenly;
 }
 .user-item:last-child {
+  border: none;
+}
+
+.street-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 30px;
+  border-bottom: 4px solid black;
+}
+.street-item .user-container,
+.street-item .base-container {
+  display: flex;
+  flex-direction: row;
+  width: calc(50% - 126px);
+}
+.street-item .user-container img,
+.street-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.street-item .user-container p,
+.street-item .base-container p {
+  line-height: 30px;
+}
+.street-item .user-container .text-container,
+.street-item .base-container .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.street-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.street-item:last-child {
   border: none;
 }
 
