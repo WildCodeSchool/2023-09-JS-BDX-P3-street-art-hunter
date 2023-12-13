@@ -236,12 +236,13 @@ p {
 // borders
 
 .button,
-input,
+.input,
 .text-block,
 .item-list,
 .switch-button {
   position: relative;
   width: fit-content;
+  margin-left: 4px;
 
   &::after,
   &::before {
@@ -297,7 +298,7 @@ p {
 .allow-scroll {
   overflow-y: auto;
   height: 100vh;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 190px);
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -490,6 +491,7 @@ input {
     position: absolute;
     top: calc(100% + 5px);
     right: 2px;
+    color: white;
   }
 }
 
