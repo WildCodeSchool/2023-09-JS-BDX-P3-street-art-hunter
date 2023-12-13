@@ -64,6 +64,36 @@ export default function Administration() {
     },
   ];
 
+  const street = [
+    {
+      id: 1,
+      image:
+        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
+      name: "Le Pigeon",
+      artist: "A-Mo",
+    },
+    {
+      id: 2,
+      image:
+        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
+      name: "Le Pigeon",
+      artist: "A-Mo",
+    },
+  ];
+
+  const artists = [
+    {
+      id: 1,
+      name: "A-Mo",
+      hashtag: "@amoarts",
+    },
+    {
+      id: 2,
+      name: "A-Mo",
+      hashtag: "@amoarts",
+    },
+  ];
+
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
   const handleOptionClick = (id) => {
@@ -99,20 +129,22 @@ export default function Administration() {
         <div className="container allow-scroll mt-40">
           <div className="text-block items">
             {exemple.map((item) => (
-              <div className="validation-item">
-                <div className="base-container">
-                  <img src={item.image} alt={`Button ${item.id}`} />
-                  <p>
-                    X : 04,7689
-                    <br />Y : 04,7689
-                  </p>
-                </div>
-                <div className="user-container">
-                  <img src={item.image} alt={`Button ${item.id}`} />
-                  <p>
-                    X : 04,7689
-                    <br />Y : 04,7689
-                  </p>
+              <div key={item.id} className="validation-item">
+                <div className="image-container">
+                  <div className="base-container">
+                    <img src={item.image} alt={`Button ${item.id}`} />
+                    <p>
+                      X : 04,7689
+                      <br />Y : 04,7689
+                    </p>
+                  </div>
+                  <div className="user-container">
+                    <img src={item.image} alt={`Button ${item.id}`} />
+                    <p>
+                      X : 04,7689
+                      <br />Y : 04,7689
+                    </p>
+                  </div>
                 </div>
                 <div className="button-container">
                   <button className="button" type="button">
@@ -132,7 +164,7 @@ export default function Administration() {
         <div className="container allow-scroll mt-40">
           <div className="text-block items">
             {users.map((user) => (
-              <div className="user-item">
+              <div key={user.id} className="user-item">
                 <div className="base-container">
                   <p>{user.pseudo}</p>
                   <p>{user.email}</p>
@@ -146,6 +178,55 @@ export default function Administration() {
                   </button>
                   <button className="button red-button" type="button">
                     Exclure
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {activeButton ===
+        buttons.find((button) => button.name === "Street-Arts").id && (
+        <div className="container allow-scroll mt-40">
+          <div className="text-block items">
+            {street.map((art) => (
+              <div key={art.id} className="street-item">
+                <div className="base-container">
+                  <img src={art.image} alt={`Button ${art.id}`} />
+                  <div className="text-container">
+                    <p>{art.name}</p>
+                    <p>Par {art.artist}</p>
+                  </div>
+                </div>
+                <div className="button-container">
+                  <button className="button" type="button">
+                    Modifier
+                  </button>
+                  <button className="button red-button" type="button">
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {activeButton ===
+        buttons.find((button) => button.name === "Artistes").id && (
+        <div className="container allow-scroll mt-40">
+          <div className="text-block items">
+            {artists.map((artist) => (
+              <div key={artist.id} className="artist-item">
+                <div className="base-container">
+                  <p>{artist.name}</p>
+                  <p>{artist.hashtag}</p>
+                </div>
+                <div className="button-container">
+                  <button className="button" type="button">
+                    Modifier
+                  </button>
+                  <button className="button red-button" type="button">
+                    Supprimer
                   </button>
                 </div>
               </div>
