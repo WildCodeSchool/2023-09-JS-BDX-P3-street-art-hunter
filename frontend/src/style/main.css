@@ -228,7 +228,8 @@ p {
 .switch-button.active a:nth-child(2) {
   opacity: 1;
 }
-.switch-button div, .switch-button.active div {
+.switch-button div,
+.switch-button.active div {
   transition: all 0.15s;
 }
 
@@ -242,7 +243,8 @@ p {
   width: fit-content;
   margin-left: 4px;
 }
-.button::after, .button::before,
+.button::after,
+.button::before,
 .input::after,
 .input::before,
 .text-block::after,
@@ -371,9 +373,9 @@ input {
   width: 140px;
   aspect-ratio: 4/3;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: center;
-     object-position: center;
+  object-position: center;
   float: left;
   margin-right: 16px;
 }
@@ -382,7 +384,8 @@ input {
   font-size: 13px;
   text-shadow: none;
 }
-.item-list .button:after, .item-list .button:before {
+.item-list .button:after,
+.item-list .button:before {
   z-index: 1;
 }
 .item-list .button:before {
@@ -437,7 +440,8 @@ input {
   z-index: 100;
   transition: all 0.1s ease-in-out 0.2s;
 }
-.burger-menu, .burger-menu.active {
+.burger-menu,
+.burger-menu.active {
   transition: height 0.2s linear;
 }
 .burger-menu .burger-button {
@@ -489,7 +493,7 @@ input {
 
 .buttons {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -527,9 +531,9 @@ label {
 .validation-item .user-container img,
 .validation-item .base-container img {
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: center center;
-     object-position: center center;
+  object-position: center center;
   aspect-ratio: 16/9;
   width: 200px;
   height: 112px;
@@ -563,9 +567,9 @@ label {
 .user-item .user-container img,
 .user-item .base-container img {
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: center center;
-     object-position: center center;
+  object-position: center center;
   aspect-ratio: 16/9;
   width: 200px;
   height: 112px;
@@ -587,20 +591,20 @@ label {
 .score img {
   width: 22px;
 }
-.street-item {
+.score .street-item {
   display: flex;
   justify-content: space-evenly;
   padding-block: 30px;
   border-bottom: 4px solid black;
 }
-.street-item .user-container,
-.street-item .base-container {
+.score .street-item .user-container,
+.score .street-item .base-container {
   display: flex;
   flex-direction: row;
   width: calc(50% - 126px);
 }
-.street-item .user-container img,
-.street-item .base-container img {
+.score .street-item .user-container img,
+.score .street-item .base-container img {
   -o-object-fit: cover;
   object-fit: cover;
   -o-object-position: center center;
@@ -610,22 +614,22 @@ label {
   height: 112px;
   margin-right: 20px;
 }
-.street-item .user-container p,
-.street-item .base-container p {
+.score .street-item .user-container p,
+.score .street-item .base-container p {
   line-height: 30px;
 }
-.street-item .user-container .text-container,
-.street-item .base-container .text-container {
+.score .street-item .user-container .text-container,
+.score .street-item .base-container .text-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.street-item .button-container {
+.score .street-item .button-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
-.street-item:last-child {
+.score .street-item:last-child {
   border: none;
 }
 
@@ -690,7 +694,6 @@ label {
     font-size: 16px;
   }
 }
-
 @media (max-width: 1000px) {
   .validation-item {
     flex-direction: column;
@@ -741,4 +744,4 @@ label {
     width: 100%;
     margin-top: 20px;
   }
-} 
+} /*# sourceMappingURL=main.css.map */
