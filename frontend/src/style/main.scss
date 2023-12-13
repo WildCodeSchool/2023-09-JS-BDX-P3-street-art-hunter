@@ -79,6 +79,12 @@ p {
 .mt-40 {
   margin-top: 40px;
 }
+.mt-50 {
+  margin-top: 50px;
+}
+.mt-60 {
+  margin-top: 60px;
+}
 
 .mb-10 {
   margin-bottom: 10px;
@@ -174,6 +180,19 @@ input,
   }
 }
 
+.item-list,
+.text-block {
+  .button {
+    border: 2px solid black;
+    &:after {
+      z-index: -1;
+    }
+  }
+  p {
+    text-shadow: none;
+  }
+}
+
 // shadows
 
 h1,
@@ -232,12 +251,6 @@ input {
 
   a {
     font-size: 14px;
-  }
-  .button {
-    border: 2px solid black;
-    &:after {
-      z-index: -1;
-    }
   }
 }
 
@@ -325,6 +338,7 @@ input {
 
 // Home
 
+
 .exclamation-button {
   position: fixed;
   right: 16px;
@@ -340,9 +354,26 @@ input {
     position: absolute;
     top: calc(100% + 5px);
     right: 2px;
+
+// Administration
+
+.block {
+  height: 57px;
+  width: 58px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .button-name {
+
     color: white;
   }
 }
+
 
 // Register
 
@@ -350,6 +381,73 @@ label {
   text-shadow: 0px 2px 0px #000000;
   font-size: 1rem;
   line-height: 1.5rem;
+    }
+.validation-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 40px;
+  border-bottom: 4px solid black;
+
+  .user-container,
+  .base-container {
+    display: flex;
+    flex-direction: row;
+    width: calc(50% - 126px);
+    img {
+      object-fit: cover;
+      object-position: center center;
+      aspect-ratio: 16 / 9;
+      width: 200px;
+      height: 112px;
+      margin-right: 20px;
+    }
+    p {
+      line-height: 30px;
+    }
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  &:last-child {
+    border: none;
+  }
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 15px;
+  border-bottom: 4px solid black;
+
+  .user-container,
+  .base-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(50% - 126px);
+    img {
+      object-fit: cover;
+      object-position: center center;
+      aspect-ratio: 16 / 9;
+      width: 200px;
+      height: 112px;
+      margin-right: 20px;
+    }
+    p {
+      line-height: 30px;
+    }
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  &:last-child {
+    border: none;
+  }
+
 }
 
 //// Responsive

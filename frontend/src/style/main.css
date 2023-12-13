@@ -83,6 +83,14 @@ p {
   margin-top: 40px;
 }
 
+.mt-50 {
+  margin-top: 50px;
+}
+
+.mt-60 {
+  margin-top: 60px;
+}
+
 .mb-10 {
   margin-bottom: 10px;
 }
@@ -184,6 +192,19 @@ input::after,
   z-index: -1;
 }
 
+.item-list .button,
+.text-block .button {
+  border: 2px solid black;
+}
+.item-list .button:after,
+.text-block .button:after {
+  z-index: -1;
+}
+.item-list p,
+.text-block p {
+  text-shadow: none;
+}
+
 h1,
 h2 {
   text-shadow: 0px 4px 0px #000000;
@@ -237,12 +258,6 @@ input {
 }
 .item-list a {
   font-size: 14px;
-}
-.item-list .button {
-  border: 2px solid black;
-}
-.item-list .button:after {
-  z-index: -1;
 }
 
 .burger-menu {
@@ -334,6 +349,93 @@ label {
   text-shadow: 0px 2px 0px #000000;
   font-size: 1rem;
   line-height: 1.5rem;
+
+.block {
+  height: 57px;
+  width: 58px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.buttons .button-name {
+  color: white;
+}
+
+.validation-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 40px;
+  border-bottom: 4px solid black;
+}
+.validation-item .user-container,
+.validation-item .base-container {
+  display: flex;
+  flex-direction: row;
+  width: calc(50% - 126px);
+}
+.validation-item .user-container img,
+.validation-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.validation-item .user-container p,
+.validation-item .base-container p {
+  line-height: 30px;
+}
+.validation-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.validation-item:last-child {
+  border: none;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 15px;
+  border-bottom: 4px solid black;
+}
+.user-item .user-container,
+.user-item .base-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 126px);
+}
+.user-item .user-container img,
+.user-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.user-item .user-container p,
+.user-item .base-container p {
+  line-height: 30px;
+}
+.user-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.user-item:last-child {
+  border: none;
+
 }
 
 @media screen and (min-width: 767px) {
