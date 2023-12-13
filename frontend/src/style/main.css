@@ -591,20 +591,21 @@ label {
 .score img {
   width: 22px;
 }
-.score .street-item {
+
+.street-item {
   display: flex;
   justify-content: space-evenly;
   padding-block: 30px;
   border-bottom: 4px solid black;
 }
-.score .street-item .user-container,
-.score .street-item .base-container {
+.street-item .user-container,
+.street-item .base-container {
   display: flex;
   flex-direction: row;
   width: calc(50% - 126px);
 }
-.score .street-item .user-container img,
-.score .street-item .base-container img {
+.street-item .user-container img,
+.street-item .base-container img {
   -o-object-fit: cover;
   object-fit: cover;
   -o-object-position: center center;
@@ -614,22 +615,22 @@ label {
   height: 112px;
   margin-right: 20px;
 }
-.score .street-item .user-container p,
-.score .street-item .base-container p {
+.street-item .user-container p,
+.street-item .base-container p {
   line-height: 30px;
 }
-.score .street-item .user-container .text-container,
-.score .street-item .base-container .text-container {
+.street-item .user-container .text-container,
+.street-item .base-container .text-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.score .street-item .button-container {
+.street-item .button-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
-.score .street-item:last-child {
+.street-item:last-child {
   border: none;
 }
 
