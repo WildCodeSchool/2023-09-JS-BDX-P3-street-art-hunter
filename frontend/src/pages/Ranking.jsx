@@ -50,11 +50,9 @@ export default function Ranking() {
             <p className="mb-30" key={rank.id}>
               <span>
                 {" "}
-                <img src="/src/assets/coin1.png" alt="coin" /> x {""}
-                {rank.points}
-              </span>
-              {""} - {""}
-              {rank.name}
+                <img src="/src/assets/coin1.png" alt="coin" /> x {rank.points}
+              </span>{" "}
+              - {rank.name}
             </p>
           ))}
         </div>
