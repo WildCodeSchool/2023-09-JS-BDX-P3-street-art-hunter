@@ -219,8 +219,7 @@ p {
 .switch-button.active a:nth-child(2) {
   opacity: 1;
 }
-.switch-button div,
-.switch-button.active div {
+.switch-button div, .switch-button.active div {
   transition: all 0.15s;
 }
 
@@ -359,9 +358,9 @@ input {
   width: 140px;
   aspect-ratio: 4/3;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   -o-object-position: center;
-  object-position: center;
+     object-position: center;
   float: left;
   margin-right: 16px;
 }
@@ -370,8 +369,7 @@ input {
   font-size: 13px;
   text-shadow: none;
 }
-.item-list .button:after,
-.item-list .button:before {
+.item-list .button:after, .item-list .button:before {
   z-index: 1;
 }
 .item-list .button:before {
@@ -468,13 +466,7 @@ input {
   position: absolute;
   top: calc(100% + 5px);
   right: 2px;
-  color: white;
 }
-
-label {
-  text-shadow: 0px 2px 0px #000000;
-  font-size: 1rem;
-  line-height: 1.5rem;
 
 .block {
   height: 57px;
@@ -489,6 +481,12 @@ label {
 }
 .buttons .button-name {
   color: white;
+}
+
+label {
+  text-shadow: 0px 2px 0px #000000;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .validation-item {
@@ -506,9 +504,9 @@ label {
 .validation-item .user-container img,
 .validation-item .base-container img {
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   -o-object-position: center center;
-  object-position: center center;
+     object-position: center center;
   aspect-ratio: 16/9;
   width: 200px;
   height: 112px;
@@ -542,9 +540,9 @@ label {
 .user-item .user-container img,
 .user-item .base-container img {
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   -o-object-position: center center;
-  object-position: center center;
+     object-position: center center;
   aspect-ratio: 16/9;
   width: 200px;
   height: 112px;
@@ -561,7 +559,6 @@ label {
 }
 .user-item:last-child {
   border: none;
-
 }
 
 @media screen and (min-width: 767px) {
