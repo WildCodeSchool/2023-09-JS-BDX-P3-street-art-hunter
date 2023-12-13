@@ -38,11 +38,13 @@ export default function Gallery() {
 
   return (
     <>
-      <h1>Gallerie</h1>
+      <h1>Galerie</h1>
       <Slider
-        className="gallerie mt-20 mb-20"
+        className="galery mt-20 mb-20"
         leftValue="Arts"
         rightValue="Artistes"
+        linkOne="/galerie/arts"
+        linkTwo="/galerie/artistes"
       >
         <div className="slider-item">
           <div className="container">

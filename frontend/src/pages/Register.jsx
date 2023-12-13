@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+
 import Button from "../components/Button";
 
 export default function Register() {
@@ -102,9 +103,11 @@ export default function Register() {
               />
             </div>
           </form>
+
           <Button type="Valider" className="button mb-20">
             Valider
           </Button>
+
           <Link to="/connexion">
             <p className="mb-10">
               Déjà inscrit ? <br />

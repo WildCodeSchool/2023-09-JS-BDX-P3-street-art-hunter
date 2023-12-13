@@ -39,6 +39,10 @@ input {
 //// General
 
 // texts
+
+.t-center {
+  text-align: center;
+}
 h1 {
   font-size: 24px;
   text-align: center;
@@ -173,6 +177,9 @@ p {
 
     &:hover.tiny-button {
       box-shadow: inset -4px -4px 0px 0px $dark-green;
+    }
+    &.red-button.tiny-button {
+      box-shadow: inset -4px -4px 0px 0px $dark-red;
     }
   }
 }
@@ -312,6 +319,9 @@ p {
 
   &.tiny-allow-scroll {
     max-height: calc(100vh - 300px);
+  }
+  &.minus-allow-scroll {
+    max-height: calc(100vh - 350px);
   }
 }
 .text-block {
@@ -504,12 +514,19 @@ input {
 
 .buttons {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
   gap: 20px;
 
   .button-name {
     color: white;
+  }
+}
+// Ranking
+
+.ranking-page {
+  p span {
+    width: 190px;
   }
 }
 
@@ -525,6 +542,12 @@ label {
   justify-content: space-evenly;
   padding-block: 40px;
   border-bottom: 4px solid black;
+
+  .image-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 
   .user-container,
   .base-container {
@@ -587,6 +610,90 @@ label {
   }
 }
 
+// Account
+
+.score {
+  img {
+    width: 22px;
+  }
+}
+.street-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 30px;
+  border-bottom: 4px solid black;
+
+  .user-container,
+  .base-container {
+    display: flex;
+    flex-direction: row;
+    width: calc(50% - 126px);
+    img {
+      object-fit: cover;
+      object-position: center center;
+      aspect-ratio: 16 / 9;
+      width: 200px;
+      height: 112px;
+      margin-right: 20px;
+    }
+    p {
+      line-height: 30px;
+    }
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  &:last-child {
+    border: none;
+  }
+}
+
+.artist-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 30px;
+  border-bottom: 4px solid black;
+
+  .user-container,
+  .base-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(50% - 126px);
+    img {
+      object-fit: cover;
+      object-position: center center;
+      aspect-ratio: 16 / 9;
+      width: 200px;
+      height: 112px;
+      margin-right: 20px;
+    }
+    p {
+      line-height: 30px;
+      font-size: 20px;
+    }
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  &:last-child {
+    border: none;
+  }
+}
+
 //// Responsive
 
 @media screen and (min-width: 767px) {
@@ -608,6 +715,64 @@ label {
       a {
         font-size: 16px;
       }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .validation-item {
+    flex-direction: column;
+    align-items: center;
+
+    .image-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+
+    .base-container,
+    .user-container {
+      width: 50%;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        width: 100px;
+        height: auto;
+      }
+    }
+    .button-container {
+      flex-direction: row;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .street-item {
+    flex-direction: column;
+    align-items: center;
+
+    .base-container {
+      width: 100%; /* Ajustez la largeur pour les appareils mobiles */
+      flex-direction: column;
+      align-items: center;
+      margin-right: 0; /* Supprimez la marge à droite pour les mobiles */
+
+      img {
+        width: 150px; /* Taille plus petite pour les images */
+        height: auto; /* Gardez l'aspect ratio de l'image */
+        margin-bottom: 10px; /* Ajoutez de l'espace entre l'image et le texte */
+      }
+    }
+
+    .button-container {
+      flex-direction: row;
+      justify-content: space-evenly;
+      width: 100%;
+      margin-top: 20px;
     }
   }
 }
