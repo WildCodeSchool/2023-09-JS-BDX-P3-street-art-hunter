@@ -382,7 +382,7 @@ input {
   .button-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
 
   &:last-child {
@@ -416,7 +416,7 @@ input {
   .button-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
   &:last-child {
     border: none;

@@ -374,7 +374,7 @@ input {
 .validation-item .button-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 .validation-item:last-child {
   border: none;
@@ -410,7 +410,7 @@ input {
 .user-item .button-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 .user-item:last-child {
   border: none;
