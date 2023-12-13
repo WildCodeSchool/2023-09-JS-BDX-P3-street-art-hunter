@@ -607,6 +607,49 @@ label {
   border: none;
 }
 
+.artist-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 30px;
+  border-bottom: 4px solid black;
+}
+.artist-item .user-container,
+.artist-item .base-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 126px);
+}
+.artist-item .user-container img,
+.artist-item .base-container img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center center;
+  object-position: center center;
+  aspect-ratio: 16/9;
+  width: 200px;
+  height: 112px;
+  margin-right: 20px;
+}
+.artist-item .user-container p,
+.artist-item .base-container p {
+  line-height: 30px;
+  font-size: 20px;
+}
+.artist-item .user-container .text-container,
+.artist-item .base-container .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.artist-item .button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.artist-item:last-child {
+  border: none;
+}
+
 @media screen and (min-width: 767px) {
   .burger-menu.active {
     height: 174px;
