@@ -45,6 +45,25 @@ export default function Administration() {
     },
   ];
 
+  const users = [
+    {
+      id: 1,
+      pseudo: "Damien Jean",
+      email: "damien@jean.fr",
+      postals: "33000",
+      city: "Bordeaux",
+      password: "abcdefgh",
+    },
+    {
+      id: 2,
+      pseudo: "Kevin",
+      email: "kevin@jean.fr",
+      postals: "33000",
+      city: "Bordeaux",
+      password: "mmpoi",
+    },
+  ];
+
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
   const handleOptionClick = (id) => {
@@ -75,36 +94,65 @@ export default function Administration() {
           </button>
         ))}
       </div>
-      <div className="container allow-scroll mt-40">
-        <div className="text-block items">
-          {exemple.map((item) => (
-            <div className="validation-item">
-              <div className="base-container">
-                <img src={item.image} alt={`Button ${item.id}`} />
-                <p>
-                  X : 04,7689
-                  <br />Y : 04,7689
-                </p>
+      {activeButton ===
+        buttons.find((button) => button.name === "Validations").id && (
+        <div className="container allow-scroll mt-40">
+          <div className="text-block items">
+            {exemple.map((item) => (
+              <div className="validation-item">
+                <div className="base-container">
+                  <img src={item.image} alt={`Button ${item.id}`} />
+                  <p>
+                    X : 04,7689
+                    <br />Y : 04,7689
+                  </p>
+                </div>
+                <div className="user-container">
+                  <img src={item.image} alt={`Button ${item.id}`} />
+                  <p>
+                    X : 04,7689
+                    <br />Y : 04,7689
+                  </p>
+                </div>
+                <div className="button-container">
+                  <button className="button" type="button">
+                    Valider
+                  </button>
+                  <button className="button red-button" type="button">
+                    Refuser
+                  </button>
+                </div>
               </div>
-              <div className="user-container">
-                <img src={item.image} alt={`Button ${item.id}`} />
-                <p>
-                  X : 04,7689
-                  <br />Y : 04,7689
-                </p>
-              </div>
-              <div className="button-container">
-                <button className="button" type="button">
-                  Valider
-                </button>
-                <button className="button red-button" type="button">
-                  Refuser
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+      {activeButton ===
+        buttons.find((button) => button.name === "Utilisateurs").id && (
+        <div className="container allow-scroll mt-40">
+          <div className="text-block items">
+            {users.map((user) => (
+              <div className="user-item">
+                <div className="base-container">
+                  <p>{user.pseudo}</p>
+                  <p>{user.email}</p>
+                  <p>{user.postals}</p>
+                  <p>{user.city}</p>
+                  <p>{user.password}</p>
+                </div>
+                <div className="button-container">
+                  <button className="button" type="button">
+                    Modifier
+                  </button>
+                  <button className="button red-button" type="button">
+                    Exclure
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -382,9 +382,42 @@ input {
   .button-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
 
+  &:last-child {
+    border: none;
+  }
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 15px;
+  border-bottom: 4px solid black;
+
+  .user-container,
+  .base-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(50% - 126px);
+    img {
+      object-fit: cover;
+      object-position: center center;
+      aspect-ratio: 16 / 9;
+      width: 200px;
+      height: 112px;
+      margin-right: 20px;
+    }
+    p {
+      line-height: 30px;
+    }
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
   &:last-child {
     border: none;
   }
