@@ -14,5 +14,9 @@ export default function Button({ children, className, color = "green" }) {
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
+};
+
+Button.defaultProps = {
+  color: "green",
 };

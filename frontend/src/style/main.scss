@@ -249,7 +249,6 @@ p {
 .switch-button {
   position: relative;
   width: fit-content;
-  margin-left: 4px;
 
   &::after,
   &::before {
@@ -304,8 +303,10 @@ p {
 
 .allow-scroll {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100vh;
   max-height: calc(100vh - 190px);
+  padding: 4px;
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -512,16 +513,55 @@ input {
   width: 58px;
 }
 
-.buttons {
+.admin-buttons {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 20px;
+  color: white;
+
+  .block-button {
+    text-align: center;
+  }
 
   .button-name {
     color: white;
   }
 }
+
+.admin-item-list {
+  display: flex;
+  flex-direction: column;
+
+  img {
+    max-width: 200px;
+  }
+
+  .admin-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 40px;
+    border-bottom: 4px solid black;
+  }
+
+  .admin-button-container {
+    width: 180px;
+
+    button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  &.has-two-items {
+    .admin-item {
+      width: 50%;
+    }
+  }
+}
+
 // Ranking
 
 .ranking-page {
@@ -540,160 +580,12 @@ label {
   font-size: 1rem;
   line-height: 1.5rem;
 }
-.validation-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 40px;
-  border-bottom: 4px solid black;
-
-  .image-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: row;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-
-  &:last-child {
-    border: none;
-  }
-}
-
-.user-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 15px;
-  border-bottom: 4px solid black;
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: column;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  &:last-child {
-    border: none;
-  }
-}
 
 // Account
 
 .score {
   img {
     width: 22px;
-  }
-}
-.street-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 30px;
-  border-bottom: 4px solid black;
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: row;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-    }
-    .text-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  &:last-child {
-    border: none;
-  }
-}
-
-.artist-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 30px;
-  border-bottom: 4px solid black;
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: column;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-      font-size: 20px;
-    }
-    .text-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  &:last-child {
-    border: none;
   }
 }
 
