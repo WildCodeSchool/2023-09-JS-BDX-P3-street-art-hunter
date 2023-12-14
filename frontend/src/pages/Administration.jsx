@@ -103,30 +103,30 @@ export default function Administration() {
   return (
     <>
       <h1>Administration</h1>
-      <div className="buttons mt-40">
-        {buttons.map((button) => (
-          <button
-            key={button.id}
-            type="button"
-            onClick={() => handleOptionClick(button.id)}
-            className="block-button"
-          >
-            <div className="button-name">{button.name}</div>
-            <img
-              src={
-                activeButton === button.id ? button.activeImage : button.image
-              }
-              className={`block mt-10${
-                activeButton === button.id ? " active" : ""
-              }`}
-              alt={`Button ${button.id}`}
-            />
-          </button>
-        ))}
-      </div>
-      {activeButton ===
-        buttons.find((button) => button.name === "Validations").id && (
-        <div className="container allow-scroll mt-40">
+      <div className="container allow-scroll mt-40">
+        <div className="buttons mt-40 mb-30">
+          {buttons.map((button) => (
+            <button
+              key={button.id}
+              type="button"
+              onClick={() => handleOptionClick(button.id)}
+              className="block-button"
+            >
+              <div className="button-name">{button.name}</div>
+              <img
+                src={
+                  activeButton === button.id ? button.activeImage : button.image
+                }
+                className={`block mt-10${
+                  activeButton === button.id ? " active" : ""
+                }`}
+                alt={`Button ${button.id}`}
+              />
+            </button>
+          ))}
+        </div>
+        {activeButton ===
+          buttons.find((button) => button.name === "Validations").id && (
           <div className="text-block items">
             {exemple.map((item) => (
               <div key={item.id} className="validation-item">
@@ -157,83 +157,83 @@ export default function Administration() {
               </div>
             ))}
           </div>
-        </div>
-      )}
-      {activeButton ===
-        buttons.find((button) => button.name === "Utilisateurs").id && (
-        <div className="container allow-scroll mt-40">
-          <div className="text-block items">
-            {users.map((user) => (
-              <div key={user.id} className="user-item">
-                <div className="base-container">
-                  <p>{user.pseudo}</p>
-                  <p>{user.email}</p>
-                  <p>{user.postals}</p>
-                  <p>{user.city}</p>
-                  <p>{user.password}</p>
-                </div>
-                <div className="button-container">
-                  <button className="button" type="button">
-                    Modifier
-                  </button>
-                  <button className="button red-button" type="button">
-                    Exclure
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      {activeButton ===
-        buttons.find((button) => button.name === "Street-Arts").id && (
-        <div className="container allow-scroll mt-40">
-          <div className="text-block items">
-            {street.map((art) => (
-              <div key={art.id} className="street-item">
-                <div className="base-container">
-                  <img src={art.image} alt={`Button ${art.id}`} />
-                  <div className="text-container">
-                    <p>{art.name}</p>
-                    <p>Par {art.artist}</p>
+        )}
+        {activeButton ===
+          buttons.find((button) => button.name === "Utilisateurs").id && (
+          <div className="container allow-scroll mt-40">
+            <div className="text-block items">
+              {users.map((user) => (
+                <div key={user.id} className="user-item">
+                  <div className="base-container">
+                    <p>{user.pseudo}</p>
+                    <p>{user.email}</p>
+                    <p>{user.postals}</p>
+                    <p>{user.city}</p>
+                    <p>{user.password}</p>
+                  </div>
+                  <div className="button-container">
+                    <button className="button" type="button">
+                      Modifier
+                    </button>
+                    <button className="button red-button" type="button">
+                      Exclure
+                    </button>
                   </div>
                 </div>
-                <div className="button-container">
-                  <button className="button" type="button">
-                    Modifier
-                  </button>
-                  <button className="button red-button" type="button">
-                    Supprimer
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-      {activeButton ===
-        buttons.find((button) => button.name === "Artistes").id && (
-        <div className="container allow-scroll mt-40">
-          <div className="text-block items">
-            {artists.map((artist) => (
-              <div key={artist.id} className="artist-item">
-                <div className="base-container">
-                  <p>{artist.name}</p>
-                  <p>{artist.hashtag}</p>
+        )}
+        {activeButton ===
+          buttons.find((button) => button.name === "Street-Arts").id && (
+          <div className="container allow-scroll mt-40">
+            <div className="text-block items">
+              {street.map((art) => (
+                <div key={art.id} className="street-item">
+                  <div className="base-container">
+                    <img src={art.image} alt={`Button ${art.id}`} />
+                    <div className="text-container">
+                      <p>{art.name}</p>
+                      <p>Par {art.artist}</p>
+                    </div>
+                  </div>
+                  <div className="button-container">
+                    <button className="button" type="button">
+                      Modifier
+                    </button>
+                    <button className="button red-button" type="button">
+                      Supprimer
+                    </button>
+                  </div>
                 </div>
-                <div className="button-container">
-                  <button className="button" type="button">
-                    Modifier
-                  </button>
-                  <button className="button red-button" type="button">
-                    Supprimer
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+        {activeButton ===
+          buttons.find((button) => button.name === "Artistes").id && (
+          <div className="container allow-scroll mt-40">
+            <div className="text-block items">
+              {artists.map((artist) => (
+                <div key={artist.id} className="artist-item">
+                  <div className="base-container">
+                    <p>{artist.name}</p>
+                    <p>{artist.hashtag}</p>
+                  </div>
+                  <div className="button-container">
+                    <button className="button" type="button">
+                      Modifier
+                    </button>
+                    <button className="button red-button" type="button">
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }
