@@ -1,11 +1,16 @@
 import PropTypes from "prop-types";
 
 export default function Button({ children, className, color = "green" }) {
+  let buttonClass = className;
+
+  if (color === "red") {
+    buttonClass += " red-button";
+  } else if (color === "yellow") {
+    buttonClass += " yellow-button";
+  }
+
   return (
-    <button
-      className={`${className}${color === "red" ? " red-button" : ""}`}
-      type="button"
-    >
+    <button className={buttonClass} type="button">
       {children}
     </button>
   );
