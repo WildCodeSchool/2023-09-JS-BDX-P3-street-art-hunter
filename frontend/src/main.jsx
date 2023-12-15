@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
 import Style from "./pages/Style";
+import FormContextProvider from "./context/RegistrationFormContext";
 import { UserContextProvider } from "./context/userContext";
 
 const router = createBrowserRouter([
@@ -52,7 +53,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/inscription",
-        element: <Register />,
+        element: (
+          <FormContextProvider>
+            <Register />
+          </FormContextProvider>
+        ),
       },
       {
         path: "/classement",
