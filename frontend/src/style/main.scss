@@ -10,13 +10,11 @@
   list-style: none;
   font-family: "Press Start 2P";
 }
-html {
-  overflow: hidden;
-}
 body {
   overflow: hidden;
   background-color: $bluesky;
   color: white;
+  min-width: 400px;
 }
 a {
   color: inherit;
@@ -42,6 +40,9 @@ input {
 
 .t-center {
   text-align: center;
+}
+.t-left {
+  text-align: left;
 }
 h1 {
   font-size: 24px;
@@ -145,6 +146,18 @@ p {
 .d-none {
   display: none;
 }
+.d-flex {
+  display: flex;
+}
+.d-flex-row {
+  flex-direction: row;
+}
+.d-flex-column {
+  flex-direction: column;
+}
+.pos-r {
+  position: relative;
+}
 
 // buttons
 
@@ -167,6 +180,14 @@ p {
     &:hover {
       background-color: $medium-red;
       box-shadow: inset -6px -6px 0px 0px $dark-red;
+    }
+  }
+  &.yellow-button {
+    background-color: $yellow;
+    box-shadow: inset -3px -3px 0px 0px $dark-yellow;
+    &:hover {
+      background-color: $medium-yellow;
+      box-shadow: inset -6px -6px 0px 0px $dark-yellow;
     }
   }
 
@@ -246,10 +267,10 @@ p {
 .input,
 .text-block,
 .item-list,
-.switch-button {
+.switch-button,
+.bg-text-block {
   position: relative;
   width: fit-content;
-  margin-left: 4px;
 
   &::after,
   &::before {
@@ -276,11 +297,20 @@ p {
 }
 
 .item-list,
-.text-block {
+.text-block,
+.bg-text-block {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-shadow: none;
+  }
   .button {
-    border: 2px solid black;
-    &:after {
-      z-index: -1;
+    &:after,
+    &:before {
+      z-index: +1;
     }
   }
   p {
@@ -302,10 +332,20 @@ p {
 
 // blocks
 
+.text-block,
+.bg-text-block {
+  background-color: $grey;
+  color: black;
+  width: 100%;
+  padding: 15px;
+}
+
 .allow-scroll {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100vh;
   max-height: calc(100vh - 190px);
+  padding: 4px;
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -320,15 +360,14 @@ p {
   &.tiny-allow-scroll {
     max-height: calc(100vh - 300px);
   }
+
   &.minus-allow-scroll {
     max-height: calc(100vh - 350px);
   }
-}
-.text-block {
-  background-color: $grey;
-  color: black;
-  width: 100%;
-  padding: 15px;
+
+  .bg-text-block {
+    width: calc(100% - 12px);
+  }
 }
 
 // form
@@ -512,22 +551,85 @@ input {
   width: 58px;
 }
 
-.buttons {
+.admin-buttons {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 20px 0;
+  color: white;
+
+  .block-button {
+    text-align: center;
+    width: 50%;
+  }
 
   .button-name {
     color: white;
   }
 }
+
+.admin-item-list {
+  display: flex;
+  flex-direction: column;
+
+  .admin-item {
+    width: 100%;
+    padding: 20px;
+    border-bottom: 4px solid black;
+
+    &:last-of-type {
+      border-bottom-width: 0px;
+    }
+
+    p {
+      line-height: 30px;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 15px;
+    }
+    .has-two-items {
+      display: flex;
+      .admin-item-child {
+        text-align: center;
+        max-width: 50%;
+        padding: 25px 12px 0;
+      }
+    }
+    //responsive à mettre
+    &.d-flex-column {
+      .admin-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+      }
+    }
+  }
+
+  .admin-button-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      max-width: 150px;
+      text-align: center;
+    }
+  }
+}
+
+.admin-streetarts {
+  img {
+    max-width: 767px;
+  }
+}
+
 // Ranking
 
 .ranking-page {
-  display: flex;
-  justify-content: center;
-
   p span {
     width: 190px;
   }
@@ -540,78 +642,6 @@ label {
   font-size: 1rem;
   line-height: 1.5rem;
 }
-.validation-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 40px;
-  border-bottom: 4px solid black;
-
-  .image-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: row;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-
-  &:last-child {
-    border: none;
-  }
-}
-
-.user-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 15px;
-  border-bottom: 4px solid black;
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: column;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  &:last-child {
-    border: none;
-  }
-}
 
 // Account
 
@@ -620,86 +650,18 @@ label {
     width: 22px;
   }
 }
-.street-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 30px;
-  border-bottom: 4px solid black;
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: row;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-    }
-    .text-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  &:last-child {
-    border: none;
-  }
-}
-
-.artist-item {
-  display: flex;
-  justify-content: space-evenly;
-  padding-block: 30px;
-  border-bottom: 4px solid black;
-
-  .user-container,
-  .base-container {
-    display: flex;
-    flex-direction: column;
-    width: calc(50% - 126px);
-    img {
-      object-fit: cover;
-      object-position: center center;
-      aspect-ratio: 16 / 9;
-      width: 200px;
-      height: 112px;
-      margin-right: 20px;
-    }
-    p {
-      line-height: 30px;
-      font-size: 20px;
-    }
-    .text-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  &:last-child {
-    border: none;
-  }
-}
 
 //// Responsive
 
+@media screen and (max-width: 766px) {
+  .admin-page .allow-scroll.tiny-allow-scroll {
+    max-height: calc(100vh - 410px);
+  }
+}
+
 @media screen and (min-width: 767px) {
+  // menu
+
   .burger-menu {
     &.active {
       height: 174px;
@@ -717,6 +679,46 @@ label {
 
       a {
         font-size: 16px;
+      }
+    }
+  }
+
+  // admins
+
+  .admin-buttons .block-button {
+    width: 25%;
+  }
+
+  .admin-users,
+  .admin-streetarts,
+  .admin-artists {
+    .admin-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .admin-item-infos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+          width: 50%;
+        }
+        img {
+          margin-bottom: 0;
+          max-width: 45%;
+        }
+      }
+
+      .admin-button-container {
+        margin-top: 0;
+        flex-direction: column;
+        gap: 25px;
+        button {
+          width: 100%;
+        }
       }
     }
   }
@@ -754,28 +756,4 @@ label {
 }
 
 @media (max-width: 1000px) {
-  .street-item {
-    flex-direction: column;
-    align-items: center;
-
-    .base-container {
-      width: 100%; /* Ajustez la largeur pour les appareils mobiles */
-      flex-direction: column;
-      align-items: center;
-      margin-right: 0; /* Supprimez la marge à droite pour les mobiles */
-
-      img {
-        width: 150px; /* Taille plus petite pour les images */
-        height: auto; /* Gardez l'aspect ratio de l'image */
-        margin-bottom: 10px; /* Ajoutez de l'espace entre l'image et le texte */
-      }
-    }
-
-    .button-container {
-      flex-direction: row;
-      justify-content: space-evenly;
-      width: 100%;
-      margin-top: 20px;
-    }
-  }
 }
