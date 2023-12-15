@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
 import Style from "./pages/Style";
+import LoginProvider from "./context/LoginContext";
 import FormContextProvider from "./context/RegistrationFormContext";
 import { UserContextProvider } from "./context/userContext";
 
@@ -49,7 +50,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/connexion",
-        element: <Login />,
+        element: (
+          <LoginProvider>
+            <Login />
+          </LoginProvider>
+        ),
       },
       {
         path: "/inscription",
