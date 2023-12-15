@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../components/Button";
 
 export default function Administration() {
   const buttons = [
@@ -103,7 +104,7 @@ export default function Administration() {
   return (
     <>
       <h1>Administration</h1>
-      <div className="container mt-40">
+      <div className="container admin-page mt-40">
         <div className="admin-buttons mt-40 mb-30">
           {buttons.map((button) => (
             <button
@@ -125,111 +126,135 @@ export default function Administration() {
             </button>
           ))}
         </div>
-
-        <div className="allow-scroll">
-          {activeButton ===
-            buttons.find((button) => button.name === "Validations").id && (
-            <div className="text-block">
+        {/* Validations */}
+        <div className="allow-scroll pos-r tiny-allow-scroll">
+          <div className="admin-validations bg-text-block">
+            {activeButton ===
+              buttons.find((button) => button.name === "Validations").id && (
               <div className="admin-item-list">
                 {exemple.map((item) => (
-                  <div key={item.id} className="admin-item has-two-items">
-                    <div className="admin-item-contain">
-                      <img src={item.image} alt={`Button ${item.id}`} />
-                      <p>
-                        X : 04,7689
-                        <br />Y : 04,7689
-                      </p>
+                  <div
+                    key={item.id}
+                    className="admin-item
+                  "
+                  >
+                    <div className="has-two-items">
+                      <div className="admin-item-child">
+                        <h4 className="mb-20">Base</h4>
+                        <img src={item.image} alt={`Button ${item.id}`} />
+                        <p>
+                          X : 04,7689
+                          <br />Y : 04,7689
+                        </p>
+                      </div>
+                      <div className="admin-item-child">
+                        <h4 className="mb-20">@Username</h4>
+                        <img src={item.image} alt={`Button ${item.id}`} />
+                        <p>
+                          X : 04,7689
+                          <br />Y : 04,7689
+                        </p>
+                      </div>
                     </div>
-                    <div className="admin-item-contain">
-                      <img src={item.image} alt={`Button ${item.id}`} />
-                      <p>
-                        X : 04,7689
-                        <br />Y : 04,7689
-                      </p>
-                    </div>
-                    <div className="admin-button-container">
-                      <button className="button" type="button">
+                    <div className="admin-button-container mt-20">
+                      <Button className="button" type="button">
                         Valider
-                      </button>
-                      <button className="button red-button mt-20" type="button">
+                      </Button>
+                      <Button color="red" className="button" type="button">
                         Refuser
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
 
-          {activeButton ===
-            buttons.find((button) => button.name === "Utilisateurs").id && (
-            <div className="text-block">
-              <div className="admin-item-list">
-                {users.map((user) => (
-                  <div key={user.id} className="admin-item">
-                    <p>{user.pseudo}</p>
-                    <p>{user.email}</p>
-                    <p>{user.postals}</p>
-                    <p>{user.city}</p>
-                    <p>{user.password}</p>
-                    <div className="admin-button-container">
-                      <button className="button" type="button">
-                        Modifier
-                      </button>
-                      <button className="button red-button mt-20" type="button">
-                        Exclure
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            {/* Utilisateurs */}
 
-          {activeButton ===
-            buttons.find((button) => button.name === "Street-Arts").id && (
-            <div className="text-block">
-              <div className="admin-item-list">
-                {street.map((art) => (
-                  <div key={art.id} className="admin-item">
-                    <img src={art.image} alt={`Button ${art.id}`} />
-                    <p>{art.name}</p>
-                    <p>Par {art.artist}</p>
-                    <div className="admin-button-container">
-                      <button className="button" type="button">
-                        Modifier
-                      </button>
-                      <button className="button red-button mt-20" type="button">
-                        Supprimer
-                      </button>
+            {activeButton ===
+              buttons.find((button) => button.name === "Utilisateurs").id && (
+              <div className="admin-users">
+                <div className="admin-item-list">
+                  {users.map((user) => (
+                    <div key={user.id} className="admin-item">
+                      <div className="admin-item-infos">
+                        <p>Pseudo : {user.pseudo}</p>
+                        <p>Email : {user.email}</p>
+                        <p>Code Postal : {user.postals}</p>
+                        <p>Ville : {user.city}</p>
+                        <p>Mot de passe : {user.password}</p>
+                      </div>
+                      <div className="admin-button-container">
+                        <Button color="yellow" className="button" type="button">
+                          Modifier
+                        </Button>
+                        <Button color="red" className="button" type="button">
+                          Exclure
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {activeButton ===
-            buttons.find((button) => button.name === "Artistes").id && (
-            <div className="text-block">
-              <div className="admin-item-list">
-                {artists.map((artist) => (
-                  <div key={artist.id} className="admin-item">
-                    <p>{artist.name}</p>
-                    <p>{artist.hashtag}</p>
-                    <div className="admin-button-container">
-                      <button className="button" type="button">
-                        Modifier
-                      </button>
-                      <button className="button red-button mt-20" type="button">
-                        Supprimer
-                      </button>
+            {/* Street arts */}
+
+            {activeButton ===
+              buttons.find((button) => button.name === "Street-Arts").id && (
+              <div className="admin-streetarts">
+                <div className="admin-item-list">
+                  {street.map((art) => (
+                    <div key={art.id} className="admin-item">
+                      <div className="admin-item-infos">
+                        <img src={art.image} alt={`Button ${art.id}`} />
+                        <p>
+                          {art.name}
+                          <br />
+                          Par {art.artist}
+                        </p>
+                      </div>
+                      <div className="admin-button-container">
+                        <Button color="yellow" className="button" type="button">
+                          Modifier
+                        </Button>
+                        <Button color="red" className="button" type="button">
+                          Supprimer
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {/* Artistes */}
+
+            {activeButton ===
+              buttons.find((button) => button.name === "Artistes").id && (
+              <div className="admin-artists">
+                <div className="admin-item-list">
+                  {artists.map((artist) => (
+                    <div key={artist.id} className="admin-item">
+                      <div className="admin-item-infos">
+                        <p>Artiste 001 : {artist.name}</p>
+                        <p>Site web : {artist.hashtag}</p>
+                        <p>Street-arts : 8</p>
+                      </div>
+                      <div className="admin-button-container">
+                        <Button color="yellow" className="button" type="button">
+                          Modifier
+                        </Button>
+                        <Button color="red" className="button" type="button">
+                          Supprimer
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
