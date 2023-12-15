@@ -42,6 +42,7 @@ export default function Home() {
             <AdvancedMarker
               className={art.name}
               position={{ lat: art.lat, lng: art.long }}
+              key={art.id}
             >
               <h2>{art.name}</h2>
               <p>Auteur: {art.author}</p>
