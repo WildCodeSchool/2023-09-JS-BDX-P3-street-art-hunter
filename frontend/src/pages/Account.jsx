@@ -1,28 +1,10 @@
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
+import { useUserContext } from "../context/userContext";
 
 export default function Account() {
-  const users = [
-    {
-      id: 1,
-      pseudo: "Damien Jean",
-      mail: "damien@jean.fr",
-      postalCode: "33000",
-      city: "Bordeaux",
-      password: "abdc123",
-      points: "1000",
-    },
-    {
-      id: 2,
-      pseudo: "Dimitri Diego",
-      mail: "dimitri@diego.fr",
-      postalCode: "33100",
-      city: "Talence",
-      password: "jaimelerhum",
-      points: "1000",
-    },
-  ];
+  const { userDb } = useUserContext();
 
   const items = [
     {
@@ -55,13 +37,11 @@ export default function Account() {
     },
   ];
 
-  const displayedUser = users[0];
-
   return (
     <>
       <h1>Mon compte</h1>
       <h3 className="score t-center">
-        <img src="/src/assets/coin.gif" alt="coin" /> x{displayedUser.points}
+        <img src="/src/assets/coin.gif" alt="coin" /> x{userDb.points}
       </h3>
       <Slider
         className="account mt-20 mb-20"
@@ -74,14 +54,15 @@ export default function Account() {
           <div className="container">
             <div className="allow-scroll tiny-allow-scroll">
               <div className="container">
-                <p className="mb-20 mt-40">Pseudo : {displayedUser.pseudo}</p>
-                <p className="mb-20">Mail : {displayedUser.mail}</p>
-                <p className="mb-20">
-                  Code Postal : {displayedUser.postalCode}
-                </p>
-                <p className="mb-20">Ville : {displayedUser.city}</p>
-                <p className="mb-20">Mot de passe : {displayedUser.password}</p>
-                <Button color="red" className="button mi-auto mt-40">
+                <p className="mb-20 mt-40">Pseudo : {userDb.pseudo}</p>
+                <p className="mb-20">Mail : {userDb.mail}</p>
+                <p className="mb-20">Code Postal : {userDb.postalCode}</p>
+                <p className="mb-20">Ville : {userDb.city}</p>
+                <p className="mb-20">Mot de passe : {userDb.password}</p>
+                <Button color="yellow" className="button mt-40">
+                  Modifier
+                </Button>
+                <Button color="red" className="button mt-40">
                   Supprimer mon compte
                 </Button>
               </div>

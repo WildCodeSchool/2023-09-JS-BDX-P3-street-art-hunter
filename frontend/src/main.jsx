@@ -13,6 +13,8 @@ import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
 import Style from "./pages/Style";
 import LoginProvider from "./context/LoginContext";
+import FormContextProvider from "./context/RegistrationFormContext";
+import { UserContextProvider } from "./context/userContext";
 
 const router = createBrowserRouter([
   {
@@ -32,11 +34,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/mon-compte/informations",
-        element: <Account />,
+        element: (
+          <UserContextProvider>
+            <Account />
+          </UserContextProvider>
+        ),
       },
       {
         path: "/mon-compte/arts",
-        element: <Account />,
+        element: (
+          <UserContextProvider>
+            <Account />
+          </UserContextProvider>
+        ),
       },
       {
         path: "/connexion",
@@ -48,7 +58,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/inscription",
-        element: <Register />,
+        element: (
+          <FormContextProvider>
+            <Register />
+          </FormContextProvider>
+        ),
       },
       {
         path: "/classement",

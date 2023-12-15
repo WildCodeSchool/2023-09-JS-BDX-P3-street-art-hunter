@@ -1,27 +1,15 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-
+import { useFormContext } from "../context/RegistrationFormContext";
 import Button from "../components/Button";
 
 export default function Register() {
-  const [formData, setFormData] = useState({
-    pseudo: "",
-    email: "",
-    postal: "",
-    city: "",
-    password: "",
-    confirmation: "",
-  });
+  const { formData, handleChange } = useFormContext();
 
-  console.info(formData);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.info(formData);
   };
+
   return (
     <div>
       <h1 className="mb-20">Inscription</h1>
@@ -40,6 +28,7 @@ export default function Register() {
                 onChange={handleChange}
               />
             </div>
+
             <label htmlFor="email" className="mb-10">
               Adresse email
             </label>
@@ -48,10 +37,12 @@ export default function Register() {
                 type="text"
                 name="email"
                 id="email"
+                required
                 value={formData.email}
                 onChange={handleChange}
               />
             </div>
+
             <label htmlFor="postal" className="mb-10">
               Code Postal
             </label>
@@ -64,6 +55,7 @@ export default function Register() {
                 onChange={handleChange}
               />
             </div>
+
             <label htmlFor="city" className="mb-10">
               Ville
             </label>
@@ -104,7 +96,11 @@ export default function Register() {
             </div>
           </form>
 
-          <Button type="Valider" className="button mb-20">
+          <Button
+            type="Valider"
+            className="button mb-20"
+            onClick={handleSubmit}
+          >
             Valider
           </Button>
 
