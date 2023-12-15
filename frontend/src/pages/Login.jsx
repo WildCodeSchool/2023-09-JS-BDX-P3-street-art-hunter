@@ -1,26 +1,58 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLogin } from "../context/LoginContext";
 
 export default function Login() {
+  const [formValue, setFormValue] = useState({
+    pseudo: "",
+    password: "",
+  });
+
+  const { login } = useLogin();
+
+  const onChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
   return (
     <>
       <h1>Connexion</h1>
       <div className="container mt-60">
         <div className="allow-scroll">
           <form className="mb-20">
-            <label htmlFor="test" className="mb-10">
+            <label htmlFor="pseudo" className="mb-10">
               Pseudo :{" "}
             </label>
             <div className="input mb-30">
-              <input id="test" type="text" />
+              <input
+                value={formValue.pseudo}
+                name="pseudo"
+                onChange={onChange}
+                id="pseudo"
+                required
+                label="Pseudo"
+                type="text"
+              />
             </div>
-            <label htmlFor="test" className="mb-10">
+            <label htmlFor="password" className="mb-10">
               Mot de passe :{" "}
             </label>
             <div className="input">
-              <input id="test" type="text" />
+              <input
+                value={formValue.password}
+                name="password"
+                onChange={onChange}
+                id="password"
+                required
+                label="Mot de passe"
+                type="text"
+              />
             </div>
           </form>
-          <button className="button mb-10 mt-40" type="button">
+          <button
+            className="button mb-10 mt-40"
+            type="button"
+            onClick={() => login(formValue)}
+          >
             Valider
           </button>
           <Link to="/inscription">
