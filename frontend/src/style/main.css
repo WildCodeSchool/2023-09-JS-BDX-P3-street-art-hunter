@@ -546,6 +546,10 @@ input {
   color: white;
 }
 
+.info-window-text {
+  color: black;
+}
+
 .block {
   height: 57px;
   width: 58px;
