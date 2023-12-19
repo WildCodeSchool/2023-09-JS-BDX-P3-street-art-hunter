@@ -1,9 +1,13 @@
 import { createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 export default function UserContextProvider({ children }) {
+  const [connect, setConnect] = useState(false);
+  const getUsers = () => JSON.parse(localStorage.getItem("users") ?? "[]");
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     pseudo: "",
     email: "",
@@ -26,7 +30,30 @@ export default function UserContextProvider({ children }) {
   };
 
   const saveUserToLocalStorage = () => {
-    localStorage.setItem("user", JSON.stringify(formData));
+    if (!localStorage.getItem("users")) {
+      localStorage.setItem("users", JSON.stringify([]));
+    }
+    const users = JSON.parse(localStorage.getItem("users"));
+    users.push(formData);
+    localStorage.setItem("users", JSON.stringify(users));
+  };
+
+  const login = (credentials) => {
+    const allUsers = getUsers();
+    const checkUser = allUsers.find(
+      (user) =>
+        user.pseudo === credentials.pseudo &&
+        user.password === credentials.password
+    );
+    if (!checkUser) {
+      alert("Identifiants incorrects !");
+    } else {
+      alert(`Content de vous revoir ${credentials.pseudo}`);
+      setConnect(checkUser);
+
+      return navigate("/");
+    }
+    return null;
   };
 
   const contextValue = useMemo(
@@ -36,8 +63,11 @@ export default function UserContextProvider({ children }) {
       handleChange,
       updateUser,
       saveUserToLocalStorage,
+      login,
+      connect,
+      setConnect,
     }),
-    [formData, setFormData]
+    [formData, setFormData, connect]
   );
 
   return (
