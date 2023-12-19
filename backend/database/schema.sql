@@ -51,3 +51,15 @@ CREATE TABLE IF NOT EXISTS artist_street_art (
     FOREIGN KEY (artist_id) REFERENCES artist(id),
     FOREIGN KEY (street_art_id) REFERENCES street_art(id)
 );
+
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS street_art;
+
+DROP TABLE IF EXISTS awaiting_image;
+DROP TABLE IF EXISTS artist;
+DROP TABLE IF EXISTS artist_street_art;
+
+SELECT * FROM users;
+
+INSERT INTO users (username, email, postcode, city, password, points, is_admin)
+VALUES ("kevin", "kevin@jean.com", "33000", "Bordeaux", "kevin", 0, 1);
