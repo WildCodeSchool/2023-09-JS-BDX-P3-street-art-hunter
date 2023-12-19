@@ -8,11 +8,6 @@ function LoginProvider({ children }) {
   const [connect, setConnect] = useState(false);
   const getUsers = () => JSON.parse(localStorage.getItem("users") ?? "[]");
   const navigate = useNavigate();
-  const users = [
-    { pseudo: "kevin", password: "11" },
-    { pseudo: "damien", password: "22" },
-  ];
-  localStorage.setItem("users", JSON.stringify(users));
 
   const login = (credentials) => {
     const allUsers = getUsers();
