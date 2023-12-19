@@ -126,7 +126,9 @@ export default function Administration() {
             </button>
           ))}
         </div>
+
         {/* Validations */}
+
         <div className="allow-scroll pos-r tiny-allow-scroll">
           <div className="admin-validations bg-text-block">
             {activeButton ===
@@ -182,7 +184,7 @@ export default function Administration() {
                         <p>Email : {user.email}</p>
                         <p>Code Postal : {user.postals}</p>
                         <p>Ville : {user.city}</p>
-                        <p>Mot de passe : {user.password}</p>
+                        <p>Mot de passe : {"*".repeat(user.password.length)}</p>
                       </div>
                       <div className="admin-button-container">
                         <Button color="yellow" className="button" type="button">
