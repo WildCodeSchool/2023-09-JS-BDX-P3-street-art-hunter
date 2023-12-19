@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useUserContext } from "../context/userContext";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation();
+  const { connect } = useUserContext();
 
   const handleLinkClick = () => {
     setOpenMenu(false);
   };
+
+  const isUserConnected = connect !== false;
 
   return (
     <footer className={`burger-menu${openMenu ? " active" : ""}`}>
@@ -48,18 +52,20 @@ export default function Navbar() {
         >
           Galerie
         </Link>
-        <Link
-          to="/mon-compte/informations"
-          className={
-            location.pathname.endsWith("/mon-compte/informations") ||
-            location.pathname.endsWith("/mon-compte/arts")
-              ? "active"
-              : ""
-          }
-          onClick={handleLinkClick}
-        >
-          Mon compte
-        </Link>
+        {isUserConnected && (
+          <Link
+            to="/mon-compte/informations"
+            className={
+              location.pathname.endsWith("/mon-compte/informations") ||
+              location.pathname.endsWith("/mon-compte/arts")
+                ? "active"
+                : ""
+            }
+            onClick={handleLinkClick}
+          >
+            Mon compte
+          </Link>
+        )}
         <Link
           to="/connexion"
           className={location.pathname === "/connexion" ? "active" : ""}
