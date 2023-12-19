@@ -72,6 +72,7 @@ p {
 
 // slider
 .slider-container {
+  overflow: hidden;
   .slider-wrapper {
     display: flex;
     width: 200vw;
@@ -542,6 +543,10 @@ input {
     right: 2px;
     color: white;
   }
+}
+
+.info-window-text {
+  color: black;
 }
 
 // Administration

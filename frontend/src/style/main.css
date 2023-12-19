@@ -70,6 +70,9 @@ p {
   max-width: 1200px;
 }
 
+.slider-container {
+  overflow: hidden;
+}
 .slider-container .slider-wrapper {
   display: flex;
   width: 200vw;
@@ -541,6 +544,10 @@ input {
   top: calc(100% + 5px);
   right: 2px;
   color: white;
+}
+
+.info-window-text {
+  color: black;
 }
 
 .block {

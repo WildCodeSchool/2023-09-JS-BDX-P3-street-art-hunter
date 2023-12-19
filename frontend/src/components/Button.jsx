@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
 
-export default function Button({ children, className, onClick, color = "green" }) {
+export default function Button({
+  children,
+  className,
+  onClick,
+  color = "green",
+}) {
   let buttonClass = className;
 
   if (color === "red") {
@@ -19,10 +24,11 @@ export default function Button({ children, className, onClick, color = "green" }
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   color: PropTypes.string,
 };
 
 Button.defaultProps = {
   color: "green",
+  onClick: () => {},
 };
