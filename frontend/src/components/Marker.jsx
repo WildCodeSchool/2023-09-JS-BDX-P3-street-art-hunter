@@ -27,10 +27,7 @@ function CustomMarker({ lat, lng, text }) {
 CustomMarker.propTypes = {
   lat: PropTypes.number.isRequired,
   lng: PropTypes.number.isRequired,
-  text: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired,
+  text: PropTypes.node.isRequired,
 };
 
 export default CustomMarker;
