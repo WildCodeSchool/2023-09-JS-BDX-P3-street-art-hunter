@@ -44,7 +44,7 @@ export default function Login() {
                 id="password"
                 required
                 label="Mot de passe"
-                type="text"
+                type="password"
               />
             </div>
           </form>
