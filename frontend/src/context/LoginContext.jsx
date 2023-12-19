@@ -6,30 +6,28 @@ const loginContext = createContext();
 
 function LoginProvider({ children }) {
   const [connect, setConnect] = useState(false);
-  const getUsers = () => JSON.parse(localStorage.getItem("users") ?? "[]");
   const navigate = useNavigate();
-  const users = [
-    { pseudo: "kevin", password: "11" },
-    { pseudo: "damien", password: "22" },
-  ];
-  localStorage.setItem("users", JSON.stringify(users));
 
-  const login = (credentials) => {
-    const allUsers = getUsers();
-    const checkUser = allUsers.find(
-      (user) =>
-        user.pseudo === credentials.pseudo &&
-        user.password === credentials.password
-    );
-    if (!checkUser) {
-      alert("Identifiants incorrects !");
-    } else {
-      alert(`Content de vous revoir ${credentials.pseudo}`);
-      setConnect(checkUser);
+  const login = async (credentials) => {
+    try {
+      const response = await fetch("http://localhost:3310/api/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
 
-      return navigate("/");
+      if (response.ok) {
+        alert(`Content de vous revoir ${credentials.username}`);
+        setConnect(data);
+        navigate("/");
+      } else {
+        alert("Identifiants incorrects !");
+      }
+    } catch (err) {
+      console.error(err);
     }
-    return null;
   };
 
   const context = useMemo(() => ({ login, connect, setConnect }), [connect]);
