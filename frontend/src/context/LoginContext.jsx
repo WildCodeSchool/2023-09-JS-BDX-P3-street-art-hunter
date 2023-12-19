@@ -16,11 +16,17 @@ function LoginProvider({ children }) {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
+      const users = await response.json();
 
-      if (response.ok) {
-        alert(`Content de vous revoir ${credentials.username}`);
-        setConnect(data);
+      const foundUser = users.find(
+        (user) =>
+          user.username === credentials.pseudo &&
+          user.password === credentials.password
+      );
+
+      if (foundUser) {
+        alert(`Content de vous revoir ${credentials.pseudo}`);
+        setConnect(foundUser);
         navigate("/");
       } else {
         alert("Identifiants incorrects !");
