@@ -21,8 +21,22 @@ export default function FormContextProvider({ children }) {
     }));
   };
 
+  const updateUser = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  const saveUserToLocalStorage = () => {
+    localStorage.setItem("user", JSON.stringify(formData));
+  };
+
   const contextValue = useMemo(
-    () => ({ formData, setFormData, handleChange }),
+    () => ({
+      formData,
+      setFormData,
+      handleChange,
+      updateUser,
+      saveUserToLocalStorage,
+    }),
     [formData, setFormData]
   );
 

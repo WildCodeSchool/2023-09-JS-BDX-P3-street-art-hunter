@@ -3,11 +3,12 @@ import { useFormContext } from "../context/RegistrationFormContext";
 import Button from "../components/Button";
 
 export default function Register() {
-  const { formData, handleChange } = useFormContext();
+  const { formData, saveUserToLocalStorage, updateUser } = useFormContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.info(formData);
+    saveUserToLocalStorage();
+    updateUser();
   };
 
   return (
@@ -25,7 +26,7 @@ export default function Register() {
                 name="pseudo"
                 id="pseudo"
                 value={formData.pseudo}
-                onChange={handleChange}
+                onChange={(e) => updateUser("pseudo", e.target.value)}
               />
             </div>
 
@@ -39,7 +40,7 @@ export default function Register() {
                 id="email"
                 required
                 value={formData.email}
-                onChange={handleChange}
+                onChange={(e) => updateUser("email", e.target.value)}
               />
             </div>
 
@@ -52,7 +53,7 @@ export default function Register() {
                 name="postal"
                 id="postal"
                 value={formData.postal}
-                onChange={handleChange}
+                onChange={(e) => updateUser("postal", e.target.value)}
               />
             </div>
 
@@ -65,7 +66,7 @@ export default function Register() {
                 name="city"
                 id="city"
                 value={formData.city}
-                onChange={handleChange}
+                onChange={(e) => updateUser("city", e.target.value)}
               />
             </div>
 
@@ -78,7 +79,7 @@ export default function Register() {
                 name="password"
                 id="password"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={(e) => updateUser("password", e.target.value)}
               />
             </div>
 
@@ -91,7 +92,7 @@ export default function Register() {
                 name="confirmation"
                 id="confirmation"
                 value={formData.confirmation}
-                onChange={handleChange}
+                onChange={(e) => updateUser("confirmation", e.target.value)}
               />
             </div>
           </form>

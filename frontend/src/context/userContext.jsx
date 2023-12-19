@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 const UserContext = createContext();
@@ -15,6 +15,9 @@ export default function UserContextProvider({ children }) {
   });
 
   const userMemo = useMemo(() => ({ userDb, setUserDb }), [userDb]);
+  useEffect(() => {
+    // check localstorage here then emit in app
+  }, []);
 
   return (
     <UserContext.Provider value={userMemo}>{children}</UserContext.Provider>

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import FormContextProvider from "./context/RegistrationFormContext";
 
 import App from "./App";
 import Home from "./pages/Home";
@@ -13,12 +13,15 @@ import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
 import Style from "./pages/Style";
 import LoginProvider from "./context/LoginContext";
-import FormContextProvider from "./context/RegistrationFormContext";
 import { UserContextProvider } from "./context/userContext";
 
 const router = createBrowserRouter([
   {
-    element: <App />,
+    element: (
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    ),
     children: [
       {
         path: "/",
@@ -33,20 +36,18 @@ const router = createBrowserRouter([
         element: <Gallery />,
       },
       {
-        path: "/mon-compte/informations",
-        element: (
-          <UserContextProvider>
-            <Account />
-          </UserContextProvider>
-        ),
-      },
-      {
-        path: "/mon-compte/arts",
-        element: (
-          <UserContextProvider>
-            <Account />
-          </UserContextProvider>
-        ),
+        path: "/mon-compte",
+
+        children: [
+          {
+            path: "/mon-compte/informations",
+            element: <Account />,
+          },
+          {
+            path: "/mon-compte/arts",
+            element: <Account />,
+          },
+        ],
       },
       {
         path: "/connexion",
