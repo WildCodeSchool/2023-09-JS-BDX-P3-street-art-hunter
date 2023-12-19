@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import FormContextProvider from "./context/RegistrationFormContext";
 
 import App from "./App";
 import Home from "./pages/Home";
@@ -59,11 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/inscription",
-        element: (
-          <FormContextProvider>
-            <Register />
-          </FormContextProvider>
-        ),
+        element: <Register />,
       },
       {
         path: "/classement",

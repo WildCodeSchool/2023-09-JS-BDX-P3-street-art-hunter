@@ -1,26 +1,47 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 const UserContext = createContext();
 
 export default function UserContextProvider({ children }) {
-  const [userDb, setUserDb] = useState({
-    id: 1,
-    pseudo: "Damien Jean",
-    mail: "damien@jean.fr",
-    postalCode: "33000",
-    city: "Bordeaux",
-    password: "abdc123",
-    points: "1000",
+  const [formData, setFormData] = useState({
+    pseudo: "",
+    email: "",
+    postal: "",
+    city: "",
+    password: "",
+    confirmation: "",
   });
 
-  const userMemo = useMemo(() => ({ userDb, setUserDb }), [userDb]);
-  useEffect(() => {
-    // check localstorage here then emit in app
-  }, []);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const updateUser = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  const saveUserToLocalStorage = () => {
+    localStorage.setItem("user", JSON.stringify(formData));
+  };
+
+  const contextValue = useMemo(
+    () => ({
+      formData,
+      setFormData,
+      handleChange,
+      updateUser,
+      saveUserToLocalStorage,
+    }),
+    [formData, setFormData]
+  );
 
   return (
-    <UserContext.Provider value={userMemo}>{children}</UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 }
 

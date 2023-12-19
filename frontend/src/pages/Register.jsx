@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useFormContext } from "../context/RegistrationFormContext";
+import { useUserContext } from "../context/userContext";
 import Button from "../components/Button";
 
 export default function Register() {
-  const { formData, saveUserToLocalStorage, updateUser } = useFormContext();
+  const { formData, saveUserToLocalStorage, updateUser } = useUserContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
