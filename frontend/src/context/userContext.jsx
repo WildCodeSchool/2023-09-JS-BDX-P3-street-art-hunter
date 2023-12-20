@@ -6,8 +6,12 @@ const UserContext = createContext();
 
 export default function UserContextProvider({ children }) {
   const [connect, setConnect] = useState(false);
-  const getUsers = () => JSON.parse(localStorage.getItem("users") ?? "[]");
+
+  const getLoggedUser = () =>
+    JSON.parse(localStorage.getItem("loggedUser") ?? "{}");
+
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     pseudo: "",
     email: "",
@@ -30,16 +34,13 @@ export default function UserContextProvider({ children }) {
   };
 
   const saveUserToLocalStorage = () => {
-    if (!localStorage.getItem("users")) {
-      localStorage.setItem("users", JSON.stringify([]));
-    }
-    const users = JSON.parse(localStorage.getItem("users"));
-    users.push(formData);
-    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("loggedUser", JSON.stringify(formData));
   };
 
+  const loggedUser = getLoggedUser();
+
   const login = (credentials) => {
-    const allUsers = getUsers();
+    const allUsers = getLoggedUser();
     const checkUser = allUsers.find(
       (user) =>
         user.pseudo === credentials.pseudo &&
@@ -66,6 +67,8 @@ export default function UserContextProvider({ children }) {
       login,
       connect,
       setConnect,
+      getLoggedUser,
+      loggedUser,
     }),
     [formData, setFormData, connect]
   );
