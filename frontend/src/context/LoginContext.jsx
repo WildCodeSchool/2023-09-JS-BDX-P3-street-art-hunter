@@ -1,14 +1,30 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const loginContext = createContext();
 
-function LoginProvider({ children }) {
-  const [connect, setConnect] = useState(false);
+export default function LoginProvider({ children }) {
   const navigate = useNavigate();
 
-  const login = async (credentials) => {
+  const isUserConnected = () => {
+    if (localStorage.getItem("user")) {
+      return true;
+    }
+    return false;
+  };
+
+  const isUserAdmin = () => {
+    if (localStorage.getItem("user")) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user.is_admin === 1) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const login = useCallback(async (credentials) => {
     try {
       const response = await fetch("http://localhost:3310/api/users", {
         method: "GET",
@@ -23,10 +39,9 @@ function LoginProvider({ children }) {
           user.username === credentials.pseudo &&
           user.password === credentials.password
       );
-
-      if (foundUser) {
+      if (foundUser !== undefined) {
         alert(`Content de vous revoir ${credentials.pseudo}`);
-        setConnect(foundUser);
+        localStorage.setItem("user", JSON.stringify(foundUser));
         navigate("/");
       } else {
         alert("Identifiants incorrects !");
@@ -34,9 +49,17 @@ function LoginProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
-  const context = useMemo(() => ({ login, connect, setConnect }), [connect]);
+  const context = useMemo(
+    () => ({ login, isUserConnected, isUserAdmin, logout }),
+    []
+  );
 
   return (
     <loginContext.Provider value={context}>{children}</loginContext.Provider>
@@ -47,5 +70,5 @@ LoginProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default LoginProvider;
+export { loginContext, LoginProvider };
 export const useLogin = () => useContext(loginContext);
