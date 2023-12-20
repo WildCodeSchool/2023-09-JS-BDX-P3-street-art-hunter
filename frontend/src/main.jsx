@@ -13,13 +13,16 @@ import Administration from "./pages/Administration";
 import Style from "./pages/Style";
 import { LoginProvider } from "./context/LoginContext";
 import { UserContextProvider } from "./context/userContext";
+import { AdminContextProvider } from "./context/AdminContext";
 
 const router = createBrowserRouter([
   {
     element: (
       <UserContextProvider>
         <LoginProvider>
-          <App />
+          <AdminContextProvider>
+            <App />
+          </AdminContextProvider>
         </LoginProvider>
       </UserContextProvider>
     ),

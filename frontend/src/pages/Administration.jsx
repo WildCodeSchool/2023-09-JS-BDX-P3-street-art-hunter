@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../components/Button";
+import { useAdminContext } from "../context/AdminContext";
 
 export default function Administration() {
   const buttons = [
@@ -46,25 +47,6 @@ export default function Administration() {
     },
   ];
 
-  const users = [
-    {
-      id: 1,
-      pseudo: "Damien Jean",
-      email: "damien@jean.fr",
-      postals: "33000",
-      city: "Bordeaux",
-      password: "abcdefgh",
-    },
-    {
-      id: 2,
-      pseudo: "Kevin",
-      email: "kevin@jean.fr",
-      postals: "33000",
-      city: "Bordeaux",
-      password: "mmpoi",
-    },
-  ];
-
   const street = [
     {
       id: 1,
@@ -96,6 +78,7 @@ export default function Administration() {
   ];
 
   const [activeButton, setActiveButton] = useState(buttons[0].id);
+  const { users } = useAdminContext();
 
   const handleOptionClick = (id) => {
     setActiveButton(id);
@@ -180,9 +163,9 @@ export default function Administration() {
                   {users.map((user) => (
                     <div key={user.id} className="admin-item">
                       <div className="admin-item-infos">
-                        <p>Pseudo : {user.pseudo}</p>
+                        <p>Pseudo : {user.username}</p>
                         <p>Email : {user.email}</p>
-                        <p>Code Postal : {user.postals}</p>
+                        <p>Code Postal : {user.postcode}</p>
                         <p>Ville : {user.city}</p>
                         <p>Mot de passe : {"*".repeat(user.password.length)}</p>
                       </div>
