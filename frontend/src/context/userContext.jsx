@@ -57,6 +57,10 @@ export default function UserContextProvider({ children }) {
     return null;
   };
 
+  const logout = () => {
+    setConnect();
+  };
+
   const contextValue = useMemo(
     () => ({
       formData,
@@ -65,6 +69,7 @@ export default function UserContextProvider({ children }) {
       updateUser,
       saveUserToLocalStorage,
       login,
+      logout,
       connect,
       setConnect,
       getLoggedUser,

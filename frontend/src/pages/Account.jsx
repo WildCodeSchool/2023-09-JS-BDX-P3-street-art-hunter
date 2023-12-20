@@ -4,7 +4,7 @@ import Slider from "../components/Slider";
 import { useUserContext } from "../context/userContext";
 
 export default function Account() {
-  const { loggedUser } = useUserContext();
+  const { loggedUser, logout } = useUserContext();
 
   const items = [
     {
@@ -62,6 +62,9 @@ export default function Account() {
                 <p className="mb-20">Mot de passe : {loggedUser.password}</p>
                 <Button color="yellow" className="button mt-40">
                   Modifier
+                </Button>
+                <Button color="red" className="button mt-40" onClick={logout()}>
+                  Se déconnecter
                 </Button>
                 <Button color="red" className="button mt-40">
                   Supprimer mon compte
