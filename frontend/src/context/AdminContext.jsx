@@ -28,11 +28,28 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
+  const removeUser = useCallback(async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Échec de la suppression de l’utilisateur");
+      }
+      setUsers((currentUsers) => currentUsers.filter((user) => user.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
-  const context = useMemo(() => ({ users }), [users]);
+  const context = useMemo(() => ({ users, removeUser }), [users]);
 
   return (
     <AdminContext.Provider value={context}>{children}</AdminContext.Provider>

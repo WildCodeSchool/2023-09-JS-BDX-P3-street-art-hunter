@@ -78,7 +78,7 @@ export default function Administration() {
   ];
 
   const [activeButton, setActiveButton] = useState(buttons[0].id);
-  const { users } = useAdminContext();
+  const { users, removeUser } = useAdminContext();
 
   const handleOptionClick = (id) => {
     setActiveButton(id);
@@ -160,25 +160,38 @@ export default function Administration() {
               buttons.find((button) => button.name === "Utilisateurs").id && (
               <div className="admin-users">
                 <div className="admin-item-list">
-                  {users.map((user) => (
-                    <div key={user.id} className="admin-item">
-                      <div className="admin-item-infos">
-                        <p>Pseudo : {user.username}</p>
-                        <p>Email : {user.email}</p>
-                        <p>Code Postal : {user.postcode}</p>
-                        <p>Ville : {user.city}</p>
-                        <p>Mot de passe : {"*".repeat(user.password.length)}</p>
+                  {users
+                    .filter((user) => !user.is_admin)
+                    .map((user) => (
+                      <div key={user.id} className="admin-item">
+                        <div className="admin-item-infos">
+                          <p>Pseudo : {user.username}</p>
+                          <p>Email : {user.email}</p>
+                          <p>Code Postal : {user.postcode}</p>
+                          <p>Ville : {user.city}</p>
+                          <p>
+                            Mot de passe : {"*".repeat(user.password.length)}
+                          </p>
+                        </div>
+                        <div className="admin-button-container">
+                          <Button
+                            color="yellow"
+                            className="button"
+                            type="button"
+                          >
+                            Modifier
+                          </Button>
+                          <Button
+                            color="red"
+                            className="button"
+                            type="button"
+                            onClick={() => removeUser(user.id)} // Passer l'ID ici
+                          >
+                            Exclure
+                          </Button>
+                        </div>
                       </div>
-                      <div className="admin-button-container">
-                        <Button color="yellow" className="button" type="button">
-                          Modifier
-                        </Button>
-                        <Button color="red" className="button" type="button">
-                          Exclure
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             )}
