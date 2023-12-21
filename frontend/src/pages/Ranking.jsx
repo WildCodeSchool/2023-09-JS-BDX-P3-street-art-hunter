@@ -78,11 +78,13 @@ const usersRank = [
 export default function Ranking() {
   return (
     <div>
-      <h1 className="mb-40">Classement</h1>
+      <div className="header-ref">
+        <h1 className="mb-40">Classement</h1>
+      </div>
       <div className="container ranking-page">
         <div className="allow-scroll">
           {usersRank.map((rank) => (
-            <p className="mb-30" key={rank.id}>
+            <p className="mb-30">
               <span>
                 <img src="/src/assets/coin1.png" alt="coin" /> x {rank.points}
               </span>

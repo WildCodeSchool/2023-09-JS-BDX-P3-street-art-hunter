@@ -5,13 +5,11 @@ import { useUserContext } from "../context/userContext";
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation();
-  const { connect } = useUserContext();
+  const { logout, isLocalStorageKeyExists, keyToCheck } = useUserContext();
 
   const handleLinkClick = () => {
     setOpenMenu(false);
   };
-
-  const isUserConnected = connect !== false;
 
   return (
     <footer className={`burger-menu${openMenu ? " active" : ""}`}>
@@ -28,9 +26,7 @@ export default function Navbar() {
           type="button"
           aria-label="Toggle report"
         />
-      ) : (
-        ""
-      )}
+      ) : null}
 
       <nav>
         <Link
@@ -52,34 +48,44 @@ export default function Navbar() {
         >
           Galerie
         </Link>
-        {isUserConnected && (
-          <Link
-            to="/mon-compte/informations"
-            className={
-              location.pathname.endsWith("/mon-compte/informations") ||
-              location.pathname.endsWith("/mon-compte/arts")
-                ? "active"
-                : ""
-            }
-            onClick={handleLinkClick}
-          >
-            Mon compte
-          </Link>
+
+        {isLocalStorageKeyExists(keyToCheck) ? (
+          <>
+            <Link
+              to="/mon-compte/informations"
+              className={
+                location.pathname.endsWith("/mon-compte/informations") ||
+                location.pathname.endsWith("/mon-compte/arts")
+                  ? "active"
+                  : ""
+              }
+              onClick={handleLinkClick}
+            >
+              Mon compte
+            </Link>
+            <button type="button" onClick={logout}>
+              Se déconnecter
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/connexion"
+              className={location.pathname === "/connexion" ? "active" : ""}
+              onClick={handleLinkClick}
+            >
+              Connexion
+            </Link>
+            <Link
+              to="/inscription"
+              className={location.pathname === "/inscription" ? "active" : ""}
+              onClick={handleLinkClick}
+            >
+              Inscription
+            </Link>
+          </>
         )}
-        <Link
-          to="/connexion"
-          className={location.pathname === "/connexion" ? "active" : ""}
-          onClick={handleLinkClick}
-        >
-          Connexion
-        </Link>
-        <Link
-          to="/inscription"
-          className={location.pathname === "/inscription" ? "active" : ""}
-          onClick={handleLinkClick}
-        >
-          Inscription
-        </Link>
+
         <Link
           to="/classement"
           className={location.pathname === "/classement" ? "active" : ""}

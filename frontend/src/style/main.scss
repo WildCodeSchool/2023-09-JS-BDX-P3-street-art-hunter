@@ -10,8 +10,11 @@
   list-style: none;
   font-family: "Press Start 2P";
 }
-body {
+body,
+html {
   overflow: hidden;
+}
+body {
   background-color: $bluesky;
   color: white;
   min-width: 400px;
