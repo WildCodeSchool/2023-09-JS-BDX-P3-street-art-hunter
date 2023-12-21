@@ -3,12 +3,12 @@ import { useUserContext } from "../context/userContext";
 import Button from "../components/Button";
 
 export default function Register() {
-  const { formData, saveUserToLocalStorage, updateUser } = useUserContext();
+  const { formData, registerUser, updateRegisterForm } = useUserContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    saveUserToLocalStorage();
-    updateUser();
+    updateRegisterForm();
+    registerUser();
   };
 
   return (
@@ -26,7 +26,7 @@ export default function Register() {
                 name="pseudo"
                 id="pseudo"
                 value={formData.pseudo}
-                onChange={(e) => updateUser("pseudo", e.target.value)}
+                onChange={(e) => updateRegisterForm("pseudo", e.target.value)}
               />
             </div>
 
@@ -40,7 +40,7 @@ export default function Register() {
                 id="email"
                 required
                 value={formData.email}
-                onChange={(e) => updateUser("email", e.target.value)}
+                onChange={(e) => updateRegisterForm("email", e.target.value)}
               />
             </div>
 
@@ -53,7 +53,7 @@ export default function Register() {
                 name="postal"
                 id="postal"
                 value={formData.postal}
-                onChange={(e) => updateUser("postal", e.target.value)}
+                onChange={(e) => updateRegisterForm("postal", e.target.value)}
               />
             </div>
 
@@ -66,7 +66,7 @@ export default function Register() {
                 name="city"
                 id="city"
                 value={formData.city}
-                onChange={(e) => updateUser("city", e.target.value)}
+                onChange={(e) => updateRegisterForm("city", e.target.value)}
               />
             </div>
 
@@ -79,7 +79,7 @@ export default function Register() {
                 name="password"
                 id="password"
                 value={formData.password}
-                onChange={(e) => updateUser("password", e.target.value)}
+                onChange={(e) => updateRegisterForm("password", e.target.value)}
               />
             </div>
 
@@ -92,7 +92,9 @@ export default function Register() {
                 name="confirmation"
                 id="confirmation"
                 value={formData.confirmation}
-                onChange={(e) => updateUser("confirmation", e.target.value)}
+                onChange={(e) =>
+                  updateRegisterForm("confirmation", e.target.value)
+                }
               />
             </div>
           </form>
