@@ -5,7 +5,7 @@ import { useUserContext } from "../context/userContext";
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation();
-  const { logout, isLocalStorageKeyExists, keyToCheck } = useUserContext();
+  const { isLocalStorageKeyExists, keyToCheck } = useUserContext();
 
   const handleLinkClick = () => {
     setOpenMenu(false);
@@ -50,23 +50,18 @@ export default function Navbar() {
         </Link>
 
         {isLocalStorageKeyExists(keyToCheck) ? (
-          <>
-            <Link
-              to="/mon-compte/informations"
-              className={
-                location.pathname.endsWith("/mon-compte/informations") ||
-                location.pathname.endsWith("/mon-compte/arts")
-                  ? "active"
-                  : ""
-              }
-              onClick={handleLinkClick}
-            >
-              Mon compte
-            </Link>
-            <button type="button" onClick={logout}>
-              Se déconnecter
-            </button>
-          </>
+          <Link
+            to="/mon-compte/informations"
+            className={
+              location.pathname.endsWith("/mon-compte/informations") ||
+              location.pathname.endsWith("/mon-compte/arts")
+                ? "active"
+                : ""
+            }
+            onClick={handleLinkClick}
+          >
+            Mon compte
+          </Link>
         ) : (
           <>
             <Link

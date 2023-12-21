@@ -63,7 +63,7 @@ export default function Account() {
                 <Button color="yellow" className="button mt-40">
                   Modifier
                 </Button>
-                <Button color="red" className="button mt-40" onClick={logout()}>
+                <Button color="red" className="button mt-40" onClick={logout}>
                   Se déconnecter
                 </Button>
                 <Button color="red" className="button mt-40">

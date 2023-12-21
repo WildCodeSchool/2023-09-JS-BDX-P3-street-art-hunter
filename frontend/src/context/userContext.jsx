@@ -27,10 +27,9 @@ export default function UserContextProvider({ children }) {
   // Enregistre un nouvel utilisateur en BDD
   const registerUser = () => {
     const existingUsers = getUsersFromDatabase();
-
     existingUsers.push(formData);
-
     localStorage.setItem("users", JSON.stringify(existingUsers));
+    navigate("/connexion");
   };
 
   // Enregistre l'utilisateur qui vient de se connecter dans le localStorage
@@ -65,6 +64,7 @@ export default function UserContextProvider({ children }) {
   // Déconnecte l'utilisateur actuellement connecté
   const logout = () => {
     localStorage.removeItem("loggedUser");
+    navigate("/");
     alert("Vous venez de vous déconnecter !");
   };
 
