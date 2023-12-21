@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../components/Button";
+import { useAdminContext } from "../context/AdminContext";
 
 export default function Administration() {
   const buttons = [
@@ -46,25 +47,6 @@ export default function Administration() {
     },
   ];
 
-  const users = [
-    {
-      id: 1,
-      pseudo: "Damien Jean",
-      email: "damien@jean.fr",
-      postals: "33000",
-      city: "Bordeaux",
-      password: "abcdefgh",
-    },
-    {
-      id: 2,
-      pseudo: "Kevin",
-      email: "kevin@jean.fr",
-      postals: "33000",
-      city: "Bordeaux",
-      password: "mmpoi",
-    },
-  ];
-
   const street = [
     {
       id: 1,
@@ -96,6 +78,7 @@ export default function Administration() {
   ];
 
   const [activeButton, setActiveButton] = useState(buttons[0].id);
+  const { users, removeUser } = useAdminContext();
 
   const handleOptionClick = (id) => {
     setActiveButton(id);
@@ -126,7 +109,9 @@ export default function Administration() {
             </button>
           ))}
         </div>
+
         {/* Validations */}
+
         <div className="allow-scroll pos-r tiny-allow-scroll">
           <div className="admin-validations bg-text-block">
             {activeButton ===
@@ -175,25 +160,38 @@ export default function Administration() {
               buttons.find((button) => button.name === "Utilisateurs").id && (
               <div className="admin-users">
                 <div className="admin-item-list">
-                  {users.map((user) => (
-                    <div key={user.id} className="admin-item">
-                      <div className="admin-item-infos">
-                        <p>Pseudo : {user.pseudo}</p>
-                        <p>Email : {user.email}</p>
-                        <p>Code Postal : {user.postals}</p>
-                        <p>Ville : {user.city}</p>
-                        <p>Mot de passe : {user.password}</p>
+                  {users
+                    .filter((user) => !user.is_admin)
+                    .map((user) => (
+                      <div key={user.id} className="admin-item">
+                        <div className="admin-item-infos">
+                          <p>Pseudo : {user.username}</p>
+                          <p>Email : {user.email}</p>
+                          <p>Code Postal : {user.postcode}</p>
+                          <p>Ville : {user.city}</p>
+                          <p>
+                            Mot de passe : {"*".repeat(user.password.length)}
+                          </p>
+                        </div>
+                        <div className="admin-button-container">
+                          <Button
+                            color="yellow"
+                            className="button"
+                            type="button"
+                          >
+                            Modifier
+                          </Button>
+                          <Button
+                            color="red"
+                            className="button"
+                            type="button"
+                            onClick={() => removeUser(user.id)} // Passer l'ID ici
+                          >
+                            Exclure
+                          </Button>
+                        </div>
                       </div>
-                      <div className="admin-button-container">
-                        <Button color="yellow" className="button" type="button">
-                          Modifier
-                        </Button>
-                        <Button color="red" className="button" type="button">
-                          Exclure
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             )}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useUserContext } from "../context/userContext";
+// import { useUserContext } from "../context/userContext";
+import { useLogin } from "../context/LoginContext";
 
 export default function Login() {
   const [formValue, setFormValue] = useState({
@@ -8,7 +9,7 @@ export default function Login() {
     password: "",
   });
 
-  const { login } = useUserContext();
+  const { login } = useLogin();
 
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -44,7 +45,8 @@ export default function Login() {
                 id="password"
                 required
                 label="Mot de passe"
-                type="text"
+                type="password"
+                autoComplete="on"
               />
             </div>
           </form>

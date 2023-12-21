@@ -11,13 +11,19 @@ import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
 import Style from "./pages/Style";
+import { LoginProvider } from "./context/LoginContext";
 import { UserContextProvider } from "./context/userContext";
+import { AdminContextProvider } from "./context/AdminContext";
 
 const router = createBrowserRouter([
   {
     element: (
       <UserContextProvider>
-        <App />
+        <LoginProvider>
+          <AdminContextProvider>
+            <App />
+          </AdminContextProvider>
+        </LoginProvider>
       </UserContextProvider>
     ),
     children: [

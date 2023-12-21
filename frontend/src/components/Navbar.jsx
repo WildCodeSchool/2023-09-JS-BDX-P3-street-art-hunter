@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useUserContext } from "../context/userContext";
+import { useLogin } from "../context/LoginContext";
+// import { useUserContext } from "../context/userContext";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation();
-  const { isLocalStorageKeyExists, keyToCheck } = useUserContext();
+  const { isUserConnected, isUserAdmin } = useLogin();
+  // const { isLocalStorageKeyExists, keyToCheck } = useUserContext();
 
   const handleLinkClick = () => {
     setOpenMenu(false);
@@ -48,8 +50,7 @@ export default function Navbar() {
         >
           Galerie
         </Link>
-
-        {isLocalStorageKeyExists(keyToCheck) ? (
+        {isUserConnected() && (
           <Link
             to="/mon-compte/informations"
             className={
@@ -62,25 +63,25 @@ export default function Navbar() {
           >
             Mon compte
           </Link>
-        ) : (
-          <>
-            <Link
-              to="/connexion"
-              className={location.pathname === "/connexion" ? "active" : ""}
-              onClick={handleLinkClick}
-            >
-              Connexion
-            </Link>
-            <Link
-              to="/inscription"
-              className={location.pathname === "/inscription" ? "active" : ""}
-              onClick={handleLinkClick}
-            >
-              Inscription
-            </Link>
-          </>
         )}
-
+        {!isUserConnected() && (
+          <Link
+            to="/connexion"
+            className={location.pathname === "/connexion" ? "active" : ""}
+            onClick={handleLinkClick}
+          >
+            Connexion
+          </Link>
+        )}
+        {!isUserConnected() && (
+          <Link
+            to="/inscription"
+            className={location.pathname === "/inscription" ? "active" : ""}
+            onClick={handleLinkClick}
+          >
+            Inscription
+          </Link>
+        )}
         <Link
           to="/classement"
           className={location.pathname === "/classement" ? "active" : ""}
@@ -88,13 +89,15 @@ export default function Navbar() {
         >
           Classement
         </Link>
-        <Link
-          to="/administration"
-          className={location.pathname === "/administration" ? "active" : ""}
-          onClick={handleLinkClick}
-        >
-          Administration
-        </Link>
+        {isUserAdmin() && (
+          <Link
+            to="/administration"
+            className={location.pathname === "/administration" ? "active" : ""}
+            onClick={handleLinkClick}
+          >
+            Administration
+          </Link>
+        )}
         <Link
           to="/style"
           className={location.pathname === "/style" ? "active" : ""}

@@ -1,6 +1,7 @@
 // Load the express module to create a web application
 
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
@@ -54,7 +55,7 @@ app.use(
 
 // Uncomment one or more of these options depending on the format of the data sent by your client:
 
-// app.use(express.json());
+app.use(express.json());
 // app.use(express.urlencoded());
 // app.use(express.text());
 // app.use(express.raw());
@@ -86,6 +87,8 @@ app.use(
 
 // Import the API routes from the router module
 const router = require("./router");
+
+app.use(cors());
 
 // Mount the API routes under the "/api" endpoint
 app.use("/api", router);
