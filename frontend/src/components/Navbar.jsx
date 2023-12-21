@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLogin } from "../context/LoginContext";
+// import { useUserContext } from "../context/userContext";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation();
   const { isUserConnected, isUserAdmin } = useLogin();
+  // const { isLocalStorageKeyExists, keyToCheck } = useUserContext();
 
   const handleLinkClick = () => {
     setOpenMenu(false);
@@ -26,9 +28,7 @@ export default function Navbar() {
           type="button"
           aria-label="Toggle report"
         />
-      ) : (
-        ""
-      )}
+      ) : null}
 
       <nav>
         <Link

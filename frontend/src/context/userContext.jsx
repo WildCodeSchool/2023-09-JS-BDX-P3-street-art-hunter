@@ -1,9 +1,16 @@
 import { createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 export default function UserContextProvider({ children }) {
+  const navigate = useNavigate();
+  // Récupère les infos de l'utilisateur actuellement connecté
+  const getLoggedUser = () =>
+    JSON.parse(localStorage.getItem("loggedUser") ?? "{}");
+
+  const [loggedUser, setLoggedUser] = useState(getLoggedUser());
   const [formData, setFormData] = useState({
     pseudo: "",
     email: "",
@@ -13,34 +20,79 @@ export default function UserContextProvider({ children }) {
     confirmation: "",
   });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const updateUser = (field, value) => {
+  const updateRegisterForm = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
-
-  const saveUserToLocalStorage = () => {
-    if (!localStorage.getItem("users")) {
-      localStorage.setItem("users", JSON.stringify([]));
-    }
-    const users = JSON.parse(localStorage.getItem("users"));
-    users.push(formData);
-    localStorage.setItem("users", JSON.stringify(users));
+  // Récupère tous les utilisateurs stockés en BDD
+  const getUsersFromDatabase = () => {
+    return JSON.parse(localStorage.getItem("users") ?? "[]");
   };
+  const users = getUsersFromDatabase();
+
+  // Enregistre un nouvel utilisateur en BDD
+  const registerUser = () => {
+    const existingUsers = getUsersFromDatabase();
+    existingUsers.push(formData);
+    localStorage.setItem("users", JSON.stringify(existingUsers));
+    navigate("/connexion");
+  };
+
+  // Enregistre l'utilisateur qui vient de se connecter dans le localStorage
+  const saveLoggedUser = (user) => {
+    localStorage.setItem("loggedUser", JSON.stringify(user));
+    setLoggedUser(user);
+  };
+
+  // Vérifie si l'utilisateur existe en BDD
+  const login = (credentials) => {
+    const allUsers = getUsersFromDatabase();
+    const checkUser = allUsers.find(
+      (user) =>
+        user.pseudo === credentials.pseudo &&
+        user.password === credentials.password
+    );
+    if (!checkUser) {
+      console.error("Identifiants incorrects !");
+    } else {
+      saveLoggedUser(checkUser);
+      console.error(`Content de vous revoir ${credentials.pseudo}`);
+
+      return navigate("/");
+    }
+    return null;
+  };
+
+  // Déconnecte l'utilisateur actuellement connecté
+  const logout = () => {
+    localStorage.removeItem("loggedUser");
+    setLoggedUser(undefined);
+    navigate("/");
+    alert("Vous venez de vous déconnecter !");
+  };
+
+  // Vérifie si un utilisateur est actuellement connecté
+  function isLocalStorageKeyExists(key) {
+    return localStorage.getItem(key) !== null;
+  }
+
+  // Exemple d'utilisation :
+  const keyToCheck = "loggedUser";
+  // const keyExists = isLocalStorageKeyExists(keyToCheck);
 
   const contextValue = useMemo(
     () => ({
       formData,
       setFormData,
-      handleChange,
-      updateUser,
-      saveUserToLocalStorage,
+      saveLoggedUser,
+      login,
+      logout,
+      getLoggedUser,
+      loggedUser,
+      registerUser,
+      updateRegisterForm,
+      users,
+      isLocalStorageKeyExists,
+      keyToCheck,
     }),
     [formData, setFormData]
   );

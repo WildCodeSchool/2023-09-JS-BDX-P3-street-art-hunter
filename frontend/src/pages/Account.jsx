@@ -4,7 +4,7 @@ import Slider from "../components/Slider";
 import { useUserContext } from "../context/userContext";
 
 export default function Account() {
-  const { userDb } = useUserContext();
+  const { loggedUser, logout } = useUserContext();
 
   const items = [
     {
@@ -41,7 +41,8 @@ export default function Account() {
     <>
       <h1>Mon compte</h1>
       <h3 className="score t-center">
-        <img src="/src/assets/coin.gif" alt="coin" /> x{userDb.points}
+        <img src="/src/assets/coin.gif" alt="coin" /> x
+        {/* {loggedUser.points} */}
       </h3>
       <Slider
         className="account mt-20 mb-20"
@@ -54,13 +55,16 @@ export default function Account() {
           <div className="container">
             <div className="allow-scroll tiny-allow-scroll">
               <div className="container">
-                <p className="mb-20 mt-40">Pseudo : {userDb.pseudo}</p>
-                <p className="mb-20">Mail : {userDb.mail}</p>
-                <p className="mb-20">Code Postal : {userDb.postalCode}</p>
-                <p className="mb-20">Ville : {userDb.city}</p>
-                <p className="mb-20">Mot de passe : {userDb.password}</p>
+                <p className="mb-20 mt-40">Pseudo : {loggedUser.pseudo}</p>
+                <p className="mb-20">Mail : {loggedUser.email}</p>
+                <p className="mb-20">Code Postal : {loggedUser.postal}</p>
+                <p className="mb-20">Ville : {loggedUser.city}</p>
+                <p className="mb-20">Mot de passe : {loggedUser.password}</p>
                 <Button color="yellow" className="button mt-40">
                   Modifier
+                </Button>
+                <Button color="red" className="button mt-40" onClick={logout}>
+                  Se déconnecter
                 </Button>
                 <Button color="red" className="button mt-40">
                   Supprimer mon compte
