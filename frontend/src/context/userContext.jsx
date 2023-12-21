@@ -6,6 +6,11 @@ const UserContext = createContext();
 
 export default function UserContextProvider({ children }) {
   const navigate = useNavigate();
+  // Récupère les infos de l'utilisateur actuellement connecté
+  const getLoggedUser = () =>
+    JSON.parse(localStorage.getItem("loggedUser") ?? "{}");
+
+  const [loggedUser, setLoggedUser] = useState(getLoggedUser());
   const [formData, setFormData] = useState({
     pseudo: "",
     email: "",
@@ -33,8 +38,9 @@ export default function UserContextProvider({ children }) {
   };
 
   // Enregistre l'utilisateur qui vient de se connecter dans le localStorage
-  const saveLoggedUser = () => {
-    localStorage.setItem("loggedUser", JSON.stringify(formData));
+  const saveLoggedUser = (user) => {
+    localStorage.setItem("loggedUser", JSON.stringify(user));
+    setLoggedUser(user);
   };
 
   // Vérifie si l'utilisateur existe en BDD
@@ -48,7 +54,7 @@ export default function UserContextProvider({ children }) {
     if (!checkUser) {
       console.error("Identifiants incorrects !");
     } else {
-      saveLoggedUser();
+      saveLoggedUser(checkUser);
       console.error(`Content de vous revoir ${credentials.pseudo}`);
 
       return navigate("/");
@@ -56,14 +62,10 @@ export default function UserContextProvider({ children }) {
     return null;
   };
 
-  // Récupère les infos de l'utilisateur actuellement connecté
-  const getLoggedUser = () =>
-    JSON.parse(localStorage.getItem("loggedUser") ?? "{}");
-  const loggedUser = getLoggedUser();
-
   // Déconnecte l'utilisateur actuellement connecté
   const logout = () => {
     localStorage.removeItem("loggedUser");
+    setLoggedUser(undefined);
     navigate("/");
     alert("Vous venez de vous déconnecter !");
   };
