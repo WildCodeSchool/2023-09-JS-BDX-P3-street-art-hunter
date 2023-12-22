@@ -1,10 +1,12 @@
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
+import { useLogin } from "../context/LoginContext";
 import { useUserContext } from "../context/userContext";
 
 export default function Account() {
-  const { loggedUser, logout } = useUserContext();
+  const { loggedUser } = useUserContext();
+  const { logout } = useLogin();
 
   const items = [
     {
