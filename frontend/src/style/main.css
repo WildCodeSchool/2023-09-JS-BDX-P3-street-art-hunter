@@ -387,8 +387,8 @@ p {
 .allow-scroll {
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 4px;
-  max-height: 100%;
+  padding-inline: 4px;
+  height: 100%;
 }
 .allow-scroll::-webkit-scrollbar {
   width: 6px;
