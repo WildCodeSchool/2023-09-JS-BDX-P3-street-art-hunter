@@ -40,14 +40,15 @@ export default function Account() {
   ];
 
   return (
-    <>
-      <h1>Mon compte</h1>
-      <h3 className="score t-center">
-        <img src="/src/assets/coin.gif" alt="coin" /> x
-        {/* {loggedUser.points} */}
-      </h3>
+    <div className="allow-scroll-container">
+      <div>
+        <h1>Mon compte</h1>
+        <h3 className="score t-center">
+          <img src="/src/assets/coin.gif" alt="coin" /> x
+          {/* {loggedUser.points} */}
+        </h3>
+      </div>
       <Slider
-        className="account mt-20 mb-20"
         leftValue="Infos"
         rightValue="Arts"
         linkOne="/mon-compte/informations"
@@ -55,9 +56,9 @@ export default function Account() {
       >
         <div className="slider-item">
           <div className="container">
-            <div className="allow-scroll tiny-allow-scroll">
+            <div className="allow-scroll">
               <div className="container">
-                <p className="mb-20 mt-40">Pseudo : {loggedUser.pseudo}</p>
+                <p className="mb-20">Pseudo : {loggedUser.pseudo}</p>
                 <p className="mb-20">Mail : {loggedUser.email}</p>
                 <p className="mb-20">Code Postal : {loggedUser.postal}</p>
                 <p className="mb-20">Ville : {loggedUser.city}</p>
@@ -77,7 +78,7 @@ export default function Account() {
         </div>
         <div className="slider-item">
           <div className="container">
-            <div className="allow-scroll minus-allow-scroll">
+            <div className="allow-scroll">
               <div className="container list-container">
                 {items.map((item) => (
                   <ItemList key={item.id} className="has-img mb-20">
@@ -96,6 +97,6 @@ export default function Account() {
           </div>
         </div>
       </Slider>
-    </>
+    </div>
   );
 }

@@ -26,7 +26,7 @@ export default function Slider({
       <button
         onClick={toggleSwitchButton}
         type="button"
-        className={`switch-button${switchButton ? " active" : ""}`}
+        className={`switch-button mt-30 mb-40${switchButton ? " active" : ""}`}
       >
         <Link to={switchButton ? linkOne : linkTwo}>{leftValue}</Link>
         <Link to={switchButton ? linkTwo : linkOne}>

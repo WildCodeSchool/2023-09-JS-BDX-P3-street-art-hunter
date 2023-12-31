@@ -77,10 +77,8 @@ const usersRank = [
 ];
 export default function Ranking() {
   return (
-    <div>
-      <div className="header-ref">
-        <h1 className="mb-40">Classement</h1>
-      </div>
+    <div className="allow-scroll-container">
+      <h1 className="mb-40">Classement</h1>
       <div className="container ranking-page">
         <div className="allow-scroll">
           {usersRank.map((rank) => (

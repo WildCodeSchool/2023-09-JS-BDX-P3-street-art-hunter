@@ -37,10 +37,9 @@ export default function Gallery() {
   ];
 
   return (
-    <>
+    <div className="allow-scroll-container">
       <h1>Galerie</h1>
       <Slider
-        className="galery mt-20 mb-20"
         leftValue="Arts"
         rightValue="Artistes"
         linkOne="/galerie/arts"
@@ -48,7 +47,7 @@ export default function Gallery() {
       >
         <div className="slider-item">
           <div className="container">
-            <div className="allow-scroll tiny-allow-scroll">
+            <div className="allow-scroll">
               <div className="container list-container">
                 {items.map((item) => (
                   <ItemList key={item.id} className="has-img mb-20">
@@ -70,7 +69,7 @@ export default function Gallery() {
         </div>
         <div className="slider-item">
           <div className="container">
-            <div className="allow-scroll tiny-allow-scroll">
+            <div className="allow-scroll">
               <div className="container list-container">
                 {/* {[1, 2, 3, 4, 5, 6].map((index) => (
                   <ItemList key={index} className="mb-20">
@@ -86,6 +85,6 @@ export default function Gallery() {
           </div>
         </div>
       </Slider>
-    </>
+    </div>
   );
 }

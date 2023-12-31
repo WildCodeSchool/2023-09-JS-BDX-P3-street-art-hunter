@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS street_art_hunters
+CREATE DATABASE IF NOT EXISTS street_art_hunters;
 
-USE street_art_hunters
+USE street_art_hunters;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT NOT NULL AUTO_INCREMENT,
@@ -51,13 +51,6 @@ CREATE TABLE IF NOT EXISTS artist_street_art (
     FOREIGN KEY (artist_id) REFERENCES artist(id),
     FOREIGN KEY (street_art_id) REFERENCES street_art(id)
 );
-
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS street_art;
-
-DROP TABLE IF EXISTS awaiting_image;
-DROP TABLE IF EXISTS artist;
-DROP TABLE IF EXISTS artist_street_art;
 
 SELECT * FROM users;
 
