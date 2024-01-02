@@ -159,6 +159,10 @@ p {
   display: block;
 }
 
+.d-iblock {
+  display: inline-block;
+}
+
 .d-none {
   display: none;
 }
@@ -173,6 +177,19 @@ p {
 
 .d-flex-column {
   flex-direction: column;
+}
+
+.d-flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-space-arround {
+  justify-content: space-around;
+}
+
+.d-flex-space-between {
+  justify-content: space-between;
 }
 
 .pos-r {
@@ -478,7 +495,7 @@ input {
   background-size: 57px 58px;
   background-repeat: repeat;
   background-position: left bottom;
-  z-index: 1;
+  z-index: 100;
 }
 .burger-menu nav {
   opacity: 0;
@@ -557,6 +574,31 @@ input {
 
 .info-window-text {
   color: black;
+}
+
+.camera-button-container {
+  position: absolute;
+  bottom: 120px;
+  left: calc(50% - 41px);
+  z-index: 11;
+  width: 82px;
+  height: 60px;
+  text-align: center;
+}
+.camera-button-container img {
+  width: 100%;
+}
+
+.camera-popup {
+  background-color: #5c94fc;
+  width: 100vw;
+  height: calc(100vh - 83px);
+  position: absolute;
+  z-index: -10;
+  top: 0;
+}
+.camera-popup.active {
+  z-index: 10;
 }
 
 .block {

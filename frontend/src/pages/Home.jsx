@@ -1,8 +1,15 @@
+import React, { useState, useRef } from "react";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
-import React from "react";
 import CustomMarker from "../components/Marker";
+import Button from "../components/Button";
 
 export default function Home() {
+  const [cameraPopup, setCameraPopup] = useState(false);
+  const [captureForm, setCaptureForm] = useState(false);
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [stream, setStream] = useState(null);
+  const videoRef = useRef(null);
+
   const arts = [
     {
       id: 1,
@@ -153,6 +160,94 @@ export default function Home() {
     },
   ];
 
+  const handleOpenCameraPopup = () => {
+    if (!cameraPopup) {
+      setCameraPopup(true);
+    } else {
+      setCameraPopup(false);
+    }
+  };
+
+  const handleOpenCamera = () => {
+    if (!cameraPopup || !stream) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((newStream) => {
+          setStream(newStream);
+
+          if (videoRef.current) {
+            // Forcer la réinitialisation du flux vidéo
+            videoRef.current.srcObject = null;
+            videoRef.current.srcObject = newStream;
+          }
+        })
+        .catch((error) => {
+          console.error(
+            "Erreur lors de l'ouverture de l'appareil photo :",
+            error
+          );
+        });
+    }
+  };
+
+  const handleCloseCamera = () => {
+    // coupe la camera
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => track.stop());
+      setStream(null);
+    }
+  };
+
+  // fonction permettant de créer une image en fonction du stream qui apparait
+  const handleCaptureCamera = () => {
+    if (stream) {
+      // récupère le contexte du canvas pour créer l'image
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+
+      // défini la taille du canvas pour correspondre à la taille de la photo
+      const video = videoRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      // créé l'image de la vidéo sur le canvas
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // convertit l'image en base64
+      const imageDataUrl = canvas.toDataURL("image/jpg");
+
+      // sert à récupérer le lien de l'image sur le serveur
+      setCapturedImage(imageDataUrl);
+
+      // ouvre le formulaire permettant d'envoyer la photo sur le serveur
+      setCaptureForm(true);
+    }
+  };
+
+  const handleValidateCapture = () => {
+    // fonction permettant d'envoyer l'image sur le serveur si l'utilsateur la valide
+    // Envoyer l'image sur votre serveur
+    // Vous pouvez utiliser une API fetch pour envoyer l'image à votre serveur
+    // par exemple, fetch("votre-serveur.com/upload", { method: "POST", body: capturedImage });
+    // setCameraPopup(false);
+  };
+
+  const handleRestartCapture = () => {
+    // ferme le formulaire
+    setCaptureForm(false);
+
+    // coupe la caméra
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => track.stop());
+      setStream(null);
+    }
+
+    // réouvre la caméra
+    handleOpenCamera();
+  };
+
   return (
     <div style={{ height: "calc(100vh - 83px)" }}>
       <APIProvider apiKey="AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo">
@@ -179,6 +274,81 @@ export default function Home() {
           ))}
         </Map>
       </APIProvider>
+      <div className={`camera-popup${cameraPopup ? " active" : ""}`}>
+        {captureForm === false ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            style={{ width: "100%", height: "100%" }}
+          >
+            <track kind="captions" srcLang="en" label="English" />
+          </video>
+        ) : (
+          <div className="capture-form mt-60">
+            <img src={capturedImage} alt="captured" style={{ width: "100%" }} />
+            <div className="d-flex d-flex-space-arround mt-30">
+              <Button
+                className="button d-iblock"
+                type="button"
+                onClick={() => {
+                  handleValidateCapture();
+                }}
+              >
+                Valider
+              </Button>
+              <Button
+                color="red"
+                className="button d-iblock"
+                type="button"
+                onClick={() => {
+                  handleRestartCapture();
+                  handleOpenCamera();
+                }}
+              >
+                Refuser
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="camera-button-container">
+        {cameraPopup ? (
+          <>
+            <button
+              className="camera-button"
+              type="button"
+              onClick={() => {
+                handleCaptureCamera();
+                handleCloseCamera();
+              }}
+            >
+              <img src="./src/assets/camera.png" alt="Faire une capture" />
+            </button>
+            <button
+              className="mt-10"
+              onClick={() => {
+                handleOpenCameraPopup();
+                handleCloseCamera();
+              }}
+              type="button"
+            >
+              Fermer
+            </button>
+          </>
+        ) : (
+          <button
+            className="camera-button"
+            type="button"
+            onClick={() => {
+              handleOpenCameraPopup();
+              handleOpenCamera();
+            }}
+          >
+            <img src="./src/assets/camera.png" alt="Ouvre la capture" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }
