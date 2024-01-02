@@ -160,7 +160,7 @@ export default function Home() {
     },
   ];
 
-  const handleOpenCameraPopup = () => {
+  const handleToggleCameraPopup = () => {
     if (!cameraPopup) {
       setCameraPopup(true);
     } else {
@@ -206,7 +206,7 @@ export default function Home() {
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d");
 
-      // défini la taille du canvas pour correspondre à la taille de la photo
+      // définit la taille du canvas pour correspondre à la taille de la photo
       const video = videoRef.current;
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -233,19 +233,9 @@ export default function Home() {
     // setCameraPopup(false);
   };
 
-  const handleRestartCapture = () => {
+  const handleToggleForm = () => {
     // ferme le formulaire
     setCaptureForm(false);
-
-    // coupe la caméra
-    if (stream) {
-      const tracks = stream.getTracks();
-      tracks.forEach((track) => track.stop());
-      setStream(null);
-    }
-
-    // réouvre la caméra
-    handleOpenCamera();
   };
 
   return (
@@ -302,7 +292,7 @@ export default function Home() {
                 className="button d-iblock"
                 type="button"
                 onClick={() => {
-                  handleRestartCapture();
+                  handleToggleForm();
                   handleOpenCamera();
                 }}
               >
@@ -328,7 +318,7 @@ export default function Home() {
             <button
               className="mt-10"
               onClick={() => {
-                handleOpenCameraPopup();
+                handleToggleCameraPopup();
                 handleCloseCamera();
               }}
               type="button"
@@ -341,7 +331,7 @@ export default function Home() {
             className="camera-button"
             type="button"
             onClick={() => {
-              handleOpenCameraPopup();
+              handleToggleCameraPopup();
               handleOpenCamera();
             }}
           >
