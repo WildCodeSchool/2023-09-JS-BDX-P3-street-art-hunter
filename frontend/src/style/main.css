@@ -16,7 +16,6 @@ html {
 body {
   background-color: #5c94fc;
   color: white;
-  min-width: 400px;
 }
 
 a {
@@ -72,6 +71,10 @@ p {
 
 .container-big {
   max-width: 1200px;
+}
+
+.container-small {
+  max-width: 700px;
 }
 
 .slider-container {
@@ -184,7 +187,7 @@ p {
   align-items: center;
 }
 
-.d-flex-space-arround {
+.d-flex-space-around {
   justify-content: space-around;
 }
 
@@ -194,6 +197,14 @@ p {
 
 .pos-r {
   position: relative;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
 }
 
 .button,
@@ -578,27 +589,53 @@ input {
 
 .camera-button-container {
   position: absolute;
-  bottom: 120px;
+  bottom: 108px;
   left: calc(50% - 41px);
   z-index: 11;
   width: 82px;
   height: 60px;
   text-align: center;
 }
-.camera-button-container img {
-  width: 100%;
-}
 
 .camera-popup {
-  background-color: #5c94fc;
   width: 100vw;
-  height: calc(100vh - 83px);
+  height: 0;
   position: absolute;
   z-index: -10;
-  top: 0;
+  bottom: 82px;
+  background-color: #5c94fc;
 }
 .camera-popup.active {
   z-index: 10;
+  height: calc(100vh - 82px);
+  opacity: 1;
+}
+.camera-popup .camera-popup-close-button {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 1;
+  color: white;
+}
+.camera-popup .flash-popup {
+  position: absolute;
+  bottom: 38px;
+  left: calc(50% + 5px);
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  z-index: -100;
+  opacity: 0;
+  transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
+}
+.camera-popup .flash-popup.active {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  opacity: 1;
+  transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
 }
 
 .block {
@@ -684,11 +721,6 @@ label {
   width: 22px;
 }
 
-@media screen and (max-width: 766px) {
-  .admin-page .allow-scroll.tiny-allow-scroll {
-    max-height: calc(100vh - 410px);
-  }
-}
 @media screen and (min-width: 767px) {
   .burger-menu.active {
     height: 174px;
