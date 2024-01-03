@@ -9,10 +9,11 @@ CREATE TABLE IF NOT EXISTS users (
     postcode VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    points INT NOT NULL,
-    is_admin BOOLEAN NOT NULL,
+    points INT NOT NULL DEFAULT 0,
+    is_admin BOOLEAN DEFAULT false,
     PRIMARY KEY (id)
 );
+
 
 CREATE TABLE IF NOT EXISTS street_art (
     id INT NOT NULL AUTO_INCREMENT,
@@ -54,5 +55,5 @@ CREATE TABLE IF NOT EXISTS artist_street_art (
 
 SELECT * FROM users;
 
-INSERT INTO user (username, email, postcode, city, password, points, is_admin)
+INSERT INTO users (username, email, postcode, city, password, points, is_admin)
 VALUES ("kevin", "kevin@jean.com", "33000", "Bordeaux", "kevin", 0, 1);
