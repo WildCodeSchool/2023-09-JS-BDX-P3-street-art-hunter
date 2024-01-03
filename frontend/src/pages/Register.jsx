@@ -26,11 +26,7 @@ export default function Register() {
       <h1 className="mb-20">Inscription</h1>
       <div className="container">
         <div className="allow-scroll">
-          <form
-            className="mb-20"
-            // method="POST"
-            // action="http://localhost:3310/api/users/"
-          >
+          <form className="mb-20">
             <label htmlFor="username" className="mb-10 ">
               Pseudo
             </label>
