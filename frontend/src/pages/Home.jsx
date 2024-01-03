@@ -302,6 +302,7 @@ export default function Home() {
               onClick={() => {
                 handleToggleCameraPopup();
                 handleCloseCamera();
+                handleToggleForm();
               }}
               type="button"
             >
