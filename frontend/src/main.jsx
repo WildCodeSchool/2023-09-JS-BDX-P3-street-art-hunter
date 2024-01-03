@@ -15,6 +15,26 @@ import { LoginProvider } from "./context/LoginContext";
 import { UserContextProvider } from "./context/userContext";
 import { AdminContextProvider } from "./context/AdminContext";
 
+function getLocalisation() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      resolve({ lat: null, lng: null });
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        resolve({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      (error) => {
+        reject(error);
+      }
+    );
+  });
+}
+
 const router = createBrowserRouter([
   {
     element: (
@@ -29,6 +49,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        loader: () => getLocalisation(),
         element: <Home />,
       },
       {

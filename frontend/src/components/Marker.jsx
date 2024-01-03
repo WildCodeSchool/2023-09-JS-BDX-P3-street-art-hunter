@@ -1,21 +1,33 @@
 import React, { useState } from "react";
-import { Marker, InfoWindow, useMarkerRef } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
+import { MarkerF, InfoWindow } from "@react-google-maps/api";
 
 function CustomMarker({ lat, lng, text }) {
   const [infowindowOpen, setInfowindowOpen] = useState(false);
-  const [markerRef, marker] = useMarkerRef();
+  const [anchor, setAnchor] = useState(null);
+
+  const onMarkerClick = (marker) => {
+    setInfowindowOpen(true);
+    setAnchor(marker);
+  };
+
   return (
     <>
-      <Marker
+      <MarkerF
         position={{ lat, lng }}
-        ref={markerRef}
-        onClick={() => setInfowindowOpen(true)}
+        onClick={(e) => onMarkerClick(e)}
+        options={{
+          strokeColor: "#1FA055",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: "#1FA055",
+          fillOpacity: 0.35,
+        }}
       />
-      {infowindowOpen && (
+      {infowindowOpen && anchor && (
         <InfoWindow
+          position={{ lat, lng }}
           onCloseClick={() => setInfowindowOpen(false)}
-          anchor={marker}
         >
           <div className="info-window-text">{text}</div>
         </InfoWindow>
