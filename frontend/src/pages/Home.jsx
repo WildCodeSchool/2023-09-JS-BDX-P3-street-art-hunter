@@ -1,7 +1,8 @@
-import React from "react";
-import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
+import React, { useState } from "react";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useLoaderData } from "react-router-dom";
 import CustomMarker from "../components/Marker";
+import CustomCircle from "../components/CustomCircle";
 
 export default function Home() {
   const arts = [
@@ -39,8 +40,11 @@ export default function Home() {
     ? userLocation
     : { lat: 44.837789, lng: -0.57918 };
 
+  const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
+  const [map, setMap] = useState(null); // Initialiser la map à null
+
   const mapOptions = {
-    zoom: 13,
+    zoom: zoomLevel,
     mapTypeId: "roadmap",
     disableDefaultUI: true,
     styles: [
@@ -170,30 +174,50 @@ export default function Home() {
     ],
   };
 
-  return (
-    <LoadScript googleMapsApiKey="AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo">
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        options={mapOptions}
-      >
-        {arts.map((art) => (
-          <CustomMarker
-            key={art.id}
-            lat={art.lat}
-            lng={art.long}
-            text={
-              <>
-                <span>{art.name}</span>
-                <br />
-                <span>Auteur: {art.author}</span>
-              </>
-            }
-          />
-        ))}
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo",
+  });
 
-        {userLocation.lat && <MarkerF position={userLocation} radius={100} />}
-      </GoogleMap>
-    </LoadScript>
+  const handleZoomChange = () => {
+    // Fonction qui change le zoom
+    if (!map) return;
+    setZoomLevel(map.getZoom());
+  };
+
+  if (loadError) return <div>Error loading maps</div>; // Si erreur de chargement, afficher un message d'erreur
+  if (!isLoaded) return <div>Loading Maps...</div>; // Si chargement en cours, afficher un message de chargement
+
+  return (
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      options={mapOptions}
+      onLoad={(loadMap) => setMap(loadMap)}
+      onZoomChanged={handleZoomChange}
+    >
+      {arts.map((art) => (
+        <CustomMarker
+          key={art.id}
+          lat={art.lat}
+          initialZoomLevel
+          lng={art.long}
+          text={
+            <>
+              <span>{art.name}</span>
+              <br />
+              <span>Auteur: {art.author}</span>
+            </>
+          }
+        />
+      ))}
+
+      {userLocation.lat && (
+        <CustomCircle
+          lat={userLocation.lat}
+          lng={userLocation.lng}
+          zoom={zoomLevel}
+        />
+      )}
+    </GoogleMap>
   );
 }
