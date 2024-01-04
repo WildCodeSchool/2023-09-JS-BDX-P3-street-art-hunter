@@ -107,14 +107,10 @@ export default function Register() {
                 }
               />
             </div>
-            <Button
-              type="submit"
-              className="button mb-20"
-              onClick={handleSubmit}
-            >
-              Valider
-            </Button>
           </form>
+          <Button type="submit" className="button mb-20" onClick={handleSubmit}>
+            Valider
+          </Button>
 
           <Link to="/connexion">
             <p className="mb-10">

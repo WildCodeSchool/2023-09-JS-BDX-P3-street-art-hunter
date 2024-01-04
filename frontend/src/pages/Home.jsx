@@ -228,7 +228,7 @@ export default function Home() {
         const formData = new FormData();
         formData.append("image", capturedImage, "captured-image.jpg");
 
-        const response = await fetch("http://localhost:3311/api/uploads/", {
+        const response = await fetch("http://localhost:3310/api/uploads/", {
           method: "POST",
           body: formData,
         });
@@ -355,11 +355,7 @@ export default function Home() {
                   style={{ width: "100%" }}
                   className="capture-preview"
                 />
-                <form
-                  action="/uploads"
-                  method="post"
-                  encType="multipart/form-data"
-                >
+                <form action="/" method="post" encType="multipart/form-data">
                   <div className="d-flex d-flex-space-around mt-30">
                     <Button
                       className="button"
