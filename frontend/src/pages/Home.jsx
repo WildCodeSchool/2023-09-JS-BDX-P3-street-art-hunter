@@ -228,7 +228,7 @@ export default function Home() {
         const formData = new FormData();
         formData.append("image", capturedImage, "captured-image.jpg");
 
-        const response = await fetch("http://localhost:3311/api/uploads/", {
+        const response = await fetch("http://localhost:3310/api/uploads/", {
           method: "POST",
           body: formData,
         });
