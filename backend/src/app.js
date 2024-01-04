@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -54,7 +55,8 @@ app.use(
 // 4. `express.raw()`: Parses requests with raw binary data.
 
 // Uncomment one or more of these options depending on the format of the data sent by your client:
-
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json());
 // app.use(express.urlencoded());
 // app.use(express.text());

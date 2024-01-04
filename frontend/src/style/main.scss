@@ -17,7 +17,6 @@ html {
 body {
   background-color: $bluesky;
   color: white;
-  min-width: 400px;
 }
 a {
   color: inherit;
@@ -71,6 +70,9 @@ p {
 }
 .container-big {
   max-width: 1200px;
+}
+.container-small {
+  max-width: 700px;
 }
 
 // slider
@@ -157,6 +159,9 @@ p {
 .d-block {
   display: block;
 }
+.d-iblock {
+  display: inline-block;
+}
 .d-none {
   display: none;
 }
@@ -169,10 +174,26 @@ p {
 .d-flex-column {
   flex-direction: column;
 }
+.d-flex-center {
+  justify-content: center;
+  align-items: center;
+}
+.d-flex-space-around {
+  justify-content: space-around;
+}
+.d-flex-space-between {
+  justify-content: space-between;
+}
 .pos-r {
   position: relative;
 }
 
+.h-100 {
+  height: 100%;
+}
+.w-100 {
+  width: 100%;
+}
 // buttons
 
 .button,
@@ -355,7 +376,7 @@ p {
 .allow-scroll-container {
   display: grid;
   grid-template-rows: auto 1fr;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 108px);
 }
 
 .allow-scroll {
@@ -461,7 +482,7 @@ input {
   background-size: 57px 58px;
   background-repeat: repeat;
   background-position: left bottom;
-  z-index: +1;
+  z-index: +100;
 
   nav {
     opacity: 0;
@@ -555,6 +576,60 @@ input {
 
 .info-window-text {
   color: black;
+}
+
+.camera-button-container {
+  position: absolute;
+  bottom: 108px;
+  left: calc(50% - 41px);
+  z-index: 11;
+  width: 82px;
+  height: 60px;
+  text-align: center;
+}
+.camera-popup {
+  width: 100vw;
+  height: 0;
+  position: absolute;
+  z-index: -10;
+  bottom: 82px;
+  background-color: $bluesky;
+
+  &.active {
+    z-index: 10;
+    height: calc(100vh - 82px);
+    opacity: 1;
+  }
+
+  .camera-popup-close-button {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    z-index: +1;
+    color: white;
+  }
+
+  .flash-popup {
+    position: absolute;
+    bottom: 38px;
+    left: calc(50% + 5px);
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    z-index: -100;
+    opacity: 0;
+    transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
+
+    &.active {
+      width: 100%;
+      height: 100%;
+      left: 0;
+      bottom: 0;
+      z-index: +100;
+      opacity: 1;
+      transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
+    }
+  }
 }
 
 // Administration
@@ -667,9 +742,6 @@ label {
 //// Responsive
 
 @media screen and (max-width: 766px) {
-  .admin-page .allow-scroll.tiny-allow-scroll {
-    max-height: calc(100vh - 410px);
-  }
 }
 
 @media screen and (min-width: 767px) {
