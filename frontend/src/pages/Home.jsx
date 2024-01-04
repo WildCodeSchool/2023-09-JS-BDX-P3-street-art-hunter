@@ -1,6 +1,8 @@
-import React, { useState, useRef } from "react";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import React, { useState } from "react";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { useLoaderData } from "react-router-dom";
 import CustomMarker from "../components/Marker";
+import CustomCircle from "../components/CustomCircle";
 import Button from "../components/Button";
 
 export default function Home() {
@@ -36,131 +38,163 @@ export default function Home() {
     },
   ];
 
-  const style = [
-    {
-      featureType: "all",
-      elementType: "labels",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.locality",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "landscape",
-      elementType: "all",
-      stylers: [
-        {
-          color: "#AFFFA0",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "all",
-      stylers: [
-        {
-          color: "#EAFFE5",
-        },
-      ],
-    },
-    {
-      featureType: "poi.business",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "poi.government",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#f9f8c7",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#59A499",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.stroke",
-      stylers: [
-        {
-          color: "#F0FF8D",
-        },
-        {
-          weight: 2.2,
-        },
-      ],
-    },
-    {
-      featureType: "transit.line",
-      elementType: "geometry",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "transit.station.airport",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#fdfabf",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "on",
-        },
-        {
-          color: "#1A87D6",
-        },
-      ],
-    },
-  ];
+  const userLocation = useLoaderData();
+
+  const containerStyle = {
+    width: "100%",
+    height: "calc(100vh - 83px)",
+  };
+
+  const center = userLocation.lat
+    ? userLocation
+    : { lat: 44.837789, lng: -0.57918 };
+
+  const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
+  const [map, setMap] = useState(null); // Initialiser la map à null
+
+  const mapOptions = {
+    zoom: zoomLevel,
+    mapTypeId: "roadmap",
+    disableDefaultUI: true,
+    styles: [
+      {
+        featureType: "all",
+        elementType: "labels",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "administrative.locality",
+        elementType: "all",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "landscape",
+        elementType: "all",
+        stylers: [
+          {
+            color: "#AFFFA0",
+          },
+        ],
+      },
+      {
+        featureType: "poi",
+        elementType: "all",
+        stylers: [
+          {
+            color: "#EAFFE5",
+          },
+        ],
+      },
+      {
+        featureType: "poi.business",
+        elementType: "all",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "poi.government",
+        elementType: "all",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "poi.park",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#f9f8c7",
+          },
+        ],
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#59A499",
+          },
+        ],
+      },
+      {
+        featureType: "road",
+        elementType: "geometry.stroke",
+        stylers: [
+          {
+            color: "#F0FF8D",
+          },
+          {
+            weight: 2.2,
+          },
+        ],
+      },
+      {
+        featureType: "transit.line",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "transit.station.airport",
+        elementType: "geometry.fill",
+        stylers: [
+          {
+            color: "#fdfabf",
+          },
+        ],
+      },
+      {
+        featureType: "water",
+        elementType: "all",
+        stylers: [
+          {
+            visibility: "on",
+          },
+          {
+            color: "#1A87D6",
+          },
+        ],
+      },
+    ],
+  };
+
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo",
+  });
+
+  const handleZoomChange = () => {
+    // Fonction qui change le zoom
+    if (!map) return;
+    setZoomLevel(map.getZoom());
+  };
+
+  if (loadError) return <div>Error loading maps</div>; // Si erreur de chargement, afficher un message d'erreur
+  if (!isLoaded) return <div>Loading Maps...</div>; // Si chargement en cours, afficher un message de chargement
 
   // Gestion de l'ouverture et fermeture de la caméra de l'utilisateur
   const handleOpenCamera = () => {
@@ -303,126 +337,130 @@ export default function Home() {
   };
 
   return (
-    <>
-      <div style={{ height: "calc(100vh - 83px)" }}>
-        <APIProvider apiKey="AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo">
-          <Map
-            zoom={13}
-            center={{ lat: 44.837789, lng: -0.57918 }}
-            mapTypeId="roadmap"
-            disableDefaultUI
-            styles={style}
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      options={mapOptions}
+      onLoad={(loadMap) => setMap(loadMap)}
+      onZoomChanged={handleZoomChange}
+    >
+      {arts.map((art) => (
+        <CustomMarker
+          key={art.id}
+          lat={art.lat}
+          initialZoomLevel
+          lng={art.long}
+          text={
+            <>
+              <span>{art.name}</span>
+              <br />
+              <span>Auteur: {art.author}</span>
+            </>
+          }
+        />
+      ))}
+
+      {userLocation.lat && (
+        <CustomCircle
+          lat={userLocation.lat}
+          lng={userLocation.lng}
+          zoom={zoomLevel}
+        />
+      )}
+    </GoogleMap>
+      <div className={`camera-popup${cameraPopup ? " active" : ""}`}>
+        <div className="container container-small h-100 d-flex d-flex-center pos-r">
+          <button
+            className="camera-popup-close-button"
+            onClick={closePopUp}
+            type="button"
           >
-            {arts.map((art) => (
-              <CustomMarker
-                key={art.id}
-                lat={art.lat}
-                lng={art.long}
-                text={
-                  <>
-                    <span>{art.name}</span>
-                    <br />
-                    <span>Auteur: {art.author}</span>
-                  </>
-                }
-              />
-            ))}
-          </Map>
-        </APIProvider>
-        <div className={`camera-popup${cameraPopup ? " active" : ""}`}>
-          <div className="container container-small h-100 d-flex d-flex-center pos-r">
-            <button
-              className="camera-popup-close-button"
-              onClick={closePopUp}
-              type="button"
+            Fermer
+          </button>
+          {captureForm === false ? (
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              style={{ width: "100%", height: "100%" }}
             >
-              Fermer
-            </button>
-            {captureForm === false ? (
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                style={{ width: "100%", height: "100%" }}
+              <track kind="captions" srcLang="en" label="English" />
+            </video>
+          ) : (
+            <div className="capture-form">
+              <img
+                src={URL.createObjectURL(new Blob([capturedImage]))}
+                alt="captured"
+                style={{ width: "100%" }}
+                className="capture-preview"
+              />
+              <form
+                action="/uploads"
+                method="post"
+                encType="multipart/form-data"
               >
-                <track kind="captions" srcLang="en" label="English" />
-              </video>
-            ) : (
-              <div className="capture-form">
-                <img
-                  src={URL.createObjectURL(new Blob([capturedImage]))}
-                  alt="captured"
-                  style={{ width: "100%" }}
-                  className="capture-preview"
-                />
-                <form
-                  action="/uploads"
-                  method="post"
-                  encType="multipart/form-data"
-                >
-                  <div className="d-flex d-flex-space-around mt-30">
-                    <Button
-                      className="button"
-                      type="button"
-                      onClick={() => {
-                        handleValidateCapture();
-                      }}
-                    >
-                      Envoyer
-                    </Button>
-                    <Button
-                      color="red"
-                      className="button"
-                      type="button"
-                      onClick={() => {
-                        handleToggleForm();
-                        handleOpenCamera();
-                      }}
-                    >
-                      Restart
-                    </Button>
-                  </div>
-                </form>
-              </div>
-            )}
-          </div>
-          <div className={`flash-popup${flashPopup ? " active" : ""}`} />
+                <div className="d-flex d-flex-space-around mt-30">
+                  <Button
+                    className="button"
+                    type="button"
+                    onClick={() => {
+                      handleValidateCapture();
+                    }}
+                  >
+                    Envoyer
+                  </Button>
+                  <Button
+                    color="red"
+                    className="button"
+                    type="button"
+                    onClick={() => {
+                      handleToggleForm();
+                      handleOpenCamera();
+                    }}
+                  >
+                    Restart
+                  </Button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
-        {!captureForm && (
-          <div className="camera-button-container">
-            {stream ? (
-              <button
-                className="camera-button"
-                type="button"
-                onClick={() => {
-                  captureImage();
-                }}
-              >
-                <img
-                  className="w-100"
-                  src="./src/assets/camera.png"
-                  alt="Faire une capture"
-                />
-              </button>
-            ) : (
-              <button
-                className="camera-button"
-                type="button"
-                onClick={OpenPopUp}
-              >
-                <img
-                  className="w-100"
-                  src="./src/assets/camera.png"
-                  alt="Ouvre la capture"
-                />
-              </button>
-            )}
-          </div>
-        )}
+        <div className={`flash-popup${flashPopup ? " active" : ""}`} />
       </div>
-      <audio id="flashSound" src="/src/assets/audio/flash-retro.wav">
-        <track kind="captions" />
-      </audio>
-    </>
+      {!captureForm && (
+        <div className="camera-button-container">
+          {stream ? (
+            <button
+              className="camera-button"
+              type="button"
+              onClick={() => {
+                captureImage();
+              }}
+            >
+              <img
+                className="w-100"
+                src="./src/assets/camera.png"
+                alt="Faire une capture"
+              />
+            </button>
+          ) : (
+            <button
+              className="camera-button"
+              type="button"
+              onClick={OpenPopUp}
+            >
+              <img
+                className="w-100"
+                src="./src/assets/camera.png"
+                alt="Ouvre la capture"
+              />
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+    <audio id="flashSound" src="/src/assets/audio/flash-retro.wav">
+      <track kind="captions" />
+    </audio>
   );
 }
