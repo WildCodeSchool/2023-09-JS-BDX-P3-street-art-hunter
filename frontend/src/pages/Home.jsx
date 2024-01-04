@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState, useRef } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useLoaderData } from "react-router-dom";
@@ -250,7 +251,7 @@ export default function Home() {
           setCapturedImage(blob);
         },
         "image/jpeg",
-        1.0
+        0.8
       );
     }
   };
@@ -271,7 +272,6 @@ export default function Home() {
           handleCloseCamera();
           setCaptureForm(false);
           setCameraPopup(false);
-
           alert("Votre image a bien été envoyée");
         } else {
           console.error("Erreur lors de l'envoi de l'image au serveur");
@@ -309,7 +309,7 @@ export default function Home() {
   const handleToggleCameraPopup = () => {
     setCameraPopup(!cameraPopup);
   };
-  const OpenPopUp = () => {
+  const openPopUp = () => {
     handleToggleCameraPopup();
     handleOpenCamera();
   };
@@ -368,44 +368,38 @@ export default function Home() {
           />
         )}
       </GoogleMap>
-      <div className={`camera-popup${cameraPopup ? " active" : ""}`}>
-        <div className="container container-small h-100 d-flex d-flex-center pos-r">
-          <button
-            className="camera-popup-close-button"
-            onClick={closePopUp}
-            type="button"
-          >
-            Fermer
-          </button>
-          {captureForm === false ? (
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              style={{ width: "100%", height: "100%" }}
+      <div style={{ height: "calc(100vh - 83px)" }}>
+        <div className={`camera-popup${cameraPopup ? " active" : ""}`}>
+          <div className="container container-small h-100 d-flex d-flex-center pos-r">
+            <button
+              className="camera-popup-close-button"
+              onClick={closePopUp}
+              type="button"
             >
-              <track kind="captions" srcLang="en" label="English" />
-            </video>
-          ) : (
-            <div className="capture-form">
-              <img
-                src={URL.createObjectURL(new Blob([capturedImage]))}
-                alt="captured"
-                style={{ width: "100%" }}
-                className="capture-preview"
-              />
-              <form
-                action="/uploads"
-                method="post"
-                encType="multipart/form-data"
+              Fermer
+            </button>
+            {captureForm === false ? (
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                style={{ width: "100%", height: "100%" }}
               >
+                <track kind="captions" srcLang="en" label="English" />
+              </video>
+            ) : (
+              <div className="capture-form">
+                <img
+                  src={URL.createObjectURL(new Blob([capturedImage]))}
+                  alt="captured"
+                  style={{ width: "100%" }}
+                  className="capture-preview"
+                />
                 <div className="d-flex d-flex-space-around mt-30">
                   <Button
                     className="button"
                     type="button"
-                    onClick={() => {
-                      handleValidateCapture();
-                    }}
+                    onClick={handleValidateCapture}
                   >
                     Envoyer
                   </Button>
@@ -421,42 +415,46 @@ export default function Home() {
                     Restart
                   </Button>
                 </div>
-              </form>
-            </div>
-          )}
+              </div>
+            )}
+          </div>
+          <div className={`flash-popup${flashPopup ? " active" : ""}`} />
         </div>
-        <div className={`flash-popup${flashPopup ? " active" : ""}`} />
+        {!captureForm && (
+          <div className="camera-button-container">
+            {stream ? (
+              <button
+                className="camera-button"
+                type="button"
+                onClick={() => {
+                  captureImage();
+                }}
+              >
+                <img
+                  className="w-100"
+                  src="./src/assets/camera.png"
+                  alt="Faire une capture"
+                />
+              </button>
+            ) : (
+              <button
+                className="camera-button"
+                type="button"
+                onClick={openPopUp}
+              >
+                <img
+                  className="w-100"
+                  src="./src/assets/camera.png"
+                  alt="Ouvre la capture"
+                />
+              </button>
+            )}
+          </div>
+        )}
+        <audio id="flashSound" src="/src/assets/audio/flash-retro.wav">
+          <track kind="captions" />
+        </audio>
       </div>
-      {!captureForm && (
-        <div className="camera-button-container">
-          {stream ? (
-            <button
-              className="camera-button"
-              type="button"
-              onClick={() => {
-                captureImage();
-              }}
-            >
-              <img
-                className="w-100"
-                src="./src/assets/camera.png"
-                alt="Faire une capture"
-              />
-            </button>
-          ) : (
-            <button className="camera-button" type="button" onClick={OpenPopUp}>
-              <img
-                className="w-100"
-                src="./src/assets/camera.png"
-                alt="Ouvre la capture"
-              />
-            </button>
-          )}
-        </div>
-      )}
-      <audio id="flashSound" src="/src/assets/audio/flash-retro.wav">
-        <track kind="captions" />
-      </audio>
     </div>
   );
 }
