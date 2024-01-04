@@ -162,14 +162,7 @@ export default function Home() {
     },
   ];
 
-  const handleToggleCameraPopup = () => {
-    if (!cameraPopup) {
-      setCameraPopup(true);
-    } else {
-      setCameraPopup(false);
-    }
-  };
-
+  // Gestion de l'ouverture et fermeture de la caméra de l'utilisateur
   const handleOpenCamera = () => {
     // ouvre la caméra en demandant les droits d'accès au navigateur
     if (!cameraPopup || !stream) {
@@ -192,7 +185,6 @@ export default function Home() {
         });
     }
   };
-
   const handleCloseCamera = () => {
     // coupe la camera
     if (stream) {
@@ -202,7 +194,7 @@ export default function Home() {
     }
   };
 
-  // fonction permettant de créer une image en fonction du stream qui apparait
+  // Gestion de la capture de photo en live
   const handleCaptureCamera = async () => {
     if (stream) {
       // récupère le contexte du canvas pour créer l'image
@@ -229,6 +221,7 @@ export default function Home() {
     }
   };
 
+  // Gestion du formulaire de validation une fois la photo prise
   const handleValidateCapture = async () => {
     if (capturedImage) {
       try {
@@ -255,16 +248,57 @@ export default function Home() {
     }
   };
 
+  // Gestion du formulaire de prévisualisation et d'envoie pour validation
   const handleToggleForm = () => {
     // ouvre ou ferme le formulaire
     setCaptureForm(!captureForm);
   };
+  const handleOpenForm = () => {
+    // ouvre le formulaire
+    setCaptureForm(true);
+  };
+  const handleCloseForm = () => {
+    // ferme le formulaire
+    setCaptureForm(false);
+  };
 
+  // Simule un flash d'appareil photo lors de la prise de capture
   const handleFlashPopup = () => {
     setFlashPopup(true);
 
     setTimeout(() => {
       setFlashPopup(false);
+    }, flashTimer);
+  };
+
+  // Gestion de l'apparition de la popup camera
+  const handleToggleCameraPopup = () => {
+    setCameraPopup(!cameraPopup);
+  };
+  const OpenPopUp = () => {
+    handleToggleCameraPopup();
+    handleOpenCamera();
+  };
+  const closePopUp = () => {
+    setCameraPopup(false);
+    handleToggleCameraPopup();
+    handleCloseCamera();
+    handleCloseForm();
+  };
+
+  // Gestion la prise de photo
+  const captureImage = () => {
+    handleCaptureCamera();
+    handleCloseCamera();
+    handleFlashPopup();
+
+    const flashAudio = document.getElementById("flashSound");
+    if (flashAudio) {
+      flashAudio.play();
+    }
+
+    setTimeout(() => {
+      handleOpenForm();
     }, flashTimer);
   };
 
@@ -299,11 +333,7 @@ export default function Home() {
           <div className="container container-small h-100 d-flex d-flex-center pos-r">
             <button
               className="camera-popup-close-button"
-              onClick={() => {
-                handleToggleCameraPopup();
-                handleCloseCamera();
-                handleToggleForm();
-              }}
+              onClick={closePopUp}
               type="button"
             >
               Fermer
@@ -365,18 +395,7 @@ export default function Home() {
                 className="camera-button"
                 type="button"
                 onClick={() => {
-                  handleCaptureCamera();
-                  handleCloseCamera();
-                  handleFlashPopup();
-
-                  const flashAudio = document.getElementById("flashSound");
-                  if (flashAudio) {
-                    flashAudio.play();
-                  }
-
-                  setTimeout(() => {
-                    handleToggleForm();
-                  }, flashTimer);
+                  captureImage();
                 }}
               >
                 <img
@@ -389,10 +408,7 @@ export default function Home() {
               <button
                 className="camera-button"
                 type="button"
-                onClick={() => {
-                  handleToggleCameraPopup();
-                  handleOpenCamera();
-                }}
+                onClick={OpenPopUp}
               >
                 <img
                   className="w-100"
