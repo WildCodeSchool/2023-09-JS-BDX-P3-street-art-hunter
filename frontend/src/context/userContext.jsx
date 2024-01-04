@@ -12,9 +12,9 @@ export default function UserContextProvider({ children }) {
 
   const [loggedUser, setLoggedUser] = useState(getLoggedUser());
   const [formData, setFormData] = useState({
-    pseudo: "",
+    username: "",
     email: "",
-    postal: "",
+    postcode: "",
     city: "",
     password: "",
     confirmation: "",

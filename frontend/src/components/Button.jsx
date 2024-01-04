@@ -15,7 +15,7 @@ export default function Button({
   }
 
   return (
-    <button className={buttonClass} type="button" onClick={onClick}>
+    <button className={buttonClass} type="submit" onClick={onClick}>
       {children}
     </button>
   );
