@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import Button from "../components/Button";
@@ -5,10 +6,19 @@ import Button from "../components/Button";
 export default function Register() {
   const { formData, registerUser, updateRegisterForm } = useUserContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     updateRegisterForm();
     registerUser();
+    try {
+      const response = await axios.post(
+        "http://localhost:3310/api/users/",
+        formData
+      );
+      console.info(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -17,16 +27,16 @@ export default function Register() {
       <div className="container">
         <div className="allow-scroll">
           <form className="mb-20">
-            <label htmlFor="pseudo" className="mb-10 ">
+            <label htmlFor="username" className="mb-10 ">
               Pseudo
             </label>
             <div className="input mb-10">
               <input
                 type="text"
-                name="pseudo"
-                id="pseudo"
-                value={formData.pseudo}
-                onChange={(e) => updateRegisterForm("pseudo", e.target.value)}
+                name="username"
+                id="username"
+                value={formData.username}
+                onChange={(e) => updateRegisterForm("username", e.target.value)}
               />
             </div>
 
@@ -44,16 +54,16 @@ export default function Register() {
               />
             </div>
 
-            <label htmlFor="postal" className="mb-10">
+            <label htmlFor="postcode" className="mb-10">
               Code Postal
             </label>
             <div className="input mb-10">
               <input
                 type="text"
-                name="postal"
-                id="postal"
-                value={formData.postal}
-                onChange={(e) => updateRegisterForm("postal", e.target.value)}
+                name="postcode"
+                id="postcode"
+                value={formData.postcode}
+                onChange={(e) => updateRegisterForm("postcode", e.target.value)}
               />
             </div>
 
@@ -75,7 +85,7 @@ export default function Register() {
             </label>
             <div className="input mb-10">
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 value={formData.password}
@@ -88,7 +98,7 @@ export default function Register() {
             </label>
             <div className="input mb-10">
               <input
-                type="text"
+                type="password"
                 name="confirmation"
                 id="confirmation"
                 value={formData.confirmation}
@@ -97,15 +107,14 @@ export default function Register() {
                 }
               />
             </div>
+            <Button
+              type="submit"
+              className="button mb-20"
+              onClick={handleSubmit}
+            >
+              Valider
+            </Button>
           </form>
-
-          <Button
-            type="Valider"
-            className="button mb-20"
-            onClick={handleSubmit}
-          >
-            Valider
-          </Button>
 
           <Link to="/connexion">
             <p className="mb-10">

@@ -82,7 +82,7 @@ export default function Ranking() {
       <div className="container ranking-page">
         <div className="allow-scroll">
           {usersRank.map((rank) => (
-            <p className="mb-30">
+            <p className="mb-30" key={rank.id}>
               <span>
                 <img src="/src/assets/coin1.png" alt="coin" /> x {rank.points}
               </span>
