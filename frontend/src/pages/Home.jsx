@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useLoaderData } from "react-router-dom";
 import CustomMarker from "../components/Marker";
@@ -337,37 +337,37 @@ export default function Home() {
   };
 
   return (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      options={mapOptions}
-      onLoad={(loadMap) => setMap(loadMap)}
-      onZoomChanged={handleZoomChange}
-    >
-      {arts.map((art) => (
-        <CustomMarker
-          key={art.id}
-          lat={art.lat}
-          initialZoomLevel
-          lng={art.long}
-          text={
-            <>
-              <span>{art.name}</span>
-              <br />
-              <span>Auteur: {art.author}</span>
-            </>
-          }
-        />
-      ))}
-
-      {userLocation.lat && (
-        <CustomCircle
-          lat={userLocation.lat}
-          lng={userLocation.lng}
-          zoom={zoomLevel}
-        />
-      )}
-    </GoogleMap>
+    <div>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        options={mapOptions}
+        onLoad={(loadMap) => setMap(loadMap)}
+        onZoomChanged={handleZoomChange}
+      >
+        {arts.map((art) => (
+          <CustomMarker
+            key={art.id}
+            lat={art.lat}
+            lng={art.long}
+            initialZoomLevel
+            text={
+              <>
+                <span>{art.name}</span>
+                <br />
+                <span>Auteur: {art.author}</span>
+              </>
+            }
+          />
+        ))}
+        {userLocation.lat && (
+          <CustomCircle
+            lat={userLocation.lat}
+            lng={userLocation.lng}
+            zoom={zoomLevel}
+          />
+        )}
+      </GoogleMap>
       <div className={`camera-popup${cameraPopup ? " active" : ""}`}>
         <div className="container container-small h-100 d-flex d-flex-center pos-r">
           <button
@@ -444,11 +444,7 @@ export default function Home() {
               />
             </button>
           ) : (
-            <button
-              className="camera-button"
-              type="button"
-              onClick={OpenPopUp}
-            >
+            <button className="camera-button" type="button" onClick={OpenPopUp}>
               <img
                 className="w-100"
                 src="./src/assets/camera.png"
@@ -458,9 +454,9 @@ export default function Home() {
           )}
         </div>
       )}
+      <audio id="flashSound" src="/src/assets/audio/flash-retro.wav">
+        <track kind="captions" />
+      </audio>
     </div>
-    <audio id="flashSound" src="/src/assets/audio/flash-retro.wav">
-      <track kind="captions" />
-    </audio>
   );
 }
