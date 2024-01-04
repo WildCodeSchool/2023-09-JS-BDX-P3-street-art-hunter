@@ -9,10 +9,11 @@ CREATE TABLE IF NOT EXISTS users (
     postcode VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    points INT NOT NULL,
-    is_admin BOOLEAN NOT NULL,
+    points INT NOT NULL DEFAULT 0,
+    is_admin BOOLEAN DEFAULT false,
     PRIMARY KEY (id)
 );
+
 
 CREATE TABLE IF NOT EXISTS street_art (
     id INT NOT NULL AUTO_INCREMENT,
