@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 const AbstractManager = require("./AbstractManager");
 
 class UserManager extends AbstractManager {
@@ -6,12 +8,18 @@ class UserManager extends AbstractManager {
   }
 
   async create(user) {
+    const hash = await UserManager.hashPassword(user.password);
+
     const [result] = await this.database.query(
       `insert into ${this.table} (username, email, postcode, city, password) values (?, ?, ?, ?, ?)`,
-      [user.username, user.email, user.postcode, user.city, user.password]
+      [user.username, user.email, user.postcode, user.city, hash]
     );
 
     return result.insertId;
+  }
+
+  static hashPassword(password, workFactor = 5) {
+    return bcrypt.hash(password, workFactor);
   }
 
   async read(id) {
