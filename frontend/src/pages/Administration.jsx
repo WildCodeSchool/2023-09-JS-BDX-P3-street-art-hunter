@@ -112,7 +112,7 @@ export default function Administration() {
 
         {/* Validations */}
 
-        <div className="allow-scroll pos-r tiny-allow-scroll">
+        <div className="allow-scroll pos-r">
           <div className="admin-validations bg-text-block">
             {activeButton ===
               buttons.find((button) => button.name === "Validations").id && (
