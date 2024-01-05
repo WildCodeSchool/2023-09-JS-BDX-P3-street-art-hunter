@@ -18,6 +18,25 @@ class UserManager extends AbstractManager {
     return result.insertId;
   }
 
+  async login({ username, password }) {
+    const [rows] = await this.database.query(
+      `select * from ${this.table} where  username = ? or email = ?`,
+      [username, username]
+    );
+
+    if (!rows.length) {
+      return undefined;
+    }
+
+    const user = rows[0];
+    // console.log(user);
+
+    const result = await bcrypt.compare(password, user.password);
+    // console.log(result);
+
+    return result ? user : undefined;
+  }
+
   static hashPassword(password, workFactor = 5) {
     return bcrypt.hash(password, workFactor);
   }

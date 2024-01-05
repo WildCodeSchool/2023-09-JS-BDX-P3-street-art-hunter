@@ -26,6 +26,8 @@ router.post("/users", validateUser, userControllers.add);
 router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
 
+router.post("/login", userControllers.postLogin);
+
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");
 // // const validateUser = require("./middlewares/validateUser");
