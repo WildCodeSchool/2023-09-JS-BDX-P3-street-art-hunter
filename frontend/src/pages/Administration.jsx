@@ -64,21 +64,8 @@ export default function Administration() {
     },
   ];
 
-  const artists = [
-    {
-      id: 1,
-      name: "A-Mo",
-      hashtag: "@amoarts",
-    },
-    {
-      id: 2,
-      name: "A-Mo",
-      hashtag: "@amoarts",
-    },
-  ];
-
   const [activeButton, setActiveButton] = useState(buttons[0].id);
-  const { users, removeUser } = useAdminContext();
+  const { users, removeUser, artists, removeArtist } = useAdminContext();
 
   const handleOptionClick = (id) => {
     setActiveButton(id);
@@ -169,9 +156,6 @@ export default function Administration() {
                           <p>Email : {user.email}</p>
                           <p>Code Postal : {user.postcode}</p>
                           <p>Ville : {user.city}</p>
-                          <p>
-                            Mot de passe : {"*".repeat(user.password.length)}
-                          </p>
                         </div>
                         <div className="admin-button-container">
                           <Button
@@ -235,15 +219,22 @@ export default function Administration() {
                   {artists.map((artist) => (
                     <div key={artist.id} className="admin-item">
                       <div className="admin-item-infos">
-                        <p>Artiste 001 : {artist.name}</p>
-                        <p>Site web : {artist.hashtag}</p>
-                        <p>Street-arts : 8</p>
+                        <p>
+                          Artiste {artist.id} : {artist.name}
+                        </p>
+                        <p>Biographie : {artist.biography}</p>
+                        <p>Site web : {artist.website}</p>
                       </div>
                       <div className="admin-button-container">
                         <Button color="yellow" className="button" type="button">
                           Modifier
                         </Button>
-                        <Button color="red" className="button" type="button">
+                        <Button
+                          color="red"
+                          className="button"
+                          type="button"
+                          onClick={removeArtist}
+                        >
                           Supprimer
                         </Button>
                       </div>
