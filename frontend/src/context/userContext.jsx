@@ -34,6 +34,7 @@ export default function UserContextProvider({ children }) {
     const existingUsers = getUsersFromDatabase();
     existingUsers.push(formData);
     localStorage.setItem("users", JSON.stringify(existingUsers));
+    alert("Inscription validée");
     navigate("/connexion");
   };
 

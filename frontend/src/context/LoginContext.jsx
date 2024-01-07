@@ -26,22 +26,20 @@ export default function LoginProvider({ children }) {
 
   const login = useCallback(async (credentials) => {
     try {
-      const response = await fetch("http://localhost:3310/api/users", {
-        method: "GET",
+      // console.log(credentials);
+      const response = await fetch("http://localhost:3310/api/login/", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(credentials),
       });
-      const users = await response.json();
+      if (response.ok) {
+        const data = await response.json();
+        const { token } = data;
 
-      const foundUser = users.find(
-        (user) =>
-          user.username === credentials.pseudo &&
-          user.password === credentials.password
-      );
-      if (foundUser !== undefined) {
         alert(`Content de vous revoir ${credentials.pseudo}`);
-        localStorage.setItem("user", JSON.stringify(foundUser));
+        localStorage.setItem("token", token);
         navigate("/");
       } else {
         alert("Identifiants incorrects !");
