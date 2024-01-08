@@ -35,6 +35,19 @@ router.post("/artists", artistControllers.add);
 router.put("/artists/:id", artistControllers.edit);
 router.delete("/artists/:id", artistControllers.destroy);
 
+// Pending Images
+
+const pendingImageControllers = require("./controllers/pendingImageControllers");
+const validatePendingImage = require("./middlewares/validatePendingImage");
+
+router.get("/admin/pendingImages", pendingImageControllers.pendingImage);
+router.get("/pendingImages/:id", pendingImageControllers.read);
+router.post(
+  "/pendingImages",
+  validatePendingImage,
+  pendingImageControllers.add
+);
+
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");
 // // const validateUser = require("./middlewares/validateUser");
