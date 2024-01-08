@@ -25,7 +25,7 @@ export default function Login() {
             </label>
             <div className="input mb-30">
               <input
-                value={formValue.pseudo}
+                value={formValue.username}
                 name="username"
                 onChange={onChange}
                 id="username"

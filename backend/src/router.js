@@ -19,6 +19,7 @@ const router = express.Router();
 
 // Import userControllers module for handling item-related operations
 const userControllers = require("./controllers/userControllers");
+const artistControllers = require("./controllers/artistControllers");
 const validateUser = require("./middlewares/validateUser");
 
 router.get("/users", userControllers.browse);
@@ -28,6 +29,12 @@ router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
 
 router.post("/login", userControllers.postLogin);
+
+router.get("/artists", artistControllers.browse);
+router.get("/artists/:id", artistControllers.read);
+router.post("/artists", artistControllers.add);
+router.put("/artists/:id", artistControllers.edit);
+router.delete("/artists/:id", artistControllers.destroy);
 
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");
