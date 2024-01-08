@@ -5,10 +5,12 @@
 // Import the manager modules responsible for handling data operations on the tables
 const UserManager = require("./models/UserManager");
 const PendingImageManager = require("./models/PendingImageManager");
+const ArtistManager = require("./models/ArtistManager");
 
 const managers = [
   UserManager,
   PendingImageManager,
+  ArtistManager,
   // Add other managers here
 ];
 

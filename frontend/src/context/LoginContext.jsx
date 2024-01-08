@@ -1,6 +1,9 @@
+import axios from "axios";
+
 import { createContext, useCallback, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { jwtDecode } from "jwt-decode";
 
 const loginContext = createContext();
 
@@ -8,16 +11,17 @@ export default function LoginProvider({ children }) {
   const navigate = useNavigate();
 
   const isUserConnected = () => {
-    if (localStorage.getItem("user")) {
+    if (localStorage.getItem("token")) {
       return true;
     }
     return false;
   };
 
   const isUserAdmin = () => {
-    if (localStorage.getItem("user")) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user.is_admin === 1) {
+    if (localStorage.getItem("token")) {
+      const data = localStorage.getItem("token");
+      const user = jwtDecode(data);
+      if (user.admin === 1) {
         return true;
       }
     }
@@ -26,33 +30,22 @@ export default function LoginProvider({ children }) {
 
   const login = useCallback(async (credentials) => {
     try {
-      const response = await fetch("http://localhost:3310/api/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const users = await response.json();
-
-      const foundUser = users.find(
-        (user) =>
-          user.username === credentials.pseudo &&
-          user.password === credentials.password
-      );
-      if (foundUser !== undefined) {
-        alert(`Content de vous revoir ${credentials.pseudo}`);
-        localStorage.setItem("user", JSON.stringify(foundUser));
-        navigate("/");
-      } else {
-        alert("Identifiants incorrects !");
-      }
+      axios
+        .post("http://localhost:3310/api/login/", credentials)
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (err) {
       console.error(err);
     }
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/");
   };
 

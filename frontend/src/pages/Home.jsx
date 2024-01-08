@@ -395,6 +395,7 @@ export default function Home() {
                   style={{ width: "100%" }}
                   className="capture-preview"
                 />
+
                 <div className="d-flex d-flex-space-around mt-30">
                   <Button
                     className="button"

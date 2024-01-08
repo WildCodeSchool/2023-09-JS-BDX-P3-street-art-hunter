@@ -1,4 +1,9 @@
+const jwt = require("jsonwebtoken");
 const tables = require("../tables");
+
+function generateAccessToken(data) {
+  return jwt.sign(data, process.env.APP_SECRET);
+}
 
 const browse = async (_, res, next) => {
   try {
@@ -59,6 +64,21 @@ const destroy = async (req, res, next) => {
     next(err);
   }
 };
+const postLogin = (req, res) => {
+  tables.users.login(req.body).then((user) => {
+    if (user) {
+      // todo : filtrer les données à envoyer
+      const token = generateAccessToken({
+        email: user.email,
+        username: user.username,
+        admin: user.is_admin,
+      });
+      res.send({ token });
+    } else {
+      res.status(401).send({ error: "Identifiant incorrect!!!" });
+    }
+  });
+};
 
 module.exports = {
   browse,
@@ -66,4 +86,5 @@ module.exports = {
   add,
   edit,
   destroy,
+  postLogin,
 };
