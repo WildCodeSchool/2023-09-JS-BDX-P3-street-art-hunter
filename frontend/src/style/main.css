@@ -62,6 +62,10 @@ p {
   line-height: 1.5rem;
 }
 
+.tiny-text {
+  font-size: 10px;
+}
+
 .container {
   width: 100%;
   max-width: 1224px;
@@ -638,6 +642,13 @@ input {
   transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
 }
 
+.admin-page.allow-scroll-container {
+  padding-inline: 12px;
+}
+.admin-page.allow-scroll-container .allow-scroll {
+  padding-top: 4px;
+}
+
 .block {
   height: 57px;
   width: 58px;
@@ -664,7 +675,7 @@ input {
 }
 .admin-item-list .admin-item {
   width: 100%;
-  padding: 20px;
+  padding: 20px 0 30px;
   border-bottom: 4px solid black;
 }
 .admin-item-list .admin-item:last-of-type {
@@ -675,11 +686,13 @@ input {
 }
 .admin-item-list .admin-item img {
   width: 100%;
+  max-width: 430px;
   height: auto;
   margin-bottom: 15px;
 }
 .admin-item-list .admin-item .has-two-items {
   display: flex;
+  justify-content: space-evenly;
 }
 .admin-item-list .admin-item .has-two-items .admin-item-child {
   text-align: center;
@@ -696,7 +709,8 @@ input {
 .admin-item-list .admin-button-container {
   margin-top: 30px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 0 70px;
 }
 .admin-item-list .admin-button-container button {
   max-width: 150px;
@@ -753,13 +767,9 @@ label {
   .admin-artists .admin-item .admin-item-infos {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .admin-users .admin-item .admin-item-infos p,
-  .admin-streetarts .admin-item .admin-item-infos p,
-  .admin-artists .admin-item .admin-item-infos p {
-    width: 50%;
+    justify-content: flex-start;
+    align-items: start;
+    gap: 20px;
   }
   .admin-users .admin-item .admin-item-infos img,
   .admin-streetarts .admin-item .admin-item-infos img,

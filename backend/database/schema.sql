@@ -252,3 +252,7 @@ SELECT pending_image.id,
       LEFT JOIN users 
       ON pending_image.user_id = users.id
       WHERE pending_image.status = 'pending';
+
+UPDATE users
+SET is_admin = 1
+WHERE id = 2;

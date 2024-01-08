@@ -59,6 +59,9 @@ p {
   font-size: 1rem;
   line-height: 1.5rem;
 }
+.tiny-text {
+  font-size: 10px;
+}
 
 //// Spacing / Margins
 
@@ -634,6 +637,14 @@ input {
 
 // Administration
 
+.admin-page.allow-scroll-container {
+  padding-inline: 12px;
+
+  .allow-scroll {
+    padding-top: 4px;
+  }
+}
+
 .block {
   height: 57px;
   width: 58px;
@@ -662,7 +673,7 @@ input {
 
   .admin-item {
     width: 100%;
-    padding: 20px;
+    padding: 20px 0 30px;
     border-bottom: 4px solid black;
 
     &:last-of-type {
@@ -674,11 +685,13 @@ input {
     }
     img {
       width: 100%;
+      max-width: 430px;
       height: auto;
       margin-bottom: 15px;
     }
     .has-two-items {
       display: flex;
+      justify-content: space-evenly;
       .admin-item-child {
         text-align: center;
         max-width: 50%;
@@ -700,7 +713,8 @@ input {
   .admin-button-container {
     margin-top: 30px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 0 70px;
 
     button {
       max-width: 150px;
@@ -785,11 +799,12 @@ label {
       .admin-item-infos {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: start;
+        gap: 20px;
 
         p {
-          width: 50%;
+          // width: 50%;
         }
         img {
           margin-bottom: 0;
