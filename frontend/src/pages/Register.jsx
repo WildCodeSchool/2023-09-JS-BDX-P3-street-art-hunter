@@ -4,12 +4,12 @@ import { useUserContext } from "../context/userContext";
 import Button from "../components/Button";
 
 export default function Register() {
-  const { formData, registerUser, updateRegisterForm } = useUserContext();
+  const { formData, updateRegisterForm } = useUserContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     updateRegisterForm();
-    registerUser();
+    // registerUser();
     try {
       const response = await axios.post(
         "http://localhost:3310/api/users/",
