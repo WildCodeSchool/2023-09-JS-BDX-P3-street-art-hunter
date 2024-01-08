@@ -36,6 +36,7 @@ const validatePendingImage = async (req, res, next) => {
     imgSrc,
     latitude,
     longitude,
+    status,
   } = req.body;
 
   if (
@@ -116,8 +117,10 @@ const validatePendingImage = async (req, res, next) => {
 
   // Status
 
+  const defaultStatus = status === null ? "pending" : status;
   const validStatusValues = ["pending", "validate", "refused"];
-  if (req.body.status && !validStatusValues.includes(req.body.status)) {
+
+  if (!validStatusValues.includes(defaultStatus)) {
     errors.push("Le statut doit être 'pending', 'validate' ou 'refused'.");
   }
 

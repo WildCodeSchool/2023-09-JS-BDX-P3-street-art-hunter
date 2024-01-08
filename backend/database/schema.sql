@@ -209,3 +209,24 @@ VALUES ( 'This is not art', 'https://www.street-artwork.com/uploads/document/5c7
 INSERT INTO street_art ( title, image, latitude, longitude, address, creation_date, author)
 VALUES ( 'La balaine bleue', 'https://www.street-artwork.com/uploads/document/64208dc1daabd529309338.jpg', 44.853000, -0.567000, '76 Quai des Chartrons 33000 Bordeaux France', '2023-03-26', 'A-mo');
 
+SELECT * FROM pending_image;
+
+SELECT pending_image.id, 
+              pending_image.user_id,
+              pending_image.status,
+              pending_image.img_src, 
+              pending_image.latitude, 
+              pending_image.longitude, 
+              pending_image.upload_date, 
+              pending_image.upload_time, 
+              pending_image.street_art_id, 
+              street_art.image as street_art_image, 
+              street_art.latitude as street_art_latitude, 
+              street_art.longitude as steet_art_longitude,
+              users.username as username
+      FROM pending_image
+      LEFT JOIN street_art
+      ON pending_image.street_art_id = street_art.id
+      LEFT JOIN users 
+      ON pending_image.user_id = users.id
+      WHERE pending_image.status = 'pending'

@@ -2,13 +2,22 @@ const tables = require("../tables");
 
 // Get
 
+const pendingImage = async (_, res, next) => {
+  try {
+    const pendingImages = await tables.pending_image.readAdmin();
+    res.json(pendingImages);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const read = async (req, res, next) => {
   try {
-    const pendingImage = await tables.pendingImages.read(req.params.id);
-    if (pendingImage == null) {
+    const pendingImages = await tables.pending_image.read(req.params.id);
+    if (pendingImages == null) {
       res.sendStatus(404);
     } else {
-      res.json(pendingImage);
+      res.json(pendingImages);
     }
   } catch (err) {
     next(err);
@@ -18,10 +27,10 @@ const read = async (req, res, next) => {
 // Post
 
 const add = async (req, res, next) => {
-  const pendingImage = req.body;
+  const pendingImages = req.body;
 
   try {
-    const insertId = await tables.pendingImages.create(pendingImage);
+    const insertId = await tables.pending_image.create(pendingImages);
     res.status(201).json({ insertId });
   } catch (err) {
     next(err);
@@ -29,6 +38,7 @@ const add = async (req, res, next) => {
 };
 
 module.exports = {
-  add,
+  pendingImage,
   read,
+  add,
 };

@@ -32,7 +32,8 @@ router.delete("/users/:id", userControllers.destroy);
 const pendingImageControllers = require("./controllers/pendingImageControllers");
 const validatePendingImage = require("./middlewares/validatePendingImage");
 
-router.get("/mon-compte/arts/:id", pendingImageControllers.read);
+router.get("/admin/pendingImages", pendingImageControllers.pendingImage);
+router.get("/pendingImages/:id", pendingImageControllers.read);
 router.post(
   "/pendingImages",
   validatePendingImage,
