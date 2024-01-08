@@ -12,7 +12,6 @@ router.use(
     credentials: true,
   })
 );
-
 /* ************************************************************************* */
 // Define Your API Routes Here
 /* ************************************************************************* */
@@ -36,9 +35,7 @@ router.post("/artists", artistControllers.add);
 router.put("/artists/:id", artistControllers.edit);
 router.delete("/artists/:id", artistControllers.destroy);
 
-// Import streetArtsControllers module for handling item-related operations
-// const streetArtsControllers = require("./controllers/streetArtsControllers");
-// // const validateUser = require("./middlewares/validateUser");
+// Pending Images
 
 const pendingImageControllers = require("./controllers/pendingImageControllers");
 const validatePendingImage = require("./middlewares/validatePendingImage");
@@ -51,7 +48,13 @@ router.post(
   pendingImageControllers.add
 );
 
-// Uploads
+// Import streetArtsControllers module for handling item-related operations
+// const streetArtsControllers = require("./controllers/streetArtsControllers");
+// // const validateUser = require("./middlewares/validateUser");
+
+// router.get("/validateStreetArts", streetArtsControllers.browse);
+// router.get("/validateStreetArts/:id", streetArtsControllers.read);
+// router.post("/validateStreetArts", streetArtsControllers.add);
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
