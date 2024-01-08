@@ -121,7 +121,7 @@ VALUES ( 1, 'Cosmic Visitor', 'https://www.street-artwork.com/uploads/document/5
 
 -- Ligne 4
 INSERT INTO street_art ( user_id, title, image, latitude, longitude, address, creation_date, author)
-VALUES ( 1, 'Plaisir de faire', 'https://www.street-artwork.com/uploads/document/5ba7cef2f23c3139271885.jpg', 44.83358 -0.565358, '1 Rue Planterose 33800 Bordeaux France', '2018-09-23', 'inconnu');
+VALUES ( 1, 'Plaisir de faire', 'https://www.street-artwork.com/uploads/document/5ba7cef2f23c3139271885.jpg', 44.83358, -0.565358, '1 Rue Planterose 33800 Bordeaux France', '2018-09-23', 'inconnu');
 
 -- Ligne 5
 INSERT INTO street_art ( user_id, title, image, latitude, longitude, address, creation_date, author)
