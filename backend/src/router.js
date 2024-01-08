@@ -1,17 +1,18 @@
 const express = require("express");
-const cors = require("cors");
+// const cors = require("cors");
 const multer = require("multer");
 
 const router = express.Router();
 
-const corsOrigin = "http://localhost:3000";
-router.use(
-  cors({
-    origin: [corsOrigin],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+// DEPLACER SUR APP:
+// const corsOrigin = "http://localhost:3000";
+// router.use(
+//   cors({
+//     origin: [corsOrigin],
+//     methods: ["GET", "POST"],
+//     credentials: true,
+//   })
+// );
 /* ************************************************************************* */
 // Define Your API Routes Here
 /* ************************************************************************* */

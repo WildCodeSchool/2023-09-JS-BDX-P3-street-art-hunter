@@ -26,7 +26,6 @@ export default function LoginProvider({ children }) {
 
   const login = useCallback(async (credentials) => {
     try {
-      // console.log(credentials);
       const response = await fetch("http://localhost:3310/api/login/", {
         method: "POST",
         headers: {

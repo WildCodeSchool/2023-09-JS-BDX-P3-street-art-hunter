@@ -5,7 +5,7 @@ import { useLogin } from "../context/LoginContext";
 
 export default function Login() {
   const [formValue, setFormValue] = useState({
-    pseudo: "",
+    username: "",
     password: "",
   });
 
@@ -26,9 +26,9 @@ export default function Login() {
             <div className="input mb-30">
               <input
                 value={formValue.pseudo}
-                name="pseudo"
+                name="username"
                 onChange={onChange}
-                id="pseudo"
+                id="username"
                 required
                 label="Pseudo"
                 type="text"
