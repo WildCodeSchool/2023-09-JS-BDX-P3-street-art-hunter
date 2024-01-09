@@ -2,14 +2,58 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import Button from "../components/Button";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function Register() {
-  const { formData, updateRegisterForm } = useUserContext();
+  const {
+    formData,
+    alertMessage,
+    setAlertMessage,
+    updateRegisterForm,
+    navigateToLogin,
+    isEmailValid,
+  } = useUserContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     updateRegisterForm();
-    // registerUser();
+    setAlertMessage({
+      username: [],
+      email: [],
+      postcode: [],
+      city: [],
+      password: [],
+      confirmation: [],
+    });
+
+    if (!formData.username || !formData.email || !formData.password) {
+      setAlertMessage((prev) => ({
+        ...prev,
+        username: ["Ce champ est requis."],
+      }));
+    }
+
+    if (formData.username.length > 20) {
+      setAlertMessage((prev) => ({
+        ...prev,
+        username: ["Le pseudo ne doit pas dépasser 20 caractères."],
+      }));
+    }
+
+    if (!isEmailValid(formData.email)) {
+      setAlertMessage((prev) => ({
+        ...prev,
+        email: ["Le format de l'email est incorrect."],
+      }));
+    }
+
+    if (formData.password.length < 6) {
+      setAlertMessage((prev) => ({
+        ...prev,
+        password: ["Le mot de passe doit contenir minimum 6 caractères."],
+      }));
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:3310/api/users/",
@@ -19,6 +63,7 @@ export default function Register() {
     } catch (error) {
       console.error(error);
     }
+    navigateToLogin();
   };
 
   return (
@@ -38,6 +83,12 @@ export default function Register() {
                 value={formData.username}
                 onChange={(e) => updateRegisterForm("username", e.target.value)}
               />
+              {alertMessage.username &&
+                alertMessage.username.map((message) => (
+                  <ErrorMessage key={message.id}>
+                    {message.username}
+                  </ErrorMessage>
+                ))}
             </div>
 
             <label htmlFor="email" className="mb-10">

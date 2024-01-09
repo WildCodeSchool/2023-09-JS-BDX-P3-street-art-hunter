@@ -1,12 +1,15 @@
 import { createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 export default function UserContextProvider({ children }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const navigateToLogin = () => {
+    navigate("/connexion");
+  };
   // Récupère les infos de l'utilisateur actuellement connecté
   // const getLoggedUser = () =>
   //   JSON.parse(localStorage.getItem("loggedUser") ?? "{}");
@@ -24,6 +27,21 @@ export default function UserContextProvider({ children }) {
   const updateRegisterForm = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
+
+  const [alertMessage, setAlertMessage] = useState({
+    username: [],
+    email: [],
+    postcode: [],
+    city: [],
+    password: [],
+    confirmation: [],
+  });
+
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   // Récupère tous les utilisateurs stockés en BDD
   // const getUsersFromDatabase = () => {
   //   return JSON.parse(localStorage.getItem("users") ?? "[]");
@@ -84,6 +102,9 @@ export default function UserContextProvider({ children }) {
     () => ({
       formData,
       setFormData,
+      alertMessage,
+      setAlertMessage,
+      isEmailValid,
       // saveLoggedUser,
       // login,
       // logout,
@@ -94,6 +115,7 @@ export default function UserContextProvider({ children }) {
       // users,
       // isLocalStorageKeyExists,
       keyToCheck,
+      navigateToLogin,
     }),
     [formData, setFormData]
   );
