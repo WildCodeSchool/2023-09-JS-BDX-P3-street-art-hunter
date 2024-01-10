@@ -8,8 +8,9 @@ export default function TitleScreen() {
             <div className="cloud cloud-2" />
             <img className="logo mt-60" src="src/assets/logo.png" alt="logo" />
           </div>
-          <div className="d-flex d-flex-center">
+          <div className="d-flex d-flex-center d-flex-column">
             <h4>Cliquez pour commencer</h4>
+            <span className="start-btn mt-30">START</span>
             <div className="hill" />
             <div className="bush" />
           </div>
