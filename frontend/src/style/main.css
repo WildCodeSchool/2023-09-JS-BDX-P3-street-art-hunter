@@ -665,6 +665,10 @@ input {
   gap: 20px;
 }
 
+button h4 {
+  color: white;
+}
+
 .exclamation-button {
   position: fixed;
   right: 16px;
