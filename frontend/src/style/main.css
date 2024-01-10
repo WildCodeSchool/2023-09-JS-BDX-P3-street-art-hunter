@@ -580,39 +580,25 @@ input {
 .intro-container {
   padding-bottom: 126px;
 }
-
-.ground {
-  position: absolute;
-  bottom: 0;
-  background-color: red;
-  height: 126px;
-  left: 0;
-  background-image: url("/src/assets/ground.png");
-  background-size: 63px;
-}
-
-.cloud {
+.intro-container .cloud {
   background-image: url("/src/assets/cloud.png");
   background-size: 100%;
   background-repeat: no-repeat;
   position: absolute;
 }
-
-.cloud-1 {
+.intro-container .cloud-1 {
   height: 49px;
   width: 97px;
   top: 30px;
   left: 20px;
 }
-
-.cloud-2 {
+.intro-container .cloud-2 {
   height: 63px;
   width: 125px;
   right: 40px;
   top: 380px;
 }
-
-.hill {
+.intro-container .hill {
   position: absolute;
   height: 37px;
   width: 96px;
@@ -622,8 +608,7 @@ input {
   background-size: 100%;
   background-repeat: no-repeat;
 }
-
-.bush {
+.intro-container .bush {
   position: absolute;
   height: 32px;
   width: 129px;
@@ -633,13 +618,7 @@ input {
   background-size: 100%;
   background-repeat: no-repeat;
 }
-
-.logo {
-  width: 100%;
-  max-width: 400px;
-}
-
-.start-btn {
+.intro-container .start-btn {
   text-align: center;
   display: inline-block;
   font-weight: bold;
@@ -653,11 +632,25 @@ input {
   box-shadow: 0 0.2em gray;
   cursor: pointer;
 }
-
-.start-btn:active {
+.intro-container .start-btn:active {
   box-shadow: none;
   position: relative;
   top: 0.2em;
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  background-color: red;
+  height: 126px;
+  left: 0;
+  background-image: url("/src/assets/ground.png");
+  background-size: 63px;
+}
+
+.logo {
+  width: 100%;
+  max-width: 400px;
 }
 
 .exclamation-button {
