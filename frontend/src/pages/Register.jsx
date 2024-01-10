@@ -1,17 +1,10 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Button from "../components/Button";
-// import ErrorMessage from "../components/ErrorMessage";
 import { useLogin } from "../context/LoginContext";
 
 export default function Register() {
   const { register } = useLogin();
-
-  // const navigate = useNavigate();
-
-  // const navigateToLogin = () => {
-  //   navigate("/connexion");
-  // };
 
   const [formData, setFormData] = useState({
     username: "",
@@ -25,62 +18,49 @@ export default function Register() {
   const updateRegisterForm = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const [alertMessage, setAlertMessage] = useState({
+    username: [],
+    email: [],
+    postcode: [],
+    city: [],
+    password: [],
+    confirmation: [],
+  });
 
-  // const [alertMessage, setAlertMessage] = useState({
-  //   username: [],
-  //   email: [],
-  //   postcode: [],
-  //   city: [],
-  //   password: [],
-  //   confirmation: [],
-  // });
-
-  // const isEmailValid = (email) => {
-  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   return emailRegex.test(email);
-  // };
+  const validateField = (fieldName, value) => {
+    switch (fieldName) {
+      case "username":
+        return !value ? ["Champ requis"] : [];
+      case "email":
+        return !value || !isEmailValid(value) ? ["Adresse email invalide"] : [];
+      case "password":
+        return !value
+          ? ["Le mot de passe doit contenir minimum 6 caractères."]
+          : [];
+      case "confirmation":
+        return !value ? ["Les mots de passes ne sont pas identiques."] : [];
+      default:
+        return [];
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const updatedAlerts = {};
+    for (const fieldName of Object.keys(formData)) {
+      const fieldErrors = validateField(fieldName, formData[fieldName]);
+      updatedAlerts[fieldName] = fieldErrors;
+    }
+    if (formData.password !== formData.confirmation) {
+      updatedAlerts.confirmation = ["Les mots de passe ne correspondent pas"];
+    }
+    setAlertMessage(updatedAlerts);
     updateRegisterForm();
-    // setAlertMessage({
-    //   username: [],
-    //   email: [],
-    //   postcode: [],
-    //   city: [],
-    //   password: [],
-    //   confirmation: [],
-    // });
-
-    // if (!formData.username || !formData.email || !formData.password) {
-    //   setAlertMessage((prev) => ({
-    //     ...prev,
-    //     username: ["Ce champ est requis."],
-    //   }));
-    // }
-
-    // if (formData.username.length > 20) {
-    //   setAlertMessage((prev) => ({
-    //     ...prev,
-    //     username: ["Le pseudo ne doit pas dépasser 20 caractères."],
-    //   }));
-    // }
-
-    // if (!isEmailValid(formData.email)) {
-    //   setAlertMessage((prev) => ({
-    //     ...prev,
-    //     email: ["Le format de l'email est incorrect."],
-    //   }));
-    // }
-
-    // if (formData.password.length < 6) {
-    //   setAlertMessage((prev) => ({
-    //     ...prev,
-    //     password: ["Le mot de passe doit contenir minimum 6 caractères."],
-    //   }));
-    // }
     register(formData);
-    // navigateToLogin();
   };
 
   return (
@@ -100,13 +80,10 @@ export default function Register() {
                 value={formData.username}
                 onChange={(e) => updateRegisterForm("username", e.target.value)}
               />
-              {/* {alertMessage.username &&
-                alertMessage.username.map((message) => (
-                  <ErrorMessage key={message.id}>
-                    {message.username}
-                  </ErrorMessage>
-                ))} */}
             </div>
+            {alertMessage.username.length > 0 && (
+              <div className="error-message">{alertMessage.username}</div>
+            )}
 
             <label htmlFor="email" className="mb-10">
               Adresse email
@@ -121,7 +98,9 @@ export default function Register() {
                 onChange={(e) => updateRegisterForm("email", e.target.value)}
               />
             </div>
-
+            {alertMessage.email.length > 0 && (
+              <div className="error-message">{alertMessage.email}</div>
+            )}
             <label htmlFor="postcode" className="mb-10">
               Code Postal
             </label>
@@ -160,6 +139,9 @@ export default function Register() {
                 onChange={(e) => updateRegisterForm("password", e.target.value)}
               />
             </div>
+            {alertMessage.password.length > 0 && (
+              <div className="error-message">{alertMessage.password}</div>
+            )}
 
             <label htmlFor="confirmation" className="mb-10">
               Confirmer le mot de passe
@@ -175,6 +157,9 @@ export default function Register() {
                 }
               />
             </div>
+            {alertMessage.confirmation.length > 0 && (
+              <div className="error-message">{alertMessage.confirmation}</div>
+            )}
           </form>
           <Button type="submit" className="button mb-20" onClick={handleSubmit}>
             Valider

@@ -64,7 +64,8 @@ export default function LoginProvider({ children, apiService }) {
   const register = async (formData) => {
     try {
       setUser(await axios.post("http://localhost:3310/api/users/", formData));
-      alert(`Bienvenu ${formData.email}`);
+      alert(`Bienvenu ${formData.username}, ton inscription est validée`);
+      navigate("/connexion");
     } catch (err) {
       alert(err.message);
     }
