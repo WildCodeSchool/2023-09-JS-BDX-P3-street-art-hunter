@@ -1,14 +1,17 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 function App() {
+  const location = useLocation();
+  const isTitleScreen = location.pathname === "/titlescreen";
+
   return (
     <>
       <main>
         <Outlet />
       </main>
-      <Navbar />
+      {!isTitleScreen && <Navbar />}
     </>
   );
 }
