@@ -199,6 +199,10 @@ p {
   justify-content: space-between;
 }
 
+.d-flex-wrap {
+  flex-wrap: wrap;
+}
+
 .pos-r {
   position: relative;
 }
@@ -655,6 +659,10 @@ input {
 .logo {
   width: 100%;
   max-width: 400px;
+}
+
+.login-button {
+  gap: 20px;
 }
 
 .exclamation-button {
