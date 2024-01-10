@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
-import Account from "./pages/Account";
+// import Account from "./pages/Account";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
@@ -13,8 +13,10 @@ import Administration from "./pages/Administration";
 import Style from "./pages/Style";
 import TitleScreen from "./pages/TitleScreen";
 import { LoginProvider } from "./context/LoginContext";
-import { UserContextProvider } from "./context/userContext";
 import { AdminContextProvider } from "./context/AdminContext";
+import ApiService from "./services/api.services";
+
+const apiService = new ApiService();
 
 function getLocalisation() {
   return new Promise((resolve, reject) => {
@@ -38,14 +40,22 @@ function getLocalisation() {
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    loader: async () => {
+      try {
+        const data = await apiService.get("http://localhost:3310/api/users/me");
+        return { preloadUser: data ?? null };
+      } catch (err) {
+        console.error(err.message);
+        return null;
+      }
+    },
     element: (
-      <UserContextProvider>
-        <LoginProvider>
-          <AdminContextProvider>
-            <App />
-          </AdminContextProvider>
-        </LoginProvider>
-      </UserContextProvider>
+      <LoginProvider apiService={apiService}>
+        <AdminContextProvider>
+          <App />
+        </AdminContextProvider>
+      </LoginProvider>
     ),
     children: [
       {
@@ -62,18 +72,17 @@ const router = createBrowserRouter([
         element: <Gallery />,
       },
       {
-        path: "/mon-compte",
-
-        children: [
-          {
-            path: "/mon-compte/informations",
-            element: <Account />,
-          },
-          {
-            path: "/mon-compte/arts",
-            element: <Account />,
-          },
-        ],
+        // path: "/mon-compte",
+        // children: [
+        //   {
+        //     path: "/mon-compte/informations",
+        //     element: <Account />,
+        //   },
+        //   {
+        //     path: "/mon-compte/arts",
+        //     element: <Account />,
+        //   },
+        // ],
       },
       {
         path: "/connexion",
