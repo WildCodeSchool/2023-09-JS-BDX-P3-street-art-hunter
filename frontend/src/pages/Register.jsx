@@ -1,12 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import Button from "../components/Button";
 import { useLogin } from "../context/LoginContext";
 
 export default function Register() {
   const { register } = useLogin();
-
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -20,12 +18,10 @@ export default function Register() {
   const updateRegisterForm = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
-
   const isEmailValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
   const [alertMessage, setAlertMessage] = useState({
     username: [],
     email: [],
@@ -41,7 +37,6 @@ export default function Register() {
         return !value ? ["Champ requis"] : [];
       case "email":
         return !value || !isEmailValid(value) ? ["Adresse email invalide"] : [];
-      // Ajoutez d'autres validations au besoin pour d'autres champs
       case "password":
         return !value
           ? ["Le mot de passe doit contenir minimum 6 caractères."]
@@ -55,41 +50,6 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // if (!formData.username) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     username: ["champs requis"],
-    //   }));
-    // } else if (formData.username) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     username: [],
-    //   }));
-    // }
-    // if (formData.username.length > 20) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     username: ["Le pseudo ne doit pas dépasser 20 caractères."],
-    //   }));
-    // } else if (formData.username) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     username: [],
-    //   }));
-    // }
-    // if (!isEmailValid(formData.email)) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     email: ["Le format de l'email est incorrect."],
-    //   }));
-    // } else if (formData.email) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     email: [],
-    //   }));
-    // }
-
     const updatedAlerts = {};
     for (const fieldName of Object.keys(formData)) {
       const fieldErrors = validateField(fieldName, formData[fieldName]);
@@ -99,22 +59,8 @@ export default function Register() {
       updatedAlerts.confirmation = ["Les mots de passe ne correspondent pas"];
     }
     setAlertMessage(updatedAlerts);
-
-    // if (formData.password.length < 6) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     password: ["Le mot de passe doit contenir minimum 6 caractères."],
-    //   }));
-    // } else if (formData.password) {
-    //   setAlertMessage((alert) => ({
-    //     ...alert,
-    //     password: [],
-    //   }));
     updateRegisterForm();
     register(formData);
-    if (alertMessage.length === 0) {
-      navigate("/connexion");
-    }
   };
 
   return (
