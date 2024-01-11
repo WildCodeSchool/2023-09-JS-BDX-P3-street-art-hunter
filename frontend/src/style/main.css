@@ -62,6 +62,10 @@ p {
   line-height: 1.5rem;
 }
 
+.tiny-text {
+  font-size: 10px;
+}
+
 .container {
   width: 100%;
   max-width: 1224px;
@@ -195,6 +199,10 @@ p {
   justify-content: space-between;
 }
 
+.d-flex-wrap {
+  flex-wrap: wrap;
+}
+
 .pos-r {
   position: relative;
 }
@@ -203,8 +211,16 @@ p {
   height: 100%;
 }
 
+.vh-100 {
+  height: 100vh;
+}
+
 .w-100 {
   width: 100%;
+}
+
+.vw-100 {
+  width: 100vw;
 }
 
 .button,
@@ -432,6 +448,10 @@ p {
   width: calc(100% - 12px);
 }
 
+.has-two-children > div {
+  height: 50%;
+}
+
 label {
   display: block;
 }
@@ -565,6 +585,90 @@ input {
   content: "Fermer";
 }
 
+.intro-container {
+  padding-bottom: 126px;
+}
+.intro-container .cloud {
+  background-image: url("/src/assets/cloud.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+.intro-container .cloud-1 {
+  height: 49px;
+  width: 97px;
+  top: 30px;
+  left: 20px;
+}
+.intro-container .cloud-2 {
+  height: 63px;
+  width: 125px;
+  right: 40px;
+  top: 380px;
+}
+.intro-container .hill {
+  position: absolute;
+  height: 37px;
+  width: 96px;
+  top: calc(100% - 160px);
+  right: 30px;
+  background-image: url("/src/assets/hill.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.intro-container .bush {
+  position: absolute;
+  height: 32px;
+  width: 129px;
+  top: calc(100% - 160px);
+  left: 30px;
+  background-image: url("/src/assets/bush.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.intro-container .start-btn {
+  text-align: center;
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px 0 10px 10px;
+  background-color: lightgray;
+  text-shadow:
+    -1px -1px black,
+    1px 1px white;
+  color: gray;
+  border-radius: 7px;
+  box-shadow: 0 0.2em gray;
+  cursor: pointer;
+}
+.intro-container .start-btn:active {
+  box-shadow: none;
+  position: relative;
+  top: 0.2em;
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  background-color: red;
+  height: 126px;
+  left: 0;
+  background-image: url("/src/assets/ground.png");
+  background-size: 63px;
+}
+
+.logo {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-button {
+  gap: 20px;
+}
+
+button h4 {
+  color: white;
+}
+
 .exclamation-button {
   position: fixed;
   right: 16px;
@@ -638,6 +742,13 @@ input {
   transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
 }
 
+.admin-page.allow-scroll-container {
+  padding-inline: 12px;
+}
+.admin-page.allow-scroll-container .allow-scroll {
+  padding-top: 4px;
+}
+
 .block {
   height: 57px;
   width: 58px;
@@ -664,7 +775,7 @@ input {
 }
 .admin-item-list .admin-item {
   width: 100%;
-  padding: 20px;
+  padding: 20px 0 30px;
   border-bottom: 4px solid black;
 }
 .admin-item-list .admin-item:last-of-type {
@@ -675,11 +786,13 @@ input {
 }
 .admin-item-list .admin-item img {
   width: 100%;
+  max-width: 430px;
   height: auto;
   margin-bottom: 15px;
 }
 .admin-item-list .admin-item .has-two-items {
   display: flex;
+  justify-content: space-evenly;
 }
 .admin-item-list .admin-item .has-two-items .admin-item-child {
   text-align: center;
@@ -696,7 +809,8 @@ input {
 .admin-item-list .admin-button-container {
   margin-top: 30px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 0 70px;
 }
 .admin-item-list .admin-button-container button {
   max-width: 150px;
@@ -753,13 +867,9 @@ label {
   .admin-artists .admin-item .admin-item-infos {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .admin-users .admin-item .admin-item-infos p,
-  .admin-streetarts .admin-item .admin-item-infos p,
-  .admin-artists .admin-item .admin-item-infos p {
-    width: 50%;
+    justify-content: flex-start;
+    align-items: start;
+    gap: 20px;
   }
   .admin-users .admin-item .admin-item-infos img,
   .admin-streetarts .admin-item .admin-item-infos img,

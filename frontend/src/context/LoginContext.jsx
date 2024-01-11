@@ -1,14 +1,22 @@
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import axios from "axios";
-
-import { createContext, useCallback, useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode";
+import ApiService from "../services/api.services";
 
 const loginContext = createContext();
 
-export default function LoginProvider({ children }) {
+export default function LoginProvider({ children, apiService }) {
   const navigate = useNavigate();
+  const givenData = useLoaderData();
+  const [user, setUser] = useState(givenData?.preloadUser?.data);
 
   const isUserConnected = () => {
     if (localStorage.getItem("token")) {
@@ -20,8 +28,8 @@ export default function LoginProvider({ children }) {
   const isUserAdmin = () => {
     if (localStorage.getItem("token")) {
       const data = localStorage.getItem("token");
-      const user = jwtDecode(data);
-      if (user.admin === 1) {
+      const userData = jwtDecode(data);
+      if (userData.admin === 1) {
         return true;
       }
     }
@@ -30,27 +38,55 @@ export default function LoginProvider({ children }) {
 
   const login = useCallback(async (credentials) => {
     try {
-      axios
-        .post("http://localhost:3310/api/login/", credentials)
-        .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          navigate("/");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      const data = await apiService.post(
+        "http://localhost:3310/api/login/",
+        credentials
+      );
+      localStorage.setItem("token", data.token);
+
+      apiService.setToken(data.token);
+
+      const result = await apiService.get("http://localhost:3310/api/users/me");
+
+      alert(`Coucou ${result.data.email}`);
+      setUser(result.data);
+      if (result.data.isAdmin === 1) {
+        return navigate("/administration");
+      }
+      return navigate("/");
     } catch (err) {
       console.error(err);
+      alert(err.message);
     }
+    return null;
   }, []);
 
+  const register = async (formData) => {
+    try {
+      setUser(await axios.post("http://localhost:3310/api/users/", formData));
+      alert(`Bienvenu ${formData.username}, ton inscription est validée`);
+      navigate("/connexion");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
+    setUser(undefined);
+    localStorage.clear();
+    return navigate("/");
   };
 
   const context = useMemo(
-    () => ({ login, isUserConnected, isUserAdmin, logout }),
+    () => ({
+      login,
+      isUserConnected,
+      isUserAdmin,
+      logout,
+      user,
+      ApiService,
+      register,
+    }),
     []
   );
 
@@ -61,6 +97,7 @@ export default function LoginProvider({ children }) {
 
 LoginProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  apiService: PropTypes.instanceOf(ApiService).isRequired,
 };
 
 export { loginContext, LoginProvider };

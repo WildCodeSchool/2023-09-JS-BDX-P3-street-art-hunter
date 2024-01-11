@@ -82,6 +82,10 @@ const postLogin = (req, res) => {
   });
 };
 
+const getProfile = (req, res) => {
+  res.send(req.user);
+};
+
 module.exports = {
   browse,
   read,
@@ -89,4 +93,5 @@ module.exports = {
   edit,
   destroy,
   postLogin,
+  getProfile,
 };

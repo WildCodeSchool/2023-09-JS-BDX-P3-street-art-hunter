@@ -5,6 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
+const path = require("path");
 
 // Configure it
 
@@ -123,6 +124,7 @@ app.get("*", (req, res) => {
   res.sendFile(`${reactBuildPath}/index.html`);
 });
 */
+app.use(express.static(path.join(__dirname, "../public")));
 
 /* ************************************************************************* */
 

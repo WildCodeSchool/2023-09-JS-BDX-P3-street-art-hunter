@@ -78,6 +78,13 @@ class UserManager extends AbstractManager {
 
     return result.affectedRows;
   }
+
+  getProfile(id) {
+    return this.database.query(
+      `SELECT id, email, is_admin AS isAdmin FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = UserManager;

@@ -2,9 +2,11 @@
 import React, { useState, useRef } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useLoaderData } from "react-router-dom";
+import axios from "axios";
 import CustomMarker from "../components/Marker";
 import CustomCircle from "../components/CustomCircle";
 import Button from "../components/Button";
+// import { pendingImage } from "../../../backend/src/controllers/pendingImageControllers";
 
 export default function Home() {
   const [cameraPopup, setCameraPopup] = useState(false);
@@ -14,6 +16,11 @@ export default function Home() {
   const [stream, setStream] = useState(null);
   const videoRef = useRef(null);
   const flashTimer = 150;
+  const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
+  const [map, setMap] = useState(null); // Initialiser la map à null
+  const [pendingImageData, setPendingImageData] = useState(null);
+  const userLocation = useLoaderData();
+  const [pendingImageSrc, setPendingImageSrc] = useState("");
 
   const arts = [
     {
@@ -39,8 +46,6 @@ export default function Home() {
     },
   ];
 
-  const userLocation = useLoaderData();
-
   const containerStyle = {
     width: "100%",
     height: "calc(100vh - 83px)",
@@ -49,9 +54,6 @@ export default function Home() {
   const center = userLocation.lat
     ? userLocation
     : { lat: 44.837789, lng: -0.57918 };
-
-  const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
-  const [map, setMap] = useState(null); // Initialiser la map à null
 
   const mapOptions = {
     zoom: zoomLevel,
@@ -184,6 +186,67 @@ export default function Home() {
     ],
   };
 
+  // Fonctions pour récupérer la date et l'heure pour l'envoie de la pendingImage
+  const getDate = () => {
+    const currentDate = new Date();
+
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = currentDate.getDate().toString().padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+  const getTime = () => {
+    const currentTime = new Date();
+
+    const hours = currentTime.getHours().toString().padStart(2, "0");
+    const minutes = currentTime.getMinutes().toString().padStart(2, "0");
+    const seconds = currentTime.getSeconds().toString().padStart(2, "0");
+
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+    return formattedTime;
+  };
+  function getFormattedTime() {
+    const currentTime = new Date();
+
+    const hours = currentTime.getHours().toString().padStart(2, "0");
+    const minutes = currentTime.getMinutes().toString().padStart(2, "0");
+    const seconds = currentTime.getSeconds().toString().padStart(2, "0");
+
+    const formattedTime = `${hours}h${minutes}m${seconds}`;
+    return formattedTime;
+  }
+
+  const createPendingImageSrc = () => {
+    setPendingImageSrc(
+      `upload-captured-image-${getDate()}_${getFormattedTime()}.jpg`
+    );
+  };
+
+  // fonction pour fetch la pendingImage
+  const fetchPendingImageData = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3310/api/pendingImages/",
+        {
+          userId: 1,
+          imgSrc: pendingImageSrc,
+          uploadDate: getDate(),
+          uploadTime: getTime(),
+          latitude: userLocation.lat,
+          longitude: userLocation.lat,
+          streetArtId: 4,
+          status: "pending",
+        }
+      );
+      setPendingImageData(response.data);
+      console.info(pendingImageData);
+    } catch (error) {
+      console.error("Erreur lors de la requête Axios:", error);
+    }
+  };
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo",
   });
@@ -251,17 +314,19 @@ export default function Home() {
           setCapturedImage(blob);
         },
         "image/jpeg",
-        0.8
+        1
       );
     }
   };
 
   // Gestion du formulaire de validation une fois la photo prise
+
   const handleValidateCapture = async () => {
     if (capturedImage) {
       try {
+        createPendingImageSrc();
         const formData = new FormData();
-        formData.append("image", capturedImage, "captured-image.jpg");
+        formData.append("image", capturedImage, pendingImageSrc);
 
         const response = await fetch("http://localhost:3310/api/uploads/", {
           method: "POST",
@@ -272,6 +337,7 @@ export default function Home() {
           handleCloseCamera();
           setCaptureForm(false);
           setCameraPopup(false);
+          fetchPendingImageData();
           alert("Votre image a bien été envoyée");
         } else {
           console.error("Erreur lors de l'envoi de l'image au serveur");

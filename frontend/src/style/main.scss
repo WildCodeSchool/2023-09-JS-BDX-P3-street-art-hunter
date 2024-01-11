@@ -59,6 +59,9 @@ p {
   font-size: 1rem;
   line-height: 1.5rem;
 }
+.tiny-text {
+  font-size: 10px;
+}
 
 //// Spacing / Margins
 
@@ -114,6 +117,10 @@ p {
 
 .mi-auto {
   margin-inline: auto;
+}
+
+.ml-1 {
+  margin-left: 10px;
 }
 
 .mt-10 {
@@ -184,6 +191,10 @@ p {
 .d-flex-space-between {
   justify-content: space-between;
 }
+
+.d-flex-wrap {
+  flex-wrap: wrap;
+}
 .pos-r {
   position: relative;
 }
@@ -191,8 +202,14 @@ p {
 .h-100 {
   height: 100%;
 }
+.vh-100 {
+  height: 100vh;
+}
 .w-100 {
   width: 100%;
+}
+.vw-100 {
+  width: 100vw;
 }
 // buttons
 
@@ -400,6 +417,12 @@ p {
   }
 }
 
+.has-two-children {
+  & > div {
+    height: 50%;
+  }
+}
+
 // form
 
 label {
@@ -553,6 +576,102 @@ input {
 
 //// Pages
 
+// intro
+
+.intro-container {
+  padding-bottom: 126px;
+
+  .cloud {
+    background-image: url("/src/assets/cloud.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+  }
+
+  .cloud-1 {
+    height: 49px;
+    width: 97px;
+    top: 30px;
+    left: 20px;
+  }
+
+  .cloud-2 {
+    height: 63px;
+    width: 125px;
+    right: 40px;
+    top: 380px;
+  }
+
+  .hill {
+    position: absolute;
+    height: 37px;
+    width: 96px;
+    top: calc(100% - 160px);
+    right: 30px;
+    background-image: url("/src/assets/hill.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+
+  .bush {
+    position: absolute;
+    height: 32px;
+    width: 129px;
+    top: calc(100% - 160px);
+    left: 30px;
+    background-image: url("/src/assets/bush.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .start-btn {
+    text-align: center;
+    display: inline-block;
+    font-weight: bold;
+    padding: 10px 0 10px 10px;
+    background-color: lightgray;
+    text-shadow:
+      -1px -1px black,
+      1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -o-border-radius: 7px;
+    border-radius: 7px;
+    box-shadow: 0 0.2em gray;
+    cursor: pointer;
+  }
+  .start-btn:active {
+    box-shadow: none;
+    position: relative;
+    top: 0.2em;
+  }
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  background-color: red;
+  height: 126px;
+  left: 0;
+  background-image: url("/src/assets/ground.png");
+  background-size: 63px;
+}
+
+.logo {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-button {
+  gap: 20px;
+}
+
+button {
+  h4 {
+    color: white;
+  }
+}
+
 // Home
 
 .exclamation-button {
@@ -634,6 +753,14 @@ input {
 
 // Administration
 
+.admin-page.allow-scroll-container {
+  padding-inline: 12px;
+
+  .allow-scroll {
+    padding-top: 4px;
+  }
+}
+
 .block {
   height: 57px;
   width: 58px;
@@ -662,7 +789,7 @@ input {
 
   .admin-item {
     width: 100%;
-    padding: 20px;
+    padding: 20px 0 30px;
     border-bottom: 4px solid black;
 
     &:last-of-type {
@@ -674,11 +801,13 @@ input {
     }
     img {
       width: 100%;
+      max-width: 430px;
       height: auto;
       margin-bottom: 15px;
     }
     .has-two-items {
       display: flex;
+      justify-content: space-evenly;
       .admin-item-child {
         text-align: center;
         max-width: 50%;
@@ -700,7 +829,8 @@ input {
   .admin-button-container {
     margin-top: 30px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 0 70px;
 
     button {
       max-width: 150px;
@@ -729,6 +859,10 @@ label {
   text-shadow: 0px 2px 0px #000000;
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.error-message {
+  color: $dark-red;
 }
 
 // Account
@@ -785,12 +919,13 @@ label {
       .admin-item-infos {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: start;
+        gap: 20px;
 
-        p {
-          width: 50%;
-        }
+        // p {
+        //   // width: 50%;
+        // }
         img {
           margin-bottom: 0;
           max-width: 45%;
