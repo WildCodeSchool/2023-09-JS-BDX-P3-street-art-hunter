@@ -11,9 +11,12 @@ import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
 import Style from "./pages/Style";
+import TitleScreen from "./pages/TitleScreen";
 import { LoginProvider } from "./context/LoginContext";
 import { AdminContextProvider } from "./context/AdminContext";
 import ApiService from "./services/api.services";
+import AdminRoute from "./components/AdminUser";
+import LoginRoute from "./components/ConnectedUser";
 
 const apiService = new ApiService();
 
@@ -85,11 +88,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/connexion",
-        element: <Login />,
+        element: (
+          <LoginRoute>
+            <Login />
+          </LoginRoute>
+        ),
       },
       {
         path: "/inscription",
-        element: <Register />,
+        element: (
+          <LoginRoute>
+            <Register />
+          </LoginRoute>
+        ),
       },
       {
         path: "/classement",
@@ -97,11 +108,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/administration",
-        element: <Administration />,
+        element: (
+          <AdminRoute>
+            <Administration />,
+          </AdminRoute>
+        ),
       },
       {
         path: "/style",
         element: <Style />,
+      },
+      {
+        path: "/titlescreen",
+        element: <TitleScreen />,
       },
     ],
   },
