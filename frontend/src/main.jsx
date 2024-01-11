@@ -43,6 +43,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     loader: async () => {
+      if (!localStorage.getItem("token")) {
+        return null;
+      }
       try {
         const data = await apiService.get("http://localhost:3310/api/users/me");
         return { preloadUser: data ?? null };
