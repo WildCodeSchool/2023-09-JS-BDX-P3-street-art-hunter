@@ -54,11 +54,15 @@ router.delete("/artists/:id", artistControllers.destroy);
 // Pending Images
 
 router.get("/admin/pendingImages", pendingImageControllers.pendingImage);
-router.get("/pendingImages/:id", pendingImageControllers.read);
+router.get("/pendingImages/:id([0-9]+)", pendingImageControllers.read);
 router.post(
   "/pendingImages",
   validatePendingImage,
   pendingImageControllers.add
+);
+router.patch(
+  "/pendingImages/status/:id([0-9]+)",
+  pendingImageControllers.updateStatus
 );
 
 // Import streetArtsControllers module for handling item-related operations
@@ -71,7 +75,7 @@ router.post(
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "uploads/"); // destination de l'upload
+    cb(null, "./public/uploads/"); // destination de l'upload
   },
   filename(req, file, cb) {
     cb(null, file.originalname);

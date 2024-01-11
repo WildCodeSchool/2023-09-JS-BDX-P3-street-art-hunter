@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 
@@ -30,23 +31,6 @@ export default function Administration() {
     },
   ];
 
-  const exemple = [
-    {
-      id: 1,
-      image:
-        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
-      lat: 3.5,
-      long: 2.5,
-    },
-    {
-      id: 2,
-      image:
-        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
-      lat: 3.5,
-      long: 2.5,
-    },
-  ];
-
   const street = [
     {
       id: 1,
@@ -65,11 +49,38 @@ export default function Administration() {
   ];
 
   const [activeButton, setActiveButton] = useState(buttons[0].id);
-  const { users, removeUser, artists, removeArtist } = useAdminContext();
+  const { users, removeUser, artists, removeArtist, validations } =
+    useAdminContext();
+
+  const formattedDate = (date) => {
+    const dateObject = new Date(date);
+    const year = dateObject.getFullYear();
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
+    const day = dateObject.getDate().toString().padStart(2, "0");
+    return `${day}/${month}/${year}`;
+  };
+  const [images, setImages] = useState(validations);
 
   const handleOptionClick = (id) => {
     setActiveButton(id);
   };
+
+  const changePendingImage = async (id, status) => {
+    try {
+      const { data } = await axios.patch(
+        `http://localhost:3310/api/pendingImages/status/${id}`,
+        { status }
+      );
+      const filteredData = [...images.filter((item) => item.id !== data.id)];
+      setImages(filteredData);
+    } catch (error) {
+      console.error("Error validating image:", error);
+    }
+  };
+
+  useEffect(() => {
+    setImages(validations);
+  }, [validations]);
 
   return (
     <div className="admin-page allow-scroll-container">
@@ -109,35 +120,54 @@ export default function Administration() {
           {activeButton ===
             buttons.find((button) => button.name === "Validations").id && (
             <div className="admin-item-list">
-              {exemple.map((item) => (
+              {images.map((item) => (
                 <div
                   key={item.id}
                   className="admin-item
                   "
                 >
+                  <h5 className="t-center mb-20">
+                    #{item.id} - Le {formattedDate(item.upload_date)} à{" "}
+                    {item.upload_time}
+                  </h5>
                   <div className="has-two-items">
                     <div className="admin-item-child">
-                      <h4 className="mb-20">Base</h4>
-                      <img src={item.image} alt={`Button ${item.id}`} />
+                      <h4 className="mb-20">{item.street_art_name}</h4>
+                      <img
+                        src={item.street_art_image}
+                        alt={item.street_art_image}
+                      />
                       <p>
-                        X : 04,7689
-                        <br />Y : 04,7689
+                        X : {item.street_art_longitude}
+                        <br />Y : {item.street_art_latitude}
                       </p>
                     </div>
                     <div className="admin-item-child">
-                      <h4 className="mb-20">@Username</h4>
-                      <img src={item.image} alt={`Button ${item.id}`} />
+                      <h4 className="mb-20">{item.username}</h4>
+                      <img
+                        src={`http://localhost:3310/uploads/${item.img_src}`}
+                        alt={`${item.username}'s upload`}
+                      />
                       <p>
-                        X : 04,7689
-                        <br />Y : 04,7689
+                        X : {item.longitude}
+                        <br />Y : {item.latitude}
                       </p>
                     </div>
                   </div>
                   <div className="admin-button-container mt-20">
-                    <Button className="button" type="button">
+                    <Button
+                      className="button"
+                      type="button"
+                      onClick={() => changePendingImage(item.id, "validate")}
+                    >
                       Valider
                     </Button>
-                    <Button color="red" className="button" type="button">
+                    <Button
+                      color="red"
+                      className="button"
+                      type="button"
+                      onClick={() => changePendingImage(item.id, "refused")}
+                    >
                       Refuser
                     </Button>
                   </div>
@@ -170,7 +200,7 @@ export default function Administration() {
                           color="red"
                           className="button"
                           type="button"
-                          onClick={() => removeUser(user.id)} // Passer l'ID ici
+                          onClick={() => removeUser(user.id)}
                         >
                           Exclure
                         </Button>

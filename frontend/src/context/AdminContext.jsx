@@ -13,6 +13,7 @@ const AdminContext = createContext();
 export default function AdminContextProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [artists, setArtists] = useState([]);
+  const [validations, setValidations] = useState([]);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -39,6 +40,24 @@ export default function AdminContextProvider({ children }) {
       });
       const allArtists = await response.json();
       setArtists(allArtists);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  const fetchValidations = useCallback(async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3310/api/admin/pendingImages",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const allValidations = await response.json();
+      setValidations(allValidations);
     } catch (err) {
       console.error(err);
     }
@@ -83,10 +102,18 @@ export default function AdminContextProvider({ children }) {
   useEffect(() => {
     fetchUsers();
     fetchArtists();
-  }, [fetchUsers, fetchArtists]);
+    fetchValidations();
+  }, [fetchUsers, fetchArtists, fetchValidations]);
 
   const context = useMemo(
-    () => ({ users, removeUser, artists, removeArtist }),
+    () => ({
+      users,
+      removeUser,
+      artists,
+      removeArtist,
+      validations,
+      setValidations,
+    }),
     [users]
   );
 
