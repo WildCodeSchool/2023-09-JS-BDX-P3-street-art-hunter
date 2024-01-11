@@ -64,10 +64,10 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <div className="container allow-scroll-container ">
       <h1 className="mb-20">Inscription</h1>
-      <div className="container">
-        <div className="allow-scroll">
+      <div className="allow-scroll">
+        <div>
           <form className="mb-20">
             <label htmlFor="username" className="mb-10 ">
               Pseudo
@@ -82,7 +82,9 @@ export default function Register() {
               />
             </div>
             {alertMessage.username.length > 0 && (
-              <div className="error-message">{alertMessage.username}</div>
+              <div className="error-message ml-1 mb-10 tiny-text ml-1">
+                {alertMessage.username}
+              </div>
             )}
 
             <label htmlFor="email" className="mb-10">
@@ -99,7 +101,9 @@ export default function Register() {
               />
             </div>
             {alertMessage.email.length > 0 && (
-              <div className="error-message">{alertMessage.email}</div>
+              <div className="error-message mb-10 tiny-text">
+                {alertMessage.email}
+              </div>
             )}
             <label htmlFor="postcode" className="mb-10">
               Code Postal
@@ -140,7 +144,9 @@ export default function Register() {
               />
             </div>
             {alertMessage.password.length > 0 && (
-              <div className="error-message">{alertMessage.password}</div>
+              <div className="error-message mb-10 tiny-text">
+                {alertMessage.password}
+              </div>
             )}
 
             <label htmlFor="confirmation" className="mb-10">
@@ -158,7 +164,9 @@ export default function Register() {
               />
             </div>
             {alertMessage.confirmation.length > 0 && (
-              <div className="error-message">{alertMessage.confirmation}</div>
+              <div className="error-message mb-10 tiny-text">
+                {alertMessage.confirmation}
+              </div>
             )}
           </form>
           <Button type="submit" className="button mb-20" onClick={handleSubmit}>
