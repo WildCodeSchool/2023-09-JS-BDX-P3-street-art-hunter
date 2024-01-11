@@ -1,5 +1,5 @@
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 const multer = require("multer");
 
 // Import userControllers module for handling item-related operations
@@ -15,15 +15,14 @@ const validatePendingImage = require("./middlewares/validatePendingImage");
 
 const router = express.Router();
 
-// DEPLACER SUR APP:
-// const corsOrigin = "http://localhost:3000";
-// router.use(
-//   cors({
-//     origin: [corsOrigin],
-//     methods: ["GET", "POST"],
-//     credentials: true,
-//   })
-// );
+const corsOrigin = "http://localhost:3000";
+router.use(
+  cors({
+    origin: [corsOrigin],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 /* ************************************************************************* */
 // Define Your API Routes Here
 /* ************************************************************************* */
@@ -65,6 +64,10 @@ router.patch(
   "/pendingImages/status/:id([0-9]+)",
   pendingImageControllers.updateStatus
 );
+
+// Street Art
+
+router.get("/streetArt");
 
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");
