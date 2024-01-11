@@ -2,6 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 
+// Import userControllers module for handling item-related operations
+const userControllers = require("./controllers/userControllers");
+const artistControllers = require("./controllers/artistControllers");
+const {
+  authMiddleware,
+  authAdminMiddleware,
+} = require("./middlewares/Security/auth.middlewares");
+const validateUser = require("./middlewares/validateUser");
+const pendingImageControllers = require("./controllers/pendingImageControllers");
+const validatePendingImage = require("./middlewares/validatePendingImage");
+
 const router = express.Router();
 
 const corsOrigin = "http://localhost:3000";
@@ -16,18 +27,23 @@ router.use(
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-// Import userControllers module for handling item-related operations
-const userControllers = require("./controllers/userControllers");
-const artistControllers = require("./controllers/artistControllers");
-const validateUser = require("./middlewares/validateUser");
+// Users
 
+router.get("/users/me", authMiddleware, userControllers.getProfile);
 router.get("/users", userControllers.browse);
-router.get("/users/:id", userControllers.read);
+router.get(
+  "/users/:id",
+  authMiddleware,
+  authAdminMiddleware,
+  userControllers.read
+);
 router.post("/users", validateUser, userControllers.add);
 router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
 
 router.post("/login", userControllers.postLogin);
+
+// Artists
 
 router.get("/artists", artistControllers.browse);
 router.get("/artists/:id", artistControllers.read);
@@ -36,9 +52,6 @@ router.put("/artists/:id", artistControllers.edit);
 router.delete("/artists/:id", artistControllers.destroy);
 
 // Pending Images
-
-const pendingImageControllers = require("./controllers/pendingImageControllers");
-const validatePendingImage = require("./middlewares/validatePendingImage");
 
 router.get("/admin/pendingImages", pendingImageControllers.pendingImage);
 router.get("/pendingImages/:id([0-9]+)", pendingImageControllers.read);
@@ -97,6 +110,18 @@ router.post("/uploads", (req, res) => {
         .json({ success: false, error: processingError.message });
     }
   });
+});
+
+// Check if user admin
+
+router.get("/admin", authMiddleware, authAdminMiddleware, (req, res) => {
+  res.status(200).json({ success: true, message: "Welcome Admin" });
+});
+
+// Check if user online
+
+router.get("/online", authMiddleware, (req, res) => {
+  res.status(200).json({ success: true, message: "Welcome" });
 });
 
 /* ************************************************************************* */

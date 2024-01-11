@@ -1,31 +1,73 @@
-import axios from "axios";
 import { Link } from "react-router-dom";
-import { useUserContext } from "../context/userContext";
+import { useState } from "react";
 import Button from "../components/Button";
+import { useLogin } from "../context/LoginContext";
 
 export default function Register() {
-  const { formData, registerUser, updateRegisterForm } = useUserContext();
+  const { register } = useLogin();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    updateRegisterForm();
-    registerUser();
-    try {
-      const response = await axios.post(
-        "http://localhost:3310/api/users/",
-        formData
-      );
-      console.info(response.data);
-    } catch (error) {
-      console.error(error);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    postcode: "",
+    city: "",
+    password: "",
+    confirmation: "",
+  });
+
+  const updateRegisterForm = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const [alertMessage, setAlertMessage] = useState({
+    username: [],
+    email: [],
+    postcode: [],
+    city: [],
+    password: [],
+    confirmation: [],
+  });
+
+  const validateField = (fieldName, value) => {
+    switch (fieldName) {
+      case "username":
+        return !value ? ["Champ requis"] : [];
+      case "email":
+        return !value || !isEmailValid(value) ? ["Adresse email invalide"] : [];
+      case "password":
+        return !value
+          ? ["Le mot de passe doit contenir minimum 6 caractères."]
+          : [];
+      case "confirmation":
+        return !value ? ["Les mots de passes ne sont pas identiques."] : [];
+      default:
+        return [];
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const updatedAlerts = {};
+    for (const fieldName of Object.keys(formData)) {
+      const fieldErrors = validateField(fieldName, formData[fieldName]);
+      updatedAlerts[fieldName] = fieldErrors;
+    }
+    if (formData.password !== formData.confirmation) {
+      updatedAlerts.confirmation = ["Les mots de passe ne correspondent pas"];
+    }
+    setAlertMessage(updatedAlerts);
+    updateRegisterForm();
+    register(formData);
+  };
+
   return (
-    <div>
+    <div className="container allow-scroll-container ">
       <h1 className="mb-20">Inscription</h1>
-      <div className="container">
-        <div className="allow-scroll">
+      <div className="allow-scroll">
+        <div>
           <form className="mb-20">
             <label htmlFor="username" className="mb-10 ">
               Pseudo
@@ -39,6 +81,11 @@ export default function Register() {
                 onChange={(e) => updateRegisterForm("username", e.target.value)}
               />
             </div>
+            {alertMessage.username.length > 0 && (
+              <div className="error-message ml-1 mb-10 tiny-text ml-1">
+                {alertMessage.username}
+              </div>
+            )}
 
             <label htmlFor="email" className="mb-10">
               Adresse email
@@ -53,7 +100,11 @@ export default function Register() {
                 onChange={(e) => updateRegisterForm("email", e.target.value)}
               />
             </div>
-
+            {alertMessage.email.length > 0 && (
+              <div className="error-message mb-10 tiny-text">
+                {alertMessage.email}
+              </div>
+            )}
             <label htmlFor="postcode" className="mb-10">
               Code Postal
             </label>
@@ -92,6 +143,11 @@ export default function Register() {
                 onChange={(e) => updateRegisterForm("password", e.target.value)}
               />
             </div>
+            {alertMessage.password.length > 0 && (
+              <div className="error-message mb-10 tiny-text">
+                {alertMessage.password}
+              </div>
+            )}
 
             <label htmlFor="confirmation" className="mb-10">
               Confirmer le mot de passe
@@ -107,6 +163,11 @@ export default function Register() {
                 }
               />
             </div>
+            {alertMessage.confirmation.length > 0 && (
+              <div className="error-message mb-10 tiny-text">
+                {alertMessage.confirmation}
+              </div>
+            )}
           </form>
           <Button type="submit" className="button mb-20" onClick={handleSubmit}>
             Valider

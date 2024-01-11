@@ -67,17 +67,21 @@ const destroy = async (req, res, next) => {
 const postLogin = (req, res) => {
   tables.users.login(req.body).then((user) => {
     if (user) {
-      // todo : filtrer les données à envoyer
       const token = generateAccessToken({
         email: user.email,
         username: user.username,
         admin: user.is_admin,
+        id: user.id,
       });
       res.send({ token });
     } else {
       res.status(401).send({ error: "Identifiant incorrect!!!" });
     }
   });
+};
+
+const getProfile = (req, res) => {
+  res.send(req.user);
 };
 
 module.exports = {
@@ -87,4 +91,5 @@ module.exports = {
   edit,
   destroy,
   postLogin,
+  getProfile,
 };
