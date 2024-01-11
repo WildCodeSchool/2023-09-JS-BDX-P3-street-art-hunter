@@ -27,6 +27,8 @@ router.use(
 // Define Your API Routes Here
 /* ************************************************************************* */
 
+// Users
+
 router.get("/users/me", authMiddleware, userControllers.getProfile);
 router.get("/users", userControllers.browse);
 router.get(
@@ -40,6 +42,8 @@ router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
 
 router.post("/login", userControllers.postLogin);
+
+// Artists
 
 router.get("/artists", artistControllers.browse);
 router.get("/artists/:id", artistControllers.read);
@@ -102,6 +106,18 @@ router.post("/uploads", (req, res) => {
         .json({ success: false, error: processingError.message });
     }
   });
+});
+
+// Check if user admin
+
+router.get("/admin", authMiddleware, authAdminMiddleware, (req, res) => {
+  res.status(200).json({ success: true, message: "Welcome Admin" });
+});
+
+// Check if user online
+
+router.get("/online", authMiddleware, (req, res) => {
+  res.status(200).json({ success: true, message: "Welcome" });
 });
 
 /* ************************************************************************* */
