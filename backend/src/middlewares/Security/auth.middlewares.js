@@ -4,7 +4,7 @@ const models = require("../../tables");
 const authMiddleware = (req, res, next) => {
   // Step 1: denied access without token
   if (!req.headers.authorization) {
-    return res.status(401).json({ error: "Token inexistant" });
+    return res.status(401).json({ error: "Non-existent token" });
   }
 
   // Step 2: verify token then set user data in req
@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
       // Step 3: get user data from token payload
       models.users.getProfile(data.id).then(([rows]) => {
         if (!rows.length) {
-          return res.status(401).json({ error: "error get data token" });
+          return res.status(401).json({ error: "No matching token" });
         }
         // Step 4: share user data between different middlewares
         // eslint-disable-next-line prefer-destructuring
@@ -32,7 +32,7 @@ const authMiddleware = (req, res, next) => {
 
 const authAdminMiddleware = (req, res, next) => {
   if (req?.user?.isAdmin !== 1) {
-    return res.status(403).json({ error: "t'es pas admin" });
+    return res.status(403).json({ error: "User not admin" });
   }
 
   return next();
