@@ -98,13 +98,6 @@ export default function Navbar() {
             Administration
           </Link>
         )}
-        <Link
-          to="/style"
-          className={location.pathname === "/style" ? "active" : ""}
-          onClick={handleLinkClick}
-        >
-          Style
-        </Link>
       </nav>
     </footer>
   );

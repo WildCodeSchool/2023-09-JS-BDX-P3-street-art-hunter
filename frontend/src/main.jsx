@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
-import Style from "./pages/Style";
 import TitleScreen from "./pages/TitleScreen";
 import { LoginProvider } from "./context/LoginContext";
 import { AdminContextProvider } from "./context/AdminContext";
@@ -113,10 +112,6 @@ const router = createBrowserRouter([
             <Administration />,
           </AdminRoute>
         ),
-      },
-      {
-        path: "/style",
-        element: <Style />,
       },
       {
         path: "/titlescreen",
