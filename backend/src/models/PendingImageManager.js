@@ -21,7 +21,7 @@ class PendingImageManager extends AbstractManager {
       FROM ${this.table}
       LEFT JOIN street_art
       ON ${this.table}.street_art_id = street_art.id
-      WHERE user_id = ?`,
+      WHERE ${this.table}.user_id = ?`,
       [id]
     );
     return rows;
@@ -38,10 +38,10 @@ class PendingImageManager extends AbstractManager {
         ${this.table}.upload_date, 
         ${this.table}.upload_time, 
         ${this.table}.street_art_id, 
-        street_art.title as steet_art_name,
+        street_art.title as street_art_name,
         street_art.image as street_art_image, 
         street_art.latitude as street_art_latitude, 
-        street_art.longitude as steet_art_longitude,
+        street_art.longitude as street_art_longitude,
         users.username as username
       FROM ${this.table}
       LEFT JOIN street_art
@@ -69,6 +69,22 @@ class PendingImageManager extends AbstractManager {
       ]
     );
     return result.insertId;
+  }
+
+  // Patch
+
+  async updateStatus(imageId, newStatus) {
+    let [result] = await this.database.query(
+      `UPDATE ${this.table} SET status = ? WHERE id = ?`,
+      [newStatus, imageId]
+    );
+
+    [result] = await this.database.query(
+      `select * from ${this.table} where id = ?`,
+      [imageId]
+    );
+
+    return result;
   }
 }
 
