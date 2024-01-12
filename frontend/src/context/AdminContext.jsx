@@ -14,6 +14,7 @@ export default function AdminContextProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [artists, setArtists] = useState([]);
   const [validations, setValidations] = useState([]);
+  const [streetArt, setStreetArt] = useState([]);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -99,11 +100,27 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
+  const fetchStreetArt = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:3310/api/streetArt", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const allStreetArt = await response.json();
+      setStreetArt(allStreetArt);
+    } catch (err) {
+      console.error("erreur de récup", err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchUsers();
     fetchArtists();
     fetchValidations();
-  }, [fetchUsers, fetchArtists, fetchValidations]);
+    fetchStreetArt();
+  }, [fetchUsers, fetchArtists, fetchValidations, fetchStreetArt]);
 
   const context = useMemo(
     () => ({
@@ -113,6 +130,7 @@ export default function AdminContextProvider({ children }) {
       removeArtist,
       validations,
       setValidations,
+      streetArt,
     }),
     [users]
   );

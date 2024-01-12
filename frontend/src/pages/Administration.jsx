@@ -31,25 +31,25 @@ export default function Administration() {
     },
   ];
 
-  const street = [
-    {
-      id: 1,
-      image:
-        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
-      name: "Le Pigeon",
-      artist: "A-Mo",
-    },
-    {
-      id: 2,
-      image:
-        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
-      name: "Le Pigeon",
-      artist: "A-Mo",
-    },
-  ];
+  // const street = [
+  //   {
+  //     id: 1,
+  //     image:
+  //       "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
+  //     name: "Le Pigeon",
+  //     artist: "A-Mo",
+  //   },
+  //   {
+  //     id: 2,
+  //     image:
+  //       "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
+  //     name: "Le Pigeon",
+  //     artist: "A-Mo",
+  //   },
+  // ];
 
   const [activeButton, setActiveButton] = useState(buttons[0].id);
-  const { users, removeUser, artists, removeArtist, validations } =
+  const { users, removeUser, artists, removeArtist, validations, streetArt } =
     useAdminContext();
 
   const formattedDate = (date) => {
@@ -217,14 +217,14 @@ export default function Administration() {
             buttons.find((button) => button.name === "Street-Arts").id && (
             <div className="admin-streetarts">
               <div className="admin-item-list">
-                {street.map((art) => (
+                {streetArt.map((art) => (
                   <div key={art.id} className="admin-item">
                     <div className="admin-item-infos">
                       <img src={art.image} alt={`Button ${art.id}`} />
                       <p>
-                        {art.name}
+                        {art.title}
                         <br />
-                        Par {art.artist}
+                        Par {art.author}
                       </p>
                     </div>
                     <div className="admin-button-container">

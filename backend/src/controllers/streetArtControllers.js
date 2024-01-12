@@ -1,6 +1,6 @@
 const tables = require("../tables");
 
-const browse = async (req, res, next) => {
+const read = async (req, res, next) => {
   try {
     const streetArt = await tables.street_art.readAll();
     res.json(streetArt);
@@ -18,4 +18,4 @@ const edit = async (req, res, next) => {
   }
 };
 
-module.exports = { browse, edit };
+module.exports = { read, edit };
