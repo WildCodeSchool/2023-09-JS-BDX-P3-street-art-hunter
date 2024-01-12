@@ -12,6 +12,7 @@ const {
 const validateUser = require("./middlewares/validateUser");
 const pendingImageControllers = require("./controllers/pendingImageControllers");
 const validatePendingImage = require("./middlewares/validatePendingImage");
+const streetArtControllers = require("./controllers/streetArtControllers");
 
 const router = express.Router();
 
@@ -41,6 +42,8 @@ router.post("/users", validateUser, userControllers.add);
 router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
 
+// Login
+
 router.post("/login", userControllers.postLogin);
 
 // Artists
@@ -64,6 +67,10 @@ router.patch(
   "/pendingImages/status/:id([0-9]+)",
   pendingImageControllers.updateStatus
 );
+
+// Street Art
+
+router.get("/streetArt", streetArtControllers.read);
 
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");
