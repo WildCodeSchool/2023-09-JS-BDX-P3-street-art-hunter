@@ -186,7 +186,7 @@ export default function Administration() {
                   .filter((user) => !user.is_admin)
                   .map((user) => (
                     <div key={user.id} className="admin-item">
-                      <div className="admin-item-infos">
+                      <div className="admin-user admin-item-infos">
                         <p>Pseudo : {user.username}</p>
                         <p>Email : {user.email}</p>
                         <p>Code Postal : {user.postcode}</p>

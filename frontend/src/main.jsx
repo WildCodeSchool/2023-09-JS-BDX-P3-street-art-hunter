@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
-import Style from "./pages/Style";
 import TitleScreen from "./pages/TitleScreen";
 import { LoginProvider } from "./context/LoginContext";
 import { AdminContextProvider } from "./context/AdminContext";
@@ -44,6 +43,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     loader: async () => {
+      if (!localStorage.getItem("token")) {
+        return null;
+      }
       try {
         const data = await apiService.get("http://localhost:3310/api/users/me");
         return { preloadUser: data ?? null };
@@ -113,10 +115,6 @@ const router = createBrowserRouter([
             <Administration />,
           </AdminRoute>
         ),
-      },
-      {
-        path: "/style",
-        element: <Style />,
       },
       {
         path: "/titlescreen",
