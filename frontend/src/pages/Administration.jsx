@@ -49,8 +49,15 @@ export default function Administration() {
   // ];
 
   const [activeButton, setActiveButton] = useState(buttons[0].id);
-  const { users, removeUser, artists, removeArtist, validations, streetArt } =
-    useAdminContext();
+  const {
+    users,
+    removeUser,
+    artists,
+    removeArtist,
+    validations,
+    streetArt,
+    removeStreetArt,
+  } = useAdminContext();
 
   const formattedDate = (date) => {
     const dateObject = new Date(date);
@@ -231,7 +238,12 @@ export default function Administration() {
                       <Button color="yellow" className="button" type="button">
                         Modifier
                       </Button>
-                      <Button color="red" className="button" type="button">
+                      <Button
+                        color="red"
+                        className="button"
+                        type="button"
+                        onClick={() => removeStreetArt(art.id)}
+                      >
                         Supprimer
                       </Button>
                     </div>

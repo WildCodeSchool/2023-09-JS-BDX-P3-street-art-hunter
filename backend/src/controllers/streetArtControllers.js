@@ -2,20 +2,24 @@ const tables = require("../tables");
 
 const read = async (req, res, next) => {
   try {
-    const streetArt = await tables.street_art.readAll();
-    res.json(streetArt);
+    const result = await tables.street_art.readAll();
+    res.json(result);
   } catch (err) {
     next(err);
   }
 };
 
-const edit = async (req, res, next) => {
+const destroy = async (req, res, next) => {
   try {
-    const modifyArt = await tables.street_art.update();
-    res.json(modifyArt);
+    const affectedRows = await tables.street_art.delete(req.params.id);
+    if (affectedRows === 0) {
+      res.status(404).json({ error: "Aucun street art trouvé avec cet ID." });
+    } else {
+      res.sendStatus(200);
+    }
   } catch (err) {
+    console.error("Erreur dans la fonction destroy:", err);
     next(err);
   }
 };
-
-module.exports = { read, edit };
+module.exports = { read, destroy };
