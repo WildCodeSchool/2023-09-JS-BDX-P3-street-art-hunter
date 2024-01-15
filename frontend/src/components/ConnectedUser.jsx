@@ -5,7 +5,7 @@ import { useLogin } from "../context/LoginContext";
 function LoginRoute({ children }) {
   const { isUserConnected } = useLogin();
 
-  return isUserConnected() ? <Navigate to="/" /> : children;
+  return isUserConnected() ? <Navigate to="/map" /> : children;
 }
 
 LoginRoute.propTypes = {

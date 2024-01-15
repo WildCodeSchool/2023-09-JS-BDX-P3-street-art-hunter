@@ -22,7 +22,7 @@ export default function Navbar() {
         aria-label="Toggle Menu"
       />
 
-      {location.pathname === "/" ? (
+      {location.pathname === "/map" ? (
         <button
           className="exclamation-button"
           type="button"
@@ -32,8 +32,8 @@ export default function Navbar() {
 
       <nav>
         <Link
-          to="/"
-          className={location.pathname === "/" ? "active" : ""}
+          to="/map"
+          className={location.pathname === "/map" ? "active" : ""}
           onClick={handleLinkClick}
         >
           Accueil

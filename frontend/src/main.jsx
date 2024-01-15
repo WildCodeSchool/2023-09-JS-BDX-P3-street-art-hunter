@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/",
+        path: "/map",
         loader: () => getLocalisation(),
         element: <Home />,
       },
@@ -117,7 +117,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/titlescreen",
+        path: "/",
         element: <TitleScreen />,
       },
     ],

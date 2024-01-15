@@ -10,7 +10,7 @@ export default function TitleScreen() {
   };
   const goToLogin = () => navigate("/connexion");
   const goToSignup = () => navigate("/inscription");
-  const continueAsGuest = () => navigate("/");
+  const continueAsGuest = () => navigate("/map");
 
   const handleKeyPress = (callback) => (event) => {
     if (event.key === "Enter") {
@@ -20,7 +20,7 @@ export default function TitleScreen() {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      navigate("/");
+      navigate("/map");
     }
   }, [navigate]);
 
