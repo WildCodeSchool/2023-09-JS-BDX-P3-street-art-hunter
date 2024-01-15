@@ -59,10 +59,6 @@ export default function Administration() {
     removeStreetArt,
   } = useAdminContext();
 
-  useEffect(() => {
-    removeStreetArt(streetArt);
-  }, [streetArt]);
-
   const formattedDate = (date) => {
     const dateObject = new Date(date);
     const year = dateObject.getFullYear();
