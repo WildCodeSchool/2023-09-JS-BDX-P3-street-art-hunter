@@ -14,8 +14,9 @@ import TitleScreen from "./pages/TitleScreen";
 import { LoginProvider } from "./context/LoginContext";
 import { AdminContextProvider } from "./context/AdminContext";
 import ApiService from "./services/api.services";
-import AdminRoute from "./components/AdminUser";
-import LoginRoute from "./components/ConnectedUser";
+import AdminUser from "./components/AdminUser";
+import LoggedUser from "./components/ConnectedUser";
+import LogoutUser from "./components/DisconnectedUser";
 
 const apiService = new ApiService();
 
@@ -97,28 +98,36 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/mon-compte/informations",
-            element: <Account />,
+            element: (
+              <LogoutUser>
+                <Account />
+              </LogoutUser>
+            ),
           },
           {
             path: "/mon-compte/arts",
-            element: <Account />,
+            element: (
+              <LogoutUser>
+                <Account />
+              </LogoutUser>
+            ),
           },
         ],
       },
       {
         path: "/connexion",
         element: (
-          <LoginRoute>
+          <LoggedUser>
             <Login />
-          </LoginRoute>
+          </LoggedUser>
         ),
       },
       {
         path: "/inscription",
         element: (
-          <LoginRoute>
+          <LoggedUser>
             <Register />
-          </LoginRoute>
+          </LoggedUser>
         ),
       },
       {
@@ -128,9 +137,9 @@ const router = createBrowserRouter([
       {
         path: "/administration",
         element: (
-          <AdminRoute>
+          <AdminUser>
             <Administration />,
-          </AdminRoute>
+          </AdminUser>
         ),
       },
       {

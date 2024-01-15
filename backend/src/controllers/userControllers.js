@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const tables = require("../tables");
 
 function generateAccessToken(data) {
-  return jwt.sign(data, process.env.APP_SECRET, { expiresIn: "1h" });
+  return jwt.sign(data, process.env.APP_SECRET);
 }
 
 const browse = async (_, res, next) => {
