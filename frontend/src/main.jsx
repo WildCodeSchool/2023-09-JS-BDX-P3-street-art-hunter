@@ -39,6 +39,16 @@ function getLocalisation() {
   });
 }
 
+const getStreetArt = async () => {
+  try {
+    const data = await apiService.get("http://localhost:3310/api/streetart");
+    return { streetArtData: data ?? null };
+  } catch (error) {
+    console.error(error.message);
+    return null;
+  }
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,8 +57,15 @@ const router = createBrowserRouter([
         return null;
       }
       try {
-        const data = await apiService.get("http://localhost:3310/api/users/me");
-        return { preloadUser: data ?? null };
+        const userData = await apiService.get(
+          "http://localhost:3310/api/users/me"
+        );
+        const streetArtData = await getStreetArt();
+
+        return {
+          preloadUser: userData ?? null,
+          preloadStreetArt: streetArtData ?? null,
+        };
       } catch (err) {
         console.error(err.message);
         return null;

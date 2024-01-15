@@ -115,31 +115,28 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
-  const removeStreetArt = useCallback(
-    async (id) => {
-      try {
-        const response = await fetch(
-          `http://localhost:3310/api/streetart/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Échec de la suppression du street art");
+  const removeStreetArt = useCallback(async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3310/api/streetart/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-
-        setStreetArt((prevStreetArt) =>
-          prevStreetArt.filter((artOne) => artOne.id !== id)
-        );
-      } catch (err) {
-        console.error(err);
+      );
+      if (!response.ok) {
+        throw new Error("Échec de la suppression du street art");
       }
-    },
-    [setStreetArt]
-  );
+
+      setStreetArt((prevStreetArt) =>
+        prevStreetArt.filter((artOne) => artOne.id !== id)
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
 
   useEffect(() => {
     fetchUsers();
@@ -159,7 +156,7 @@ export default function AdminContextProvider({ children }) {
       streetArt,
       removeStreetArt,
     }),
-    [users]
+    [users, streetArt]
   );
 
   return (
