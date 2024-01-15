@@ -6,6 +6,7 @@ import axios from "axios";
 import CustomMarker from "../components/Marker";
 import CustomCircle from "../components/CustomCircle";
 import Button from "../components/Button";
+import { useAdminContext } from "../context/AdminContext";
 // import { pendingImage } from "../../../backend/src/controllers/pendingImageControllers";
 
 export default function Home() {
@@ -21,30 +22,7 @@ export default function Home() {
   const [pendingImageData, setPendingImageData] = useState(null);
   const userLocation = useLoaderData();
   const [pendingImageSrc, setPendingImageSrc] = useState("");
-
-  const arts = [
-    {
-      id: 1,
-      name: "Le pigeon",
-      author: "A-mo",
-      lat: 44.821308,
-      long: -0.551763,
-    },
-    {
-      id: 2,
-      name: "Cosmic Visitor",
-      author: "Inconnu",
-      lat: 44.825882,
-      long: -0.548732,
-    },
-    {
-      id: 3,
-      name: "Plaisir de faire",
-      author: "Inconnu",
-      lat: 44.833581,
-      long: -0.565358,
-    },
-  ];
+  const { streetArt } = useAdminContext();
 
   const containerStyle = {
     width: "100%",
@@ -411,15 +389,15 @@ export default function Home() {
         onLoad={(loadMap) => setMap(loadMap)}
         onZoomChanged={handleZoomChange}
       >
-        {arts.map((art) => (
+        {streetArt.map((art) => (
           <CustomMarker
             key={art.id}
-            lat={art.lat}
-            lng={art.long}
+            lat={art.latitude}
+            lng={art.longitude}
             initialZoomLevel
             text={
               <>
-                <span>{art.name}</span>
+                <span>{art.title}</span>
                 <br />
                 <span>Auteur: {art.author}</span>
               </>
