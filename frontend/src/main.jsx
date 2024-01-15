@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
-// import Account from "./pages/Account";
+import Account from "./pages/Account";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
@@ -76,17 +76,17 @@ const router = createBrowserRouter([
         element: <Gallery />,
       },
       {
-        // path: "/mon-compte",
-        // children: [
-        //   {
-        //     path: "/mon-compte/informations",
-        //     element: <Account />,
-        //   },
-        //   {
-        //     path: "/mon-compte/arts",
-        //     element: <Account />,
-        //   },
-        // ],
+        path: "/mon-compte",
+        children: [
+          {
+            path: "/mon-compte/informations",
+            element: <Account />,
+          },
+          {
+            path: "/mon-compte/arts",
+            element: <Account />,
+          },
+        ],
       },
       {
         path: "/connexion",

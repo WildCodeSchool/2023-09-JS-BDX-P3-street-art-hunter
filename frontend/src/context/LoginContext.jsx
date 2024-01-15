@@ -74,7 +74,7 @@ export default function LoginProvider({ children, apiService }) {
   const logout = () => {
     setUser(undefined);
     localStorage.clear();
-    return navigate("/titlescreen");
+    return navigate("/");
   };
 
   const context = useMemo(
