@@ -53,7 +53,7 @@ export default function LoginProvider({ children, apiService }) {
       if (result.data.isAdmin === 1) {
         return navigate("/administration");
       }
-      return navigate("/");
+      return navigate("/map");
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -74,7 +74,7 @@ export default function LoginProvider({ children, apiService }) {
   const logout = () => {
     setUser(undefined);
     localStorage.clear();
-    return navigate("/");
+    return navigate("/titlescreen");
   };
 
   const context = useMemo(

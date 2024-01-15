@@ -5,7 +5,7 @@ import { useLogin } from "../context/LoginContext";
 function AdminRoute({ children }) {
   const { isUserAdmin } = useLogin();
 
-  return isUserAdmin() ? children : <Navigate to="/" />;
+  return isUserAdmin() ? children : <Navigate to="/map" />;
 }
 
 AdminRoute.propTypes = {

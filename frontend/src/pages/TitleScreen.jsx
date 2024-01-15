@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function TitleScreen() {
@@ -10,13 +10,19 @@ export default function TitleScreen() {
   };
   const goToLogin = () => navigate("/connexion");
   const goToSignup = () => navigate("/inscription");
-  const continueAsGuest = () => navigate("/");
+  const continueAsGuest = () => navigate("/map");
 
   const handleKeyPress = (callback) => (event) => {
     if (event.key === "Enter") {
       callback();
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/map");
+    }
+  }, [navigate]);
 
   return (
     <div className="pos-r vh-100">
