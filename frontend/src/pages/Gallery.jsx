@@ -1,7 +1,9 @@
 import React from "react";
+import ModalImage from "react-modal-image";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
+
 import "../style/main.css";
 import { useAdminContext } from "../context/AdminContext";
 
@@ -23,7 +25,11 @@ export default function Gallery() {
               <div className="container list-container">
                 {streetArt.map((art) => (
                   <ItemList key={art.id} className="has-img mb-20">
-                    <img src={art.image} alt={art.title} />
+                    <ModalImage
+                      small={art.image}
+                      large={art.image}
+                      alt={art.title}
+                    />
                     <div className="item-infos">
                       <h5>{art.title}</h5>
                       <p>
