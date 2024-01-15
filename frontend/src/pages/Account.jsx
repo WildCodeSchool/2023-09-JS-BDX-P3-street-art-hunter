@@ -3,9 +3,11 @@ import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
 import { useLogin } from "../context/LoginContext";
+import { useAdminContext } from "../context/AdminContext";
 
 export default function Account() {
   const { logout } = useLogin();
+  const { removeUser } = useAdminContext();
   const [loggedUser, setLoggedUser] = useState({});
 
   useEffect(() => {
@@ -34,6 +36,11 @@ export default function Account() {
 
     fetchUserData();
   }, []);
+
+  const handleDelete = async () => {
+    removeUser(loggedUser.id);
+    logout();
+  };
 
   const items = [
     {
@@ -94,7 +101,11 @@ export default function Account() {
                 <Button color="red" className="button mt-40" onClick={logout}>
                   Se déconnecter
                 </Button>
-                <Button color="red" className="button mt-40">
+                <Button
+                  color="red"
+                  className="button mt-40"
+                  onClick={handleDelete}
+                >
                   Supprimer mon compte
                 </Button>
               </div>
