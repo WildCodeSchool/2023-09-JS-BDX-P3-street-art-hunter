@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 
 function App() {
   const location = useLocation();
-  const isTitleScreen = location.pathname === "/titlescreen";
+  const isTitleScreen = location.pathname === "/";
 
   return (
     <>

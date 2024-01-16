@@ -14,6 +14,7 @@ export default function AdminContextProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [artists, setArtists] = useState([]);
   const [validations, setValidations] = useState([]);
+  const [streetArt, setStreetArt] = useState([]);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -99,11 +100,73 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
+  const fetchStreetArt = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:3310/api/streetart", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const allStreetArt = await response.json();
+      setStreetArt(allStreetArt);
+    } catch (err) {
+      console.error("erreur de récup", err);
+    }
+  }, []);
+
+  const removeStreetArt = useCallback(async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3310/api/streetart/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Échec de la suppression du street art");
+      }
+
+      setStreetArt((prevStreetArt) =>
+        prevStreetArt.filter((artOne) => artOne.id !== id)
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  const updateUser = useCallback(async (id, data) => {
+    try {
+      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Échec de la mise à jour de l’utilisateur");
+      }
+      const updatedUser = await response.json();
+      setUsers((currentUsers) =>
+        currentUsers.map((user) =>
+          user.id === id ? { ...user, ...updatedUser } : user
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchUsers();
     fetchArtists();
     fetchValidations();
-  }, [fetchUsers, fetchArtists, fetchValidations]);
+    fetchStreetArt();
+  }, [fetchUsers, fetchArtists, fetchValidations, fetchStreetArt]);
 
   const context = useMemo(
     () => ({
@@ -113,8 +176,11 @@ export default function AdminContextProvider({ children }) {
       removeArtist,
       validations,
       setValidations,
+      streetArt,
+      removeStreetArt,
+      updateUser,
     }),
-    [users]
+    [users, streetArt]
   );
 
   return (

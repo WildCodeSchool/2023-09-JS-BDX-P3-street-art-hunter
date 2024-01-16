@@ -870,6 +870,13 @@ label {
     align-items: center;
     justify-content: space-between;
   }
+  .admin-users .admin-item .admin-user,
+  .admin-streetarts .admin-item .admin-user,
+  .admin-artists .admin-item .admin-user {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
   .admin-users .admin-item .admin-item-infos,
   .admin-streetarts .admin-item .admin-item-infos,
   .admin-artists .admin-item .admin-item-infos {

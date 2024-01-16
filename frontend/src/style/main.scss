@@ -917,6 +917,12 @@ label {
       align-items: center;
       justify-content: space-between;
 
+      .admin-user {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
       .admin-item-infos {
         display: flex;
         flex-wrap: wrap;

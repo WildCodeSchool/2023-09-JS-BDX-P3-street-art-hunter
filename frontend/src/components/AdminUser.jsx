@@ -2,14 +2,14 @@ import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useLogin } from "../context/LoginContext";
 
-function AdminRoute({ children }) {
+function AdminUser({ children }) {
   const { isUserAdmin } = useLogin();
 
-  return isUserAdmin() ? children : <Navigate to="/" />;
+  return isUserAdmin() ? children : <Navigate to="/map" />;
 }
 
-AdminRoute.propTypes = {
+AdminUser.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default AdminRoute;
+export default AdminUser;

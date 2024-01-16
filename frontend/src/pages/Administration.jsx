@@ -32,8 +32,15 @@ export default function Administration() {
   ];
 
   const [activeButton, setActiveButton] = useState(buttons[0].id);
-  const { users, removeUser, artists, removeArtist, validations } =
-    useAdminContext();
+  const {
+    users,
+    removeUser,
+    artists,
+    removeArtist,
+    validations,
+    streetArt,
+    removeStreetArt,
+  } = useAdminContext();
   const [images, setImages] = useState(validations);
 
   const formattedDate = (date) => {
@@ -168,7 +175,7 @@ export default function Administration() {
                   .filter((user) => !user.is_admin)
                   .map((user) => (
                     <div key={user.id} className="admin-item">
-                      <div className="admin-item-infos">
+                      <div className="admin-user admin-item-infos">
                         <p>Pseudo : {user.username}</p>
                         <p>Email : {user.email}</p>
                         <p>Code Postal : {user.postcode}</p>
@@ -195,25 +202,30 @@ export default function Administration() {
 
           {/* Street arts */}
 
-          {/* {activeButton ===
+          {activeButton ===
             buttons.find((button) => button.name === "Street-Arts").id && (
             <div className="admin-streetarts">
               <div className="admin-item-list">
-                {street.map((art) => (
+                {streetArt.map((art) => (
                   <div key={art.id} className="admin-item">
                     <div className="admin-item-infos">
                       <img src={art.image} alt={`Button ${art.id}`} />
                       <p>
-                        {art.name}
+                        {art.title}
                         <br />
-                        Par {art.artist}
+                        Par {art.author}
                       </p>
                     </div>
                     <div className="admin-button-container">
                       <Button color="yellow" className="button" type="button">
                         Modifier
                       </Button>
-                      <Button color="red" className="button" type="button">
+                      <Button
+                        color="red"
+                        className="button"
+                        type="button"
+                        onClick={() => removeStreetArt(art.id)}
+                      >
                         Supprimer
                       </Button>
                     </div>
@@ -221,7 +233,7 @@ export default function Administration() {
                 ))}
               </div>
             </div>
-          )} */}
+          )}
 
           {/* Artistes */}
 

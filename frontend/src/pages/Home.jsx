@@ -19,32 +19,7 @@ export default function Home() {
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
   const [map, setMap] = useState(null); // Initialiser la map à null
   const userLocation = useLoaderData();
-
-  const { validations, setValidations } = useAdminContext();
-
-  const arts = [
-    {
-      id: 1,
-      name: "Le pigeon",
-      author: "A-mo",
-      lat: 44.821308,
-      long: -0.551763,
-    },
-    {
-      id: 2,
-      name: "Cosmic Visitor",
-      author: "Inconnu",
-      lat: 44.825882,
-      long: -0.548732,
-    },
-    {
-      id: 3,
-      name: "Plaisir de faire",
-      author: "Inconnu",
-      lat: 44.833581,
-      long: -0.565358,
-    },
-  ];
+  const { streetArt, validations, setValidations } = useAdminContext();
 
   const containerStyle = {
     width: "100%",
@@ -207,22 +182,6 @@ export default function Home() {
     const formattedTime = `${hours}:${minutes}:${seconds}`;
     return formattedTime;
   };
-  // function getFormattedTime() {
-  //   const currentTime = new Date();
-
-  //   const hours = currentTime.getHours().toString().padStart(2, "0");
-  //   const minutes = currentTime.getMinutes().toString().padStart(2, "0");
-  //   const seconds = currentTime.getSeconds().toString().padStart(2, "0");
-
-  //   const formattedTime = `${hours}h${minutes}m${seconds}`;
-  //   return formattedTime;
-  // }
-
-  // const createPendingImageSrc = () => {
-  //   setPendingImageSrc(
-  //     `upload-captured-image-${getDate()}_${getFormattedTime()}.jpg`
-  //   );
-  // };
 
   // fonction pour fetch la pendingImage
   const fetchPendingImageData = async (path) => {
@@ -417,15 +376,15 @@ export default function Home() {
         onLoad={(loadMap) => setMap(loadMap)}
         onZoomChanged={handleZoomChange}
       >
-        {arts.map((art) => (
+        {streetArt.map((art) => (
           <CustomMarker
             key={art.id}
-            lat={art.lat}
-            lng={art.long}
+            lat={art.latitude}
+            lng={art.longitude}
             initialZoomLevel
             text={
               <>
-                <span>{art.name}</span>
+                <span>{art.title}</span>
                 <br />
                 <span>Auteur: {art.author}</span>
               </>

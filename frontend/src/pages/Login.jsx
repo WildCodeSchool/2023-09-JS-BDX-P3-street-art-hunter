@@ -28,7 +28,7 @@ export default function Login() {
                 value={formValue.username}
                 name="username"
                 onChange={onChange}
-                id="pseudo"
+                id="username"
                 required
                 label="Pseudo"
                 type="text"

@@ -5,18 +5,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
-// import Account from "./pages/Account";
+import Account from "./pages/Account";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import Administration from "./pages/Administration";
-import Style from "./pages/Style";
 import TitleScreen from "./pages/TitleScreen";
 import { LoginProvider } from "./context/LoginContext";
 import { AdminContextProvider } from "./context/AdminContext";
 import ApiService from "./services/api.services";
-import AdminRoute from "./components/AdminUser";
-import LoginRoute from "./components/ConnectedUser";
+import AdminUser from "./components/AdminUser";
+import LoggedUser from "./components/ConnectedUser";
+import LogoutUser from "./components/DisconnectedUser";
+import UpdateUser from "./pages/UpdateUser";
 
 const apiService = new ApiService();
 
@@ -40,13 +41,33 @@ function getLocalisation() {
   });
 }
 
+const getStreetArt = async () => {
+  try {
+    const data = await apiService.get("http://localhost:3310/api/streetart");
+    return { streetArtData: data ?? null };
+  } catch (error) {
+    console.error(error.message);
+    return null;
+  }
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
     loader: async () => {
+      if (!localStorage.getItem("token")) {
+        return null;
+      }
       try {
-        const data = await apiService.get("http://localhost:3310/api/users/me");
-        return { preloadUser: data ?? null };
+        const userData = await apiService.get(
+          "http://localhost:3310/api/users/me"
+        );
+        const streetArtData = await getStreetArt();
+
+        return {
+          preloadUser: userData ?? null,
+          preloadStreetArt: streetArtData ?? null,
+        };
       } catch (err) {
         console.error(err.message);
         return null;
@@ -61,7 +82,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/",
+        path: "/map",
         loader: () => getLocalisation(),
         element: <Home />,
       },
@@ -74,32 +95,48 @@ const router = createBrowserRouter([
         element: <Gallery />,
       },
       {
-        // path: "/mon-compte",
-        // children: [
-        //   {
-        //     path: "/mon-compte/informations",
-        //     element: <Account />,
-        //   },
-        //   {
-        //     path: "/mon-compte/arts",
-        //     element: <Account />,
-        //   },
-        // ],
+        path: "/mon-compte",
+        children: [
+          {
+            path: "/mon-compte/informations",
+            element: (
+              <LogoutUser>
+                <Account />
+              </LogoutUser>
+            ),
+          },
+          {
+            path: "/mon-compte/arts",
+            element: (
+              <LogoutUser>
+                <Account />
+              </LogoutUser>
+            ),
+          },
+          {
+            path: "/mon-compte/modifier",
+            element: (
+              <LogoutUser>
+                <UpdateUser />
+              </LogoutUser>
+            ),
+          },
+        ],
       },
       {
         path: "/connexion",
         element: (
-          <LoginRoute>
+          <LoggedUser>
             <Login />
-          </LoginRoute>
+          </LoggedUser>
         ),
       },
       {
         path: "/inscription",
         element: (
-          <LoginRoute>
+          <LoggedUser>
             <Register />
-          </LoginRoute>
+          </LoggedUser>
         ),
       },
       {
@@ -109,17 +146,13 @@ const router = createBrowserRouter([
       {
         path: "/administration",
         element: (
-          <AdminRoute>
-            <Administration />
-          </AdminRoute>
+          <AdminUser>
+            <Administration />,
+          </AdminUser>
         ),
       },
       {
-        path: "/style",
-        element: <Style />,
-      },
-      {
-        path: "/titlescreen",
+        path: "/",
         element: <TitleScreen />,
       },
     ],
