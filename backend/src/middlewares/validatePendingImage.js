@@ -4,7 +4,7 @@ const validatePendingImage = async (req, res, next) => {
   const errors = [];
 
   // Regex pour le format de l'image + Date/Heure
-  const validImgSrcRegex = /^upload-.+\.jpg$/;
+  const validImgSrcRegex = /^uploads.+\.jpg$/;
 
   const isValidDateFormat = (dateString) => {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
@@ -128,7 +128,7 @@ const validatePendingImage = async (req, res, next) => {
 
   if (!validImgSrcRegex.test(imgSrc)) {
     errors.push(
-      "Le lien de l'image doit commencer par upload- et se terminer par .jpg"
+      "Le lien de l'image doit commencer par uploads et se terminer par .jpg"
     );
   }
 

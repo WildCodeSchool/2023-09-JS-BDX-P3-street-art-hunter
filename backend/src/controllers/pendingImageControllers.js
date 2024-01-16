@@ -30,8 +30,8 @@ const add = async (req, res, next) => {
   const pendingImages = req.body;
 
   try {
-    const insertId = await tables.pending_image.create(pendingImages);
-    res.status(201).json({ insertId });
+    const receivedImage = await tables.pending_image.create(pendingImages);
+    res.status(201).json({ receivedImage });
   } catch (err) {
     next(err);
   }
