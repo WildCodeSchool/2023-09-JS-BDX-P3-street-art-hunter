@@ -51,9 +51,9 @@ export default function Gallery() {
               <div className="container list-container">
                 {artists.map((artist) => (
                   <ItemList key={artist.id} className="mb-20">
-                    <h5 className="mb-10">{artist.name}</h5>
-                    <a href="google.fr" className="d-block mb-10">
-                      @{artist.website}
+                    <h5 className="mb-20">{artist.name}</h5>
+                    <a href={artist.website} className="d-block mb-20">
+                      Site Web
                     </a>
                     <Button className="button tiny-button">Galerie</Button>
                   </ItemList>

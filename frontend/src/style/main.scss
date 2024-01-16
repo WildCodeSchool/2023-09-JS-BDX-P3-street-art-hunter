@@ -433,7 +433,7 @@ input {
   background-color: $grey;
   padding: 10px 15px;
   font-size: 16px;
-  max-width: 250px;
+  max-width: 400px;
 }
 
 // item-list
@@ -450,7 +450,7 @@ input {
   background-color: $grey;
   color: black;
   width: 100%;
-  max-width: 400px;
+  max-width: 536px;
 
   &.has-img {
     display: flex;
@@ -470,6 +470,13 @@ input {
     object-position: center;
     float: left;
     margin-right: 16px;
+  }
+  #react-modal-image-img {
+    width: calc(100% - 50px);
+    max-width: 860px;
+  }
+  .__react_modal_image__header a {
+    line-height: 24px;
   }
   a,
   p {
@@ -841,8 +848,12 @@ button {
 }
 
 .admin-streetarts {
-  img {
-    max-width: 767px;
+  .admin-item img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    object-position: center;
   }
 }
 
@@ -909,46 +920,46 @@ label {
     width: 25%;
   }
 
-  .admin-users,
-  .admin-streetarts,
-  .admin-artists {
-    .admin-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  // .admin-users,
+  // .admin-streetarts,
+  // .admin-artists {
+  //   .admin-item {
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: space-between;
 
-      .admin-user {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
+  //     .admin-user {
+  //       flex-direction: column;
+  //       align-items: flex-start;
+  //       gap: 10px;
+  //     }
 
-      .admin-item-infos {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: start;
-        gap: 20px;
+  //     .admin-item-infos {
+  //       display: flex;
+  //       flex-wrap: wrap;
+  //       justify-content: flex-start;
+  //       align-items: start;
+  //       gap: 20px;
 
-        // p {
-        //   // width: 50%;
-        // }
-        img {
-          margin-bottom: 0;
-          max-width: 45%;
-        }
-      }
+  //       // p {
+  //       //   // width: 50%;
+  //       // }
+  //       img {
+  //         margin-bottom: 0;
+  //         max-width: 45%;
+  //       }
+  //     }
 
-      .admin-button-container {
-        margin-top: 0;
-        flex-direction: column;
-        gap: 25px;
-        button {
-          width: 100%;
-        }
-      }
-    }
-  }
+  //     .admin-button-container {
+  //       margin-top: 0;
+  //       flex-direction: column;
+  //       gap: 25px;
+  //       button {
+  //         width: 100%;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 @media (max-width: 1000px) {

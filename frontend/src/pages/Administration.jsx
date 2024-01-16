@@ -115,32 +115,32 @@ export default function Administration() {
                   className="admin-item
                   "
                 >
-                  <h5 className="t-center mb-20">
+                  <h5 className="t-center mb-10">
                     #{item.id} - Le {formattedDate(item.upload_date)} à{" "}
                     {item.upload_time}
                   </h5>
                   <div className="has-two-items">
                     <div className="admin-item-child">
-                      <h4 className="mb-20">{item.street_art_name}</h4>
+                      <h4 className="mb-10">{item.street_art_name}</h4>
+                      <p className="mb-20">
+                        X : {item.street_art_longitude}
+                        <br />Y : {item.street_art_latitude}
+                      </p>
                       <img
                         src={item.street_art_image}
                         alt={item.street_art_image}
                       />
-                      <p>
-                        X : {item.street_art_longitude}
-                        <br />Y : {item.street_art_latitude}
-                      </p>
                     </div>
                     <div className="admin-item-child">
-                      <h4 className="mb-20">{item.username}</h4>
+                      <h4 className="mb-10">{item.username}</h4>
+                      <p className="mb-20">
+                        X : {item.longitude}
+                        <br />Y : {item.latitude}
+                      </p>
                       <img
                         src={`http://localhost:3310/${item.img_src}`}
                         alt={`${item.username}'s upload`}
                       />
-                      <p>
-                        X : {item.longitude}
-                        <br />Y : {item.latitude}
-                      </p>
                     </div>
                   </div>
                   <div className="admin-button-container mt-20">
@@ -208,13 +208,18 @@ export default function Administration() {
               <div className="admin-item-list">
                 {streetArt.map((art) => (
                   <div key={art.id} className="admin-item">
-                    <div className="admin-item-infos">
+                    <div className="admin-item-infos d-flex d-flex-center d-flex-column">
                       <img src={art.image} alt={`Button ${art.id}`} />
-                      <p>
-                        {art.title}
-                        <br />
-                        Par {art.author}
-                      </p>
+                      <div>
+                        <p className="mb-10">
+                          #{art.id} - {art.title}
+                        </p>
+                        <p className="mb-10">Artiste: {art.author}</p>
+                        <p className="mb-10">Adresse: {art.address}</p>
+                        <p className="mb-10">Créé le: {art.creation_date}</p>
+                        <p className="mb-10">Lng: {art.longitude}</p>
+                        <p className="mb-10">Lat: {art.latitude}</p>
+                      </div>
                     </div>
                     <div className="admin-button-container">
                       <Button color="yellow" className="button" type="button">
@@ -244,13 +249,18 @@ export default function Administration() {
                 {artists.map((artist) => (
                   <div key={artist.id} className="admin-item">
                     <div className="admin-item-infos">
-                      <p>
+                      <p className="mb-10">
                         Artiste {artist.id} : {artist.name}
                       </p>
-                      <p>Biographie : {artist.biography}</p>
-                      <p>
-                        Site web :{" "}
-                        <span className="tiny-text">{artist.website}</span>
+                      <p className="mb-10">Biographie : {artist.biography}</p>
+                      <p className="mb-10">
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href={artist.website}
+                        >
+                          Site web
+                        </a>
                       </p>
                     </div>
                     <div className="admin-button-container">
