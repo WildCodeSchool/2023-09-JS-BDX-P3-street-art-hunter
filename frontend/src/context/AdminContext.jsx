@@ -138,6 +138,29 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
+  const updateUser = useCallback(async (id, data) => {
+    try {
+      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Échec de la mise à jour de l’utilisateur");
+      }
+      const updatedUser = await response.json();
+      setUsers((currentUsers) =>
+        currentUsers.map((user) =>
+          user.id === id ? { ...user, ...updatedUser } : user
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchUsers();
     fetchArtists();
@@ -155,6 +178,7 @@ export default function AdminContextProvider({ children }) {
       setValidations,
       streetArt,
       removeStreetArt,
+      updateUser,
     }),
     [users, streetArt]
   );

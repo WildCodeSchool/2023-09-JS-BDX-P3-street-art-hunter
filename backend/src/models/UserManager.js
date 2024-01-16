@@ -53,18 +53,11 @@ class UserManager extends AbstractManager {
   }
 
   async update(id, user) {
+    const hash = await UserManager.hashPassword(user.password);
+
     const [result] = await this.database.query(
-      `update ${this.table} set username = ?, email = ?, postcode = ?, city = ?, password = ?, points = ?, is_admin = ? where id = ?`,
-      [
-        user.username,
-        user.email,
-        user.postcode,
-        user.city,
-        user.password,
-        user.points,
-        user.is_admin,
-        id,
-      ]
+      `update ${this.table} set username = ?, email = ?, postcode = ?, city = ?, password = ? where id = ?`,
+      [user.username, user.email, user.postcode, user.city, hash, id]
     );
 
     return result.affectedRows;

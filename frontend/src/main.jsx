@@ -17,6 +17,7 @@ import ApiService from "./services/api.services";
 import AdminUser from "./components/AdminUser";
 import LoggedUser from "./components/ConnectedUser";
 import LogoutUser from "./components/DisconnectedUser";
+import UpdateUser from "./pages/UpdateUser";
 
 const apiService = new ApiService();
 
@@ -109,6 +110,14 @@ const router = createBrowserRouter([
             element: (
               <LogoutUser>
                 <Account />
+              </LogoutUser>
+            ),
+          },
+          {
+            path: "/mon-compte/modifier",
+            element: (
+              <LogoutUser>
+                <UpdateUser />
               </LogoutUser>
             ),
           },
