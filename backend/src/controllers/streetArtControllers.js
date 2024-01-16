@@ -9,6 +9,22 @@ const read = async (req, res, next) => {
   }
 };
 
+const edit = async (req, res, next) => {
+  const art = req.body;
+  const { id } = req.params;
+  try {
+    const affectedRows = await tables.street_art.update1(id, art);
+
+    if (affectedRows === 0) {
+      res.status(404).json({ message: "leslie" });
+    } else {
+      res.sendStatus(200);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 const destroy = async (req, res, next) => {
   try {
     const affectedRows = await tables.street_art.delete(req.params.id);
@@ -22,4 +38,4 @@ const destroy = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { read, destroy };
+module.exports = { read, edit, destroy };

@@ -55,32 +55,58 @@ class PendingImageManager extends AbstractManager {
   // Post
 
   async create(pendingImage) {
-    const [result] = await this.database.query(
-      `INSERT INTO ${this.table}(user_id, img_src, upload_date, upload_time, latitude, longitude, street_art_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        pendingImage.userId,
-        pendingImage.imgSrc,
-        pendingImage.uploadDate,
-        pendingImage.uploadTime,
-        pendingImage.latitude,
-        pendingImage.longitude,
-        pendingImage.streetArtId,
-        pendingImage.status,
-      ]
-    );
-    return result.insertId;
+    try {
+      const [result] = await this.database.query(
+        `INSERT INTO ${this.table}(
+          user_id,
+          img_src,
+          upload_date,
+          upload_time,
+          latitude,
+          longitude,
+          street_art_id,
+          status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          pendingImage.userId,
+          pendingImage.imgSrc,
+          pendingImage.uploadDate,
+          pendingImage.uploadTime,
+          pendingImage.latitude,
+          pendingImage.longitude,
+          pendingImage.streetArtId,
+          pendingImage.status,
+        ]
+      );
+
+      const lastInsertId = result.insertId;
+
+      const [newPendingImage] = await this.database.query(
+        `SELECT * FROM ${this.table} WHERE id = ?`,
+        [lastInsertId]
+      );
+
+      return newPendingImage;
+    } catch (error) {
+      console.error("Erreur lors de la création du pendingImage:", error);
+      throw error;
+    }
   }
 
   // Patch
 
   async updateStatus(imageId, newStatus) {
     let [result] = await this.database.query(
-      `UPDATE ${this.table} SET status = ? WHERE id = ?`,
+      `UPDATE ${this.table}
+      SET status = ? 
+      WHERE id = ?`,
       [newStatus, imageId]
     );
 
     [result] = await this.database.query(
-      `select * from ${this.table} where id = ?`,
+      `SELECT * 
+      FROM ${this.table} 
+      WHERE id = ?`,
       [imageId]
     );
 

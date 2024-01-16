@@ -7,7 +7,6 @@ import CustomMarker from "../components/Marker";
 import CustomCircle from "../components/CustomCircle";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
-// import { pendingImage } from "../../../backend/src/controllers/pendingImageControllers";
 
 export default function Home() {
   const [cameraPopup, setCameraPopup] = useState(false);
@@ -19,10 +18,8 @@ export default function Home() {
   const flashTimer = 150;
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
   const [map, setMap] = useState(null); // Initialiser la map à null
-  const [pendingImageData, setPendingImageData] = useState(null);
   const userLocation = useLoaderData();
-  const [pendingImageSrc, setPendingImageSrc] = useState("");
-  const { streetArt } = useAdminContext();
+  const { streetArt, validations, setValidations } = useAdminContext();
 
   const containerStyle = {
     width: "100%",
@@ -185,41 +182,25 @@ export default function Home() {
     const formattedTime = `${hours}:${minutes}:${seconds}`;
     return formattedTime;
   };
-  function getFormattedTime() {
-    const currentTime = new Date();
-
-    const hours = currentTime.getHours().toString().padStart(2, "0");
-    const minutes = currentTime.getMinutes().toString().padStart(2, "0");
-    const seconds = currentTime.getSeconds().toString().padStart(2, "0");
-
-    const formattedTime = `${hours}h${minutes}m${seconds}`;
-    return formattedTime;
-  }
-
-  const createPendingImageSrc = () => {
-    setPendingImageSrc(
-      `upload-captured-image-${getDate()}_${getFormattedTime()}.jpg`
-    );
-  };
 
   // fonction pour fetch la pendingImage
-  const fetchPendingImageData = async () => {
+  const fetchPendingImageData = async (path) => {
     try {
       const response = await axios.post(
         "http://localhost:3310/api/pendingImages/",
         {
           userId: 1,
-          imgSrc: pendingImageSrc,
+          imgSrc: path,
           uploadDate: getDate(),
           uploadTime: getTime(),
           latitude: userLocation.lat,
-          longitude: userLocation.lat,
+          longitude: userLocation.lng,
           streetArtId: 4,
           status: "pending",
         }
       );
-      setPendingImageData(response.data);
-      console.info(pendingImageData);
+      const responseData = response.data.receivedImage;
+      setValidations(() => [...validations, responseData]);
     } catch (error) {
       console.error("Erreur lors de la requête Axios:", error);
     }
@@ -289,7 +270,10 @@ export default function Home() {
       canvas.toBlob(
         (blob) => {
           // stocke le Blob dans le state capturedImage
-          setCapturedImage(blob);
+          const file = new File([blob], "fileName.jpg", { type: blob.type });
+          setCapturedImage(file);
+
+          // setCapturedImage(blob);
         },
         "image/jpeg",
         1
@@ -302,20 +286,23 @@ export default function Home() {
   const handleValidateCapture = async () => {
     if (capturedImage) {
       try {
-        createPendingImageSrc();
-        const formData = new FormData();
-        formData.append("image", capturedImage, pendingImageSrc);
+        const uploadFile = new FormData();
+        uploadFile.append("image", capturedImage);
 
-        const response = await fetch("http://localhost:3310/api/uploads/", {
+        const response = await axios({
           method: "POST",
-          body: formData,
+          url: "http://localhost:3310/api/uploads/",
+          data: uploadFile,
+          headers: { "Content-Type": "multipart/form-data" },
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
+          const receivedUploadPath = response.data.filePath;
+
           handleCloseCamera();
           setCaptureForm(false);
           setCameraPopup(false);
-          fetchPendingImageData();
+          fetchPendingImageData(receivedUploadPath);
           alert("Votre image a bien été envoyée");
         } else {
           console.error("Erreur lors de l'envoi de l'image au serveur");
