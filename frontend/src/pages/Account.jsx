@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
 import { useLogin } from "../context/LoginContext";
+import { useAdminContext } from "../context/AdminContext";
 
 export default function Account() {
   const { logout } = useLogin();
+  const { removeUser } = useAdminContext();
   const [loggedUser, setLoggedUser] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,6 +38,11 @@ export default function Account() {
 
     fetchUserData();
   }, []);
+
+  const handleDelete = async () => {
+    removeUser(loggedUser.id);
+    logout();
+  };
 
   const items = [
     {
@@ -88,13 +97,21 @@ export default function Account() {
                 <p className="mb-20">Mail : {loggedUser.email}</p>
                 <p className="mb-20">Code Postal : {loggedUser.postcode}</p>
                 <p className="mb-20">Ville : {loggedUser.city}</p>
-                <Button color="yellow" className="button mt-40">
+                <Button
+                  color="yellow"
+                  className="button mt-40"
+                  onClick={() => navigate("/mon-compte/modifier")}
+                >
                   Modifier
                 </Button>
                 <Button color="red" className="button mt-40" onClick={logout}>
                   Se déconnecter
                 </Button>
-                <Button color="red" className="button mt-40">
+                <Button
+                  color="red"
+                  className="button mt-40"
+                  onClick={handleDelete}
+                >
                   Supprimer mon compte
                 </Button>
               </div>
