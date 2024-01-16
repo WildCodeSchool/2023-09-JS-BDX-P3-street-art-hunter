@@ -52,7 +52,7 @@ export default function Account() {
       <div>
         <h1>Mon compte</h1>
         <h3 className="score t-center">
-          <img src="/src/assets/coin.gif" alt="coin" /> x{user.points}
+          <img src="/src/assets/coin.gif" alt="coin" /> x {user.points}
         </h3>
       </div>
       <Slider
@@ -65,27 +65,35 @@ export default function Account() {
           <div className="container">
             <div className="allow-scroll">
               <div className="container">
-                <p className="mb-20">Pseudo : {user.username}</p>
-                <p className="mb-20">Mail : {user.email}</p>
-                <p className="mb-20">Code Postal : {user.postcode}</p>
-                <p className="mb-20">Ville : {user.city}</p>
-                <Button
-                  color="yellow"
-                  className="button mt-40"
-                  onClick={() => navigate("/mon-compte/modifier")}
-                >
-                  Modifier
-                </Button>
-                <Button color="red" className="button mt-40" onClick={logout}>
-                  Se déconnecter
-                </Button>
-                <Button
-                  color="red"
-                  className="button mt-40"
-                  onClick={handleDelete}
-                >
-                  Supprimer mon compte
-                </Button>
+                <div className="d-flex d-flex-center">
+                  <div>
+                    <p className="mb-20">Pseudo : {user.username}</p>
+                    <p className="mb-20">Mail : {user.email}</p>
+                    <p className="mb-20">Code Postal : {user.postcode}</p>
+                    <p className="mb-20">Ville : {user.city}</p>
+                    <Button
+                      color="yellow"
+                      className="button mt-40"
+                      onClick={() => navigate("/mon-compte/modifier")}
+                    >
+                      Modifier
+                    </Button>
+                    <Button
+                      color="red"
+                      className="button mt-40"
+                      onClick={logout}
+                    >
+                      Se déconnecter
+                    </Button>
+                    <Button
+                      color="red"
+                      className="button mt-40"
+                      onClick={handleDelete}
+                    >
+                      Supprimer mon compte
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
