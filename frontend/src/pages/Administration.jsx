@@ -31,26 +31,10 @@ export default function Administration() {
     },
   ];
 
-  const street = [
-    {
-      id: 1,
-      image:
-        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
-      name: "Le Pigeon",
-      artist: "A-Mo",
-    },
-    {
-      id: 2,
-      image:
-        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
-      name: "Le Pigeon",
-      artist: "A-Mo",
-    },
-  ];
-
   const [activeButton, setActiveButton] = useState(buttons[0].id);
   const { users, removeUser, artists, removeArtist, validations } =
     useAdminContext();
+  const [images, setImages] = useState(validations);
 
   const formattedDate = (date) => {
     const dateObject = new Date(date);
@@ -59,8 +43,6 @@ export default function Administration() {
     const day = dateObject.getDate().toString().padStart(2, "0");
     return `${day}/${month}/${year}`;
   };
-  const [images, setImages] = useState(validations);
-
   const handleOptionClick = (id) => {
     setActiveButton(id);
   };
@@ -145,7 +127,7 @@ export default function Administration() {
                     <div className="admin-item-child">
                       <h4 className="mb-20">{item.username}</h4>
                       <img
-                        src={`http://localhost:3310/uploads/${item.img_src}`}
+                        src={`http://localhost:3310/${item.img_src}`}
                         alt={`${item.username}'s upload`}
                       />
                       <p>
@@ -213,7 +195,7 @@ export default function Administration() {
 
           {/* Street arts */}
 
-          {activeButton ===
+          {/* {activeButton ===
             buttons.find((button) => button.name === "Street-Arts").id && (
             <div className="admin-streetarts">
               <div className="admin-item-list">
@@ -239,7 +221,7 @@ export default function Administration() {
                 ))}
               </div>
             </div>
-          )}
+          )} */}
 
           {/* Artistes */}
 
