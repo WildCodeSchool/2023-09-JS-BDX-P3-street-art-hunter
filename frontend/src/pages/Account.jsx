@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
@@ -9,38 +8,11 @@ import { useAdminContext } from "../context/AdminContext";
 export default function Account() {
   const { logout } = useLogin();
   const { removeUser } = useAdminContext();
-  const [loggedUser, setLoggedUser] = useState({});
+  const { user } = useLogin();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const response = await fetch(`http://localhost:3310/api/users/me`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          if (response.ok) {
-            const user = await response.json();
-            setLoggedUser(user);
-          } else {
-            console.error("Failed to fetch user data");
-          }
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
   const handleDelete = async () => {
-    removeUser(loggedUser.id);
+    removeUser(user.id);
     logout();
   };
 
@@ -80,7 +52,7 @@ export default function Account() {
       <div>
         <h1>Mon compte</h1>
         <h3 className="score t-center">
-          <img src="/src/assets/coin.gif" alt="coin" /> x{loggedUser.points}
+          <img src="/src/assets/coin.gif" alt="coin" /> x{user.points}
         </h3>
       </div>
       <Slider
@@ -93,10 +65,10 @@ export default function Account() {
           <div className="container">
             <div className="allow-scroll">
               <div className="container">
-                <p className="mb-20">Pseudo : {loggedUser.username}</p>
-                <p className="mb-20">Mail : {loggedUser.email}</p>
-                <p className="mb-20">Code Postal : {loggedUser.postcode}</p>
-                <p className="mb-20">Ville : {loggedUser.city}</p>
+                <p className="mb-20">Pseudo : {user.username}</p>
+                <p className="mb-20">Mail : {user.email}</p>
+                <p className="mb-20">Code Postal : {user.postcode}</p>
+                <p className="mb-20">Ville : {user.city}</p>
                 <Button
                   color="yellow"
                   className="button mt-40"
