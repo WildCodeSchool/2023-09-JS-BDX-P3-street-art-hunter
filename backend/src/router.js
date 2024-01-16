@@ -71,6 +71,7 @@ router.patch(
 // Street Art
 
 router.get("/streetart", streetArtControllers.read);
+router.put("/streetart/:id", streetArtControllers.edit);
 router.delete("/streetart/:id", streetArtControllers.destroy);
 
 // Import streetArtsControllers module for handling item-related operations
