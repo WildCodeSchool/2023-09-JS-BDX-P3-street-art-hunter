@@ -50,7 +50,7 @@ export default function LoginProvider({ children, apiService }) {
 
       alert(`Coucou ${result.data.email}`);
       setUser(result.data);
-      if (result.data.isAdmin === 1) {
+      if (result.data.is_admin === 1) {
         return navigate("/administration");
       }
       return navigate("/map");
