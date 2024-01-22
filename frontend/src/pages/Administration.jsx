@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
@@ -42,6 +43,7 @@ export default function Administration() {
     removeStreetArt,
   } = useAdminContext();
   const [images, setImages] = useState(validations);
+  const navigate = useNavigate();
 
   const formattedDate = (date) => {
     const dateObject = new Date(date);
@@ -264,14 +266,23 @@ export default function Administration() {
                       </p>
                     </div>
                     <div className="admin-button-container">
-                      <Button color="yellow" className="button" type="button">
+                      <Button
+                        color="yellow"
+                        className="button"
+                        type="button"
+                        onClick={() =>
+                          navigate(
+                            `/administration/modifier-artistes/${artist.id}`
+                          )
+                        }
+                      >
                         Modifier
                       </Button>
                       <Button
                         color="red"
                         className="button"
                         type="button"
-                        onClick={removeArtist}
+                        onClick={() => removeArtist(artist.id)}
                       >
                         Supprimer
                       </Button>

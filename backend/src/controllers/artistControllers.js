@@ -13,7 +13,7 @@ const read = async (req, res, next) => {
   try {
     const artist = await tables.artist.read(req.params.id);
     if (artist == null) {
-      res.sendStatus(404);
+      res.status(404).json({ error: "Artist not found" });
     } else {
       res.json(artist);
     }
@@ -38,9 +38,9 @@ const edit = async (req, res, next) => {
   try {
     const affectedRows = await tables.artist.update(id, artist);
     if (affectedRows === 0) {
-      res.sendStatus(404);
+      res.status(404).json({ error: "Artist not found" });
     } else {
-      res.sendStatus(200);
+      res.status(200).json({ affectedRows });
     }
   } catch (err) {
     next(err);
@@ -51,9 +51,9 @@ const destroy = async (req, res, next) => {
   try {
     const affectedRows = await tables.artist.delete(req.params.id);
     if (affectedRows === 0) {
-      res.sendStatus(404);
+      res.status(404).json({ error: "Artist not found" });
     } else {
-      res.sendStatus(200);
+      res.status(200).json({ affectedRows });
     }
   } catch (err) {
     next(err);

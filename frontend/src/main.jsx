@@ -18,6 +18,7 @@ import AdminUser from "./components/AdminUser";
 import LoggedUser from "./components/ConnectedUser";
 import LogoutUser from "./components/DisconnectedUser";
 import UpdateUser from "./pages/UpdateUser";
+import UpdateArtist from "./pages/UpdateArtist";
 
 const apiService = new ApiService();
 
@@ -148,6 +149,14 @@ const router = createBrowserRouter([
         element: (
           <AdminUser>
             <Administration />
+          </AdminUser>
+        ),
+      },
+      {
+        path: "/administration/modifier-artistes/:artistId",
+        element: (
+          <AdminUser>
+            <UpdateArtist />
           </AdminUser>
         ),
       },
