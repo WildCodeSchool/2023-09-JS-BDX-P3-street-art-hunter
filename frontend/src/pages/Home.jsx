@@ -6,6 +6,7 @@ import axios from "axios";
 import CustomMarker from "../components/Marker";
 import CustomCircle from "../components/CustomCircle";
 import Button from "../components/Button";
+import { useLogin } from "../context/LoginContext";
 import { useAdminContext } from "../context/AdminContext";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
   const [map, setMap] = useState(null); // Initialiser la map à null
   const { streetArt, validations, setValidations } = useAdminContext();
+  const { user } = useLogin();
 
   const initialUserLocation = useLoaderData();
   const [userLocation, setUserLocation] = useState(initialUserLocation);
@@ -208,7 +210,7 @@ export default function Home() {
       const response = await axios.post(
         "http://localhost:3310/api/pendingImages/",
         {
-          userId: 1,
+          userId: user.id,
           imgSrc: path,
           uploadDate: getDate(),
           uploadTime: getTime(),
