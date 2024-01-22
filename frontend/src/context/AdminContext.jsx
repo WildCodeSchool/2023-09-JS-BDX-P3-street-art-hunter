@@ -161,6 +161,29 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
+  const updateArtist = useCallback(async (id, data) => {
+    try {
+      const response = await fetch(`http://localhost:3310/api/artists/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Échec de la mise à jour de l’artiste");
+      }
+      const updatedArtist = await response.json();
+      setArtists((currentArtists) =>
+        currentArtists.map((artist) =>
+          artist.id === id ? { ...artist, ...updatedArtist } : artist
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchUsers();
     fetchArtists();
@@ -179,6 +202,7 @@ export default function AdminContextProvider({ children }) {
       streetArt,
       removeStreetArt,
       updateUser,
+      updateArtist,
     }),
     [users, streetArt]
   );
