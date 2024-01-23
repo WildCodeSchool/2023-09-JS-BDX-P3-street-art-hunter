@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useState } from "react";
+import { useNavigate, useLoaderData } from "react-router-dom";
 import axios from "axios";
-import { useLoaderData } from "react-router-dom";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 
@@ -73,17 +72,12 @@ export default function Administration() {
     }
   };
 
-
   const handleModifyClick = useCallback(
     async (art) => {
       navigate(`/administration/modifier/${art.id}`);
     },
     [setSelectedStreetArt]
   );
-
-  useEffect(() => {
-    setImages(validations);
-  }, [validations]);
 
   function toRadians(degrees) {
     return degrees * (Math.PI / 180);
