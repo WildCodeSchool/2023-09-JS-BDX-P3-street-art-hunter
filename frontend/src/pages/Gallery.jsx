@@ -1,5 +1,6 @@
 import React from "react";
 import ModalImage from "react-modal-image";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
@@ -9,6 +10,7 @@ import { useAdminContext } from "../context/AdminContext";
 
 export default function Gallery() {
   const { streetArt, artists } = useAdminContext();
+  const navigate = useNavigate();
 
   return (
     <div className="allow-scroll-container">
@@ -55,7 +57,12 @@ export default function Gallery() {
                     <a href={artist.website} className="d-block mb-20">
                       Site Web
                     </a>
-                    <Button className="button tiny-button">Galerie</Button>
+                    <Button
+                      className="button tiny-button"
+                      onClick={() => navigate(`/galerie/artistes/${artist.id}`)}
+                    >
+                      Galerie
+                    </Button>
                   </ItemList>
                 ))}
               </div>
