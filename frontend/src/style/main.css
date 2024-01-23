@@ -52,6 +52,10 @@ h1 {
   margin-block: 25px;
 }
 
+h4 {
+  line-height: 24px;
+}
+
 h5 {
   font-size: 14px;
   line-height: 18px;
@@ -64,6 +68,10 @@ p {
 
 .tiny-text {
   font-size: 10px;
+}
+
+.of-hidden {
+  overflow: hidden;
 }
 
 .container {
@@ -164,6 +172,10 @@ p {
 
 .mb-60 {
   margin-bottom: 60px;
+}
+
+.mr-30 {
+  margin-right: 30px;
 }
 
 .d-block {
@@ -464,7 +476,7 @@ input {
   background-color: #d9d9d9;
   padding: 10px 15px;
   font-size: 16px;
-  max-width: 250px;
+  max-width: 400px;
 }
 
 .list-container {
@@ -479,7 +491,7 @@ input {
   background-color: #d9d9d9;
   color: black;
   width: 100%;
-  max-width: 400px;
+  max-width: 536px;
 }
 .item-list.has-img {
   display: flex;
@@ -499,6 +511,16 @@ input {
   object-position: center;
   float: left;
   margin-right: 16px;
+}
+.item-list #react-modal-image-img {
+  width: calc(100% - 50px);
+  max-width: 860px;
+  -o-object-fit: contain;
+  object-fit: contain;
+  aspect-ratio: auto;
+}
+.item-list .__react_modal_image__header a {
+  line-height: 24px;
 }
 .item-list a,
 .item-list p {
@@ -624,7 +646,7 @@ input {
   position: absolute;
   height: 32px;
   width: 129px;
-  top: calc(100% - 160px);
+  top: calc(100% - 158px);
   left: 30px;
   background-image: url("/src/assets/bush.png");
   background-size: 100%;
@@ -634,7 +656,7 @@ input {
   text-align: center;
   display: inline-block;
   font-weight: bold;
-  padding: 10px 0 10px 10px;
+  padding: 10px;
   background-color: lightgray;
   text-shadow:
     -1px -1px black,
@@ -821,8 +843,14 @@ button h4 {
   text-align: center;
 }
 
-.admin-streetarts img {
-  max-width: 767px;
+.admin-streetarts .admin-item img {
+  width: 100%;
+  max-width: 100%;
+  max-height: 400px;
+  -o-object-fit: contain;
+  object-fit: contain;
+  -o-object-position: center;
+  object-position: center;
 }
 
 .ranking-page p span {
@@ -862,47 +890,6 @@ label {
   }
   .admin-buttons .block-button {
     width: 25%;
-  }
-  .admin-users .admin-item,
-  .admin-streetarts .admin-item,
-  .admin-artists .admin-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .admin-users .admin-item .admin-user,
-  .admin-streetarts .admin-item .admin-user,
-  .admin-artists .admin-item .admin-user {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .admin-users .admin-item .admin-item-infos,
-  .admin-streetarts .admin-item .admin-item-infos,
-  .admin-artists .admin-item .admin-item-infos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: start;
-    gap: 20px;
-  }
-  .admin-users .admin-item .admin-item-infos img,
-  .admin-streetarts .admin-item .admin-item-infos img,
-  .admin-artists .admin-item .admin-item-infos img {
-    margin-bottom: 0;
-    max-width: 45%;
-  }
-  .admin-users .admin-item .admin-button-container,
-  .admin-streetarts .admin-item .admin-button-container,
-  .admin-artists .admin-item .admin-button-container {
-    margin-top: 0;
-    flex-direction: column;
-    gap: 25px;
-  }
-  .admin-users .admin-item .admin-button-container button,
-  .admin-streetarts .admin-item .admin-button-container button,
-  .admin-artists .admin-item .admin-button-container button {
-    width: 100%;
   }
 }
 @media (max-width: 1000px) {

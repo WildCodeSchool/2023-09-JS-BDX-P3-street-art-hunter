@@ -52,4 +52,18 @@ const destroy = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { read, edit, destroy, readOne };
+
+const readStreetArt = async (req, res, next) => {
+  const { artistId } = req.params;
+  try {
+    const affectedRows = await tables.street_art.getStreetArts(artistId);
+    res.json(affectedRows);
+    if (affectedRows === 0) {
+      res.status(404).json({ error: "Artist not found" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports = { read, edit, destroy, readOne , readStreetArt };
+

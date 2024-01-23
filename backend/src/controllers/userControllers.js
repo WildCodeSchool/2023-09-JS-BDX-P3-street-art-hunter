@@ -82,6 +82,15 @@ const postLogin = (req, res) => {
   });
 };
 
+const getRanks = async (_, res, next) => {
+  try {
+    const ranks = await tables.users.getRanks();
+    res.json(ranks);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getProfile = (req, res) => {
   res.send(req.user);
 };
@@ -93,5 +102,6 @@ module.exports = {
   edit,
   destroy,
   postLogin,
+  getRanks,
   getProfile,
 };

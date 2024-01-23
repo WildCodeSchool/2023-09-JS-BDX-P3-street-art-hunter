@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
 // Import userControllers module for handling item-related operations
 const userControllers = require("./controllers/userControllers");
@@ -41,6 +43,7 @@ router.get(
 router.post("/users", validateUser, userControllers.add);
 router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
+router.get("/ranks", userControllers.getRanks);
 
 // Login
 
@@ -74,6 +77,7 @@ router.get("/streetart", streetArtControllers.read);
 router.get("/streetart/:id", streetArtControllers.readOne);
 router.put("/streetart/:id", streetArtControllers.edit);
 router.delete("/streetart/:id", streetArtControllers.destroy);
+router.get("/streetart/:artistId([0-9]+)", streetArtControllers.readStreetArt);
 
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");
@@ -92,34 +96,46 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage }).single("image");
+const upload = multer({ storage });
 
-router.post("/uploads", (req, res) => {
-  upload(req, res, (uploadError) => {
-    if (uploadError) {
-      console.error("Erreur Multer:", uploadError.message);
-      return res
-        .status(500)
-        .json({ success: false, error: uploadError.message });
+router.post("/uploads", upload.single("image"), (req, res) => {
+  try {
+    if (!req.file) {
+      throw new Error("Aucun fichier téléchargé.");
     }
 
-    try {
-      if (!req.file) {
-        throw new Error("Aucun fichier téléchargé.");
+    const originalFilename = req.file.filename;
+    const filePath = req.file.path.replace(
+      originalFilename,
+      `${new Date().getTime()}-${originalFilename}`
+    );
+
+    // Obtient un chemin relatif sans le préfixe "public/" et remplace les "\" par "/"
+    const relativePath = path.relative("public", filePath).replace(/\\/g, "/");
+
+    fs.rename(req.file.path, filePath, (renameError) => {
+      if (renameError) {
+        console.error(
+          "Erreur lors du renommage du fichier:",
+          renameError.message
+        );
+        return res
+          .status(500)
+          .json({ success: false, error: renameError.message });
       }
 
-      const filePath = req.file.path;
-      return res.status(200).json({ success: true, filePath });
-    } catch (processingError) {
-      console.error(
-        "Erreur lors du traitement du fichier:",
-        processingError.message
-      );
-      return res
-        .status(500)
-        .json({ success: false, error: processingError.message });
-    }
-  });
+      return res.status(200).json({ success: true, filePath: relativePath });
+    });
+  } catch (processingError) {
+    console.error(
+      "Erreur lors du traitement du fichier:",
+      processingError.message
+    );
+    return res
+      .status(500)
+      .json({ success: false, error: processingError.message });
+  }
+  return null;
 });
 
 // Check if user admin

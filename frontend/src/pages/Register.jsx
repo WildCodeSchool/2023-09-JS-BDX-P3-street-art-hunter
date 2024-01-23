@@ -65,120 +65,136 @@ export default function Register() {
 
   return (
     <div className="container allow-scroll-container ">
-      <h1 className="mb-20">Inscription</h1>
-      <div className="allow-scroll">
+      <div className="d-flex d-flex-center">
         <div>
-          <form className="mb-20">
-            <label htmlFor="username" className="mb-10 ">
-              Pseudo
-            </label>
-            <div className="input mb-10">
-              <input
-                type="text"
-                name="username"
-                id="username"
-                value={formData.username}
-                onChange={(e) => updateRegisterForm("username", e.target.value)}
-              />
-            </div>
-            {alertMessage.username.length > 0 && (
-              <div className="error-message ml-1 mb-10 tiny-text ml-1">
-                {alertMessage.username}
-              </div>
-            )}
+          <h1 className="mb-20">Inscription</h1>
+          <div className="allow-scroll">
+            <div>
+              <form className="mb-20">
+                <label htmlFor="username" className="mb-10 ">
+                  Pseudo
+                </label>
+                <div className="input mb-10">
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    value={formData.username}
+                    onChange={(e) =>
+                      updateRegisterForm("username", e.target.value)
+                    }
+                  />
+                </div>
+                {alertMessage.username.length > 0 && (
+                  <div className="error-message ml-1 mb-10 tiny-text ml-1">
+                    {alertMessage.username}
+                  </div>
+                )}
 
-            <label htmlFor="email" className="mb-10">
-              Adresse email
-            </label>
-            <div className="input mb-10">
-              <input
-                type="text"
-                name="email"
-                id="email"
-                required
-                value={formData.email}
-                onChange={(e) => updateRegisterForm("email", e.target.value)}
-              />
-            </div>
-            {alertMessage.email.length > 0 && (
-              <div className="error-message mb-10 tiny-text">
-                {alertMessage.email}
-              </div>
-            )}
-            <label htmlFor="postcode" className="mb-10">
-              Code Postal
-            </label>
-            <div className="input mb-10">
-              <input
-                type="text"
-                name="postcode"
-                id="postcode"
-                value={formData.postcode}
-                onChange={(e) => updateRegisterForm("postcode", e.target.value)}
-              />
-            </div>
+                <label htmlFor="email" className="mb-10">
+                  Adresse email
+                </label>
+                <div className="input mb-10">
+                  <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) =>
+                      updateRegisterForm("email", e.target.value)
+                    }
+                  />
+                </div>
+                {alertMessage.email.length > 0 && (
+                  <div className="error-message mb-10 tiny-text">
+                    {alertMessage.email}
+                  </div>
+                )}
+                <label htmlFor="postcode" className="mb-10">
+                  Code Postal
+                </label>
+                <div className="input mb-10">
+                  <input
+                    type="text"
+                    name="postcode"
+                    id="postcode"
+                    value={formData.postcode}
+                    onChange={(e) =>
+                      updateRegisterForm("postcode", e.target.value)
+                    }
+                  />
+                </div>
 
-            <label htmlFor="city" className="mb-10">
-              Ville
-            </label>
-            <div className="input mb-10">
-              <input
-                type="text"
-                name="city"
-                id="city"
-                value={formData.city}
-                onChange={(e) => updateRegisterForm("city", e.target.value)}
-              />
-            </div>
+                <label htmlFor="city" className="mb-10">
+                  Ville
+                </label>
+                <div className="input mb-10">
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    value={formData.city}
+                    onChange={(e) => updateRegisterForm("city", e.target.value)}
+                  />
+                </div>
 
-            <label htmlFor="password" className="mb-10">
-              Mot de passe
-            </label>
-            <div className="input mb-10">
-              <input
-                type="password"
-                name="password"
-                id="password"
-                value={formData.password}
-                onChange={(e) => updateRegisterForm("password", e.target.value)}
-              />
-            </div>
-            {alertMessage.password.length > 0 && (
-              <div className="error-message mb-10 tiny-text">
-                {alertMessage.password}
-              </div>
-            )}
+                <label htmlFor="password" className="mb-10">
+                  Mot de passe
+                </label>
+                <div className="input mb-10">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={formData.password}
+                    onChange={(e) =>
+                      updateRegisterForm("password", e.target.value)
+                    }
+                  />
+                </div>
+                {alertMessage.password.length > 0 && (
+                  <div className="error-message mb-10 tiny-text">
+                    {alertMessage.password}
+                  </div>
+                )}
 
-            <label htmlFor="confirmation" className="mb-10">
-              Confirmer le mot de passe
-            </label>
-            <div className="input mb-10">
-              <input
-                type="password"
-                name="confirmation"
-                id="confirmation"
-                value={formData.confirmation}
-                onChange={(e) =>
-                  updateRegisterForm("confirmation", e.target.value)
-                }
-              />
-            </div>
-            {alertMessage.confirmation.length > 0 && (
-              <div className="error-message mb-10 tiny-text">
-                {alertMessage.confirmation}
-              </div>
-            )}
-          </form>
-          <Button type="submit" className="button mb-20" onClick={handleSubmit}>
-            Valider
-          </Button>
+                <label htmlFor="confirmation" className="mb-10">
+                  Confirmer le mot de passe
+                </label>
+                <div className="input mb-10">
+                  <input
+                    type="password"
+                    name="confirmation"
+                    id="confirmation"
+                    value={formData.confirmation}
+                    onChange={(e) =>
+                      updateRegisterForm("confirmation", e.target.value)
+                    }
+                  />
+                </div>
+                {alertMessage.confirmation.length > 0 && (
+                  <div className="error-message mb-10 tiny-text">
+                    {alertMessage.confirmation}
+                  </div>
+                )}
+              </form>
+              <Button
+                type="submit"
+                className="button mb-20"
+                onClick={handleSubmit}
+              >
+                Valider
+              </Button>
 
-          <Link to="/connexion">
-            <p className="mb-10">
-              Déjà inscrit ? <br />
-              Connectez-vous !
-            </p>
-          </Link>
+              <Link to="/connexion">
+                <p className="mb-10">
+                  Déjà inscrit ? <br />
+                  Connectez-vous !
+                </p>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

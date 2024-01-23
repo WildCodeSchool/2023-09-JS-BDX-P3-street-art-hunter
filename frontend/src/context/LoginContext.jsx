@@ -50,7 +50,7 @@ export default function LoginProvider({ children, apiService }) {
 
       alert(`Coucou ${result.data.email}`);
       setUser(result.data);
-      if (result.data.isAdmin === 1) {
+      if (result.data.is_admin === 1) {
         return navigate("/administration");
       }
       return navigate("/map");
@@ -84,10 +84,10 @@ export default function LoginProvider({ children, apiService }) {
       isUserAdmin,
       logout,
       user,
-      ApiService,
+      apiService,
       register,
     }),
-    []
+    [isUserConnected, isUserAdmin, logout, user, apiService, register]
   );
 
   return (
