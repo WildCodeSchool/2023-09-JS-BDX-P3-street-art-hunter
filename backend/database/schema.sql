@@ -43,14 +43,6 @@ CREATE TABLE IF NOT EXISTS artist_street_art (
 SELECT * FROM users;
 
 INSERT INTO
-    users (
-        username, email, postcode, city, password, points, is_admin
-    )
-VALUES (
-        "kevin", "kevin@jean.com", "33000", "Bordeaux", "kevin", 0, 1
-    );
-
-INSERT INTO
     artist (name, biography, website)
 VALUES (
         "Alber", "Alber est un graffeur français basé à Bordeaux.", "https://www.instagram.com/alberoner/"
