@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 import Button from "../components/Button";
@@ -35,7 +36,9 @@ export default function Administration() {
   const { validations } = useLoaderData();
   const [collection, setCollection] = useState(validations);
 
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(buttons[0].id);
+
   const {
     users,
     removeUser,
@@ -43,6 +46,7 @@ export default function Administration() {
     removeArtist,
     streetArt,
     removeStreetArt,
+    setSelectedStreetArt,
   } = useAdminContext();
 
   const formattedDate = (date) => {
@@ -68,6 +72,18 @@ export default function Administration() {
       console.error("Error validating image:", error);
     }
   };
+
+
+  const handleModifyClick = useCallback(
+    async (art) => {
+      navigate(`/administration/modifier/${art.id}`);
+    },
+    [setSelectedStreetArt]
+  );
+
+  useEffect(() => {
+    setImages(validations);
+  }, [validations]);
 
   function toRadians(degrees) {
     return degrees * (Math.PI / 180);
@@ -257,7 +273,12 @@ export default function Administration() {
                       </div>
                     </div>
                     <div className="admin-button-container">
-                      <Button color="yellow" className="button" type="button">
+                      <Button
+                        color="yellow"
+                        className="button"
+                        type="button"
+                        onClick={() => handleModifyClick(art)}
+                      >
                         Modifier
                       </Button>
                       <Button

@@ -74,6 +74,7 @@ router.patch(
 // Street Art
 
 router.get("/streetart", streetArtControllers.read);
+router.get("/streetart/:id", streetArtControllers.readOne);
 router.put("/streetart/:id", streetArtControllers.edit);
 router.delete("/streetart/:id", streetArtControllers.destroy);
 router.get("/streetart/:artistId([0-9]+)", streetArtControllers.readStreetArt);

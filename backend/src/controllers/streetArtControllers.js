@@ -9,14 +9,28 @@ const read = async (req, res, next) => {
   }
 };
 
+const readOne = async (req, res, next) => {
+  try {
+    const result = await tables.street_art.readSingle(req.params.id);
+    if (result === 0) {
+      res.status(404).json({ error: "Aucun street art trouvé avec cet ID." });
+    } else {
+      res.status(200).json(result);
+    }
+  } catch (err) {
+    console.error("Erreur dans la fonction readOne:", err);
+    next(err);
+  }
+};
+
 const edit = async (req, res, next) => {
   const art = req.body;
   const { id } = req.params;
   try {
-    const affectedRows = await tables.street_art.update1(id, art);
+    const affectedRows = await tables.street_art.updateOne(id, art);
 
     if (affectedRows === 0) {
-      res.status(404).json({ message: "leslie" });
+      res.status(404).json({ message: "error in edit route" });
     } else {
       res.sendStatus(200);
     }
@@ -51,4 +65,5 @@ const readStreetArt = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { read, edit, destroy, readStreetArt };
+module.exports = { read, edit, destroy, readOne , readStreetArt };
+
