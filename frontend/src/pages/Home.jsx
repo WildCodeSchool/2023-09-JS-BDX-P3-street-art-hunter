@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
@@ -19,9 +19,28 @@ export default function Home() {
   const flashTimer = 150;
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
   const [map, setMap] = useState(null); // Initialiser la map à null
-  const userLocation = useLoaderData();
   const { streetArt, validations, setValidations } = useAdminContext();
   const { user } = useLogin();
+
+  const initialUserLocation = useLoaderData();
+  const [userLocation, setUserLocation] = useState(initialUserLocation);
+
+  useEffect(() => {
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      (error) => {
+        console.error("Erreur de géolocalisation: ", error.message);
+      },
+      { enableHighAccuracy: true }
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
 
   const containerStyle = {
     width: "100%",

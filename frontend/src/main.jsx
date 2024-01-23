@@ -18,6 +18,8 @@ import AdminUser from "./components/AdminUser";
 import LoggedUser from "./components/ConnectedUser";
 import LogoutUser from "./components/DisconnectedUser";
 import UpdateUser from "./pages/UpdateUser";
+import UpdateArtist from "./pages/UpdateArtist";
+import Art from "./pages/Art";
 
 const apiService = new ApiService();
 
@@ -95,6 +97,10 @@ const router = createBrowserRouter([
         element: <Gallery />,
       },
       {
+        path: "/galerie/artistes/:artistId",
+        element: <Art />,
+      },
+      {
         path: "/mon-compte",
         children: [
           {
@@ -159,6 +165,14 @@ const router = createBrowserRouter([
         element: (
           <AdminUser>
             <Administration />
+          </AdminUser>
+        ),
+      },
+      {
+        path: "/administration/modifier-artistes/:artistId",
+        element: (
+          <AdminUser>
+            <UpdateArtist />
           </AdminUser>
         ),
       },
