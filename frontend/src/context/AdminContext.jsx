@@ -78,7 +78,7 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  });
 
   const removeArtist = useCallback(async (id) => {
     try {

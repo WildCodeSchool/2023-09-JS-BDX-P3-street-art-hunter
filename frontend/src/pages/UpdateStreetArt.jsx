@@ -25,6 +25,11 @@ function UpdateStreetArt() {
               <br />
               Par {selectedStreetArt?.author}
             </p>
+            <p className="mb-10">Artiste: {selectedStreetArt.author}</p>
+            <p className="mb-10">Adresse: {selectedStreetArt.address}</p>{" "}
+            <p className="mb-10">Créé le: {selectedStreetArt.creation_date}</p>
+            <p className="mb-10">Lng: {selectedStreetArt.longitude}</p>
+            <p className="mb-10">Lat: {selectedStreetArt.latitude}</p>
           </div>
         </div>
       </div>
