@@ -69,6 +69,28 @@ export default function Administration() {
     }
   };
 
+  function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Rayon moyen de la Terre en kilomètres
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distanceInKm = R * c; // Distance en kilomètres
+    const distanceInM = distanceInKm * 1000; // Convertir en mètres
+    return distanceInM.toFixed(2);
+  }
+
   return (
     <div className="admin-page allow-scroll-container">
       <div>
@@ -100,7 +122,7 @@ export default function Administration() {
         </div>
       </div>
 
-      <div className="container">
+      <div className="container of-hidden">
         {/* Validations */}
         {activeButton ===
           buttons.find((button) => button.name === "Validations").id && (
@@ -116,28 +138,30 @@ export default function Administration() {
                       </h5>
                       <div className="has-two-items">
                         <div className="admin-item-child">
-                          <h4 className="mb-10">{item.street_art_name}</h4>
-                          <p className="mb-20">
-                            X : {item.street_art_longitude}
-                            <br />Y : {item.street_art_latitude}
-                          </p>
+                          <h4 className="mb-20">{item.street_art_name}</h4>
                           <img
                             src={item.street_art_image}
                             alt={item.street_art_image}
                           />
                         </div>
                         <div className="admin-item-child">
-                          <h4 className="mb-10">{item.username}</h4>
-                          <p className="mb-20">
-                            X : {item.longitude}
-                            <br />Y : {item.latitude}
-                          </p>
+                          <h4 className="mb-20">{item.username}</h4>
                           <img
                             src={`http://localhost:3310/${item.img_src}`}
                             alt={`${item.username}'s upload`}
                           />
                         </div>
                       </div>
+                      <h4 className="t-center mb-20 mt-20 d-block">
+                        Distance ={" "}
+                        {getDistance(
+                          item.street_art_longitude,
+                          item.street_art_latitude,
+                          item.longitude,
+                          item.latitude
+                        )}
+                        m
+                      </h4>
                       <div className="admin-button-container mt-20">
                         <Button
                           className="button"

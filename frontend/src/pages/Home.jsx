@@ -19,7 +19,7 @@ export default function Home() {
   const flashTimer = 150;
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
   const [map, setMap] = useState(null); // Initialiser la map à null
-  const { streetArt, validations, setValidations } = useAdminContext();
+  const { streetArt } = useAdminContext();
   const { user } = useLogin();
 
   const initialUserLocation = useLoaderData();
@@ -207,21 +207,16 @@ export default function Home() {
   // fonction pour fetch la pendingImage
   const fetchPendingImageData = async (path) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3310/api/pendingImages/",
-        {
-          userId: user.id,
-          imgSrc: path,
-          uploadDate: getDate(),
-          uploadTime: getTime(),
-          latitude: userLocation.lat,
-          longitude: userLocation.lng,
-          streetArtId: 4,
-          status: "pending",
-        }
-      );
-      const responseData = response.data.receivedImage;
-      setValidations(() => [...validations, responseData]);
+      await axios.post("http://localhost:3310/api/pendingImages/", {
+        userId: user.id,
+        imgSrc: path,
+        uploadDate: getDate(),
+        uploadTime: getTime(),
+        latitude: userLocation.lat,
+        longitude: userLocation.lng,
+        streetArtId: 27,
+        status: "pending",
+      });
     } catch (error) {
       console.error("Erreur lors de la requête Axios:", error);
     }
