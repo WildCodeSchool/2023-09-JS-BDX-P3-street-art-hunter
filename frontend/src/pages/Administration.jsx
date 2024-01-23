@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 
@@ -32,18 +32,18 @@ export default function Administration() {
     },
   ];
 
+  const { validations } = useLoaderData();
+  const [collection, setCollection] = useState(validations);
+
   const [activeButton, setActiveButton] = useState(buttons[0].id);
   const {
     users,
     removeUser,
     artists,
     removeArtist,
-    validations,
     streetArt,
     removeStreetArt,
   } = useAdminContext();
-  const [images, setImages] = useState(validations);
-  const navigate = useNavigate();
 
   const formattedDate = (date) => {
     const dateObject = new Date(date);
@@ -52,26 +52,22 @@ export default function Administration() {
     const day = dateObject.getDate().toString().padStart(2, "0");
     return `${day}/${month}/${year}`;
   };
+
   const handleOptionClick = (id) => {
     setActiveButton(id);
   };
 
-  const changePendingImage = async (id, status) => {
+  const changePendingImage = async (id, status, userId) => {
     try {
-      const { data } = await axios.patch(
+      await axios.patch(
         `http://localhost:3310/api/pendingImages/status/${id}`,
-        { status }
+        { status, userId }
       );
-      const filteredData = [...images.filter((item) => item.id !== data.id)];
-      setImages(filteredData);
+      setCollection([...collection.filter((item) => item.id !== id)]);
     } catch (error) {
       console.error("Error validating image:", error);
     }
   };
-
-  useEffect(() => {
-    setImages(validations);
-  }, [validations]);
 
   return (
     <div className="admin-page allow-scroll-container">
@@ -104,74 +100,86 @@ export default function Administration() {
         </div>
       </div>
 
-      {/* Validations */}
-
-      <div className="allow-scroll pos-r">
-        <div className="admin-validations bg-text-block">
-          {activeButton ===
-            buttons.find((button) => button.name === "Validations").id && (
-            <div className="admin-item-list">
-              {images.map((item) => (
-                <div
-                  key={item.id}
-                  className="admin-item
-                  "
-                >
-                  <h5 className="t-center mb-10">
-                    #{item.id} - Le {formattedDate(item.upload_date)} à{" "}
-                    {item.upload_time}
-                  </h5>
-                  <div className="has-two-items">
-                    <div className="admin-item-child">
-                      <h4 className="mb-10">{item.street_art_name}</h4>
-                      <p className="mb-20">
-                        X : {item.street_art_longitude}
-                        <br />Y : {item.street_art_latitude}
-                      </p>
-                      <img
-                        src={item.street_art_image}
-                        alt={item.street_art_image}
-                      />
+      <div className="container">
+        {/* Validations */}
+        {activeButton ===
+          buttons.find((button) => button.name === "Validations").id && (
+          <div className="allow-scroll pos-r">
+            <div className="admin-validations bg-text-block">
+              {collection.length > 0 ? (
+                <div className="admin-item-list">
+                  {collection.map((item) => (
+                    <div key={item.id} className="admin-item">
+                      <h5 className="t-center mb-10">
+                        #{item.id} - Le {formattedDate(item.upload_date)} à{" "}
+                        {item.upload_time}
+                      </h5>
+                      <div className="has-two-items">
+                        <div className="admin-item-child">
+                          <h4 className="mb-10">{item.street_art_name}</h4>
+                          <p className="mb-20">
+                            X : {item.street_art_longitude}
+                            <br />Y : {item.street_art_latitude}
+                          </p>
+                          <img
+                            src={item.street_art_image}
+                            alt={item.street_art_image}
+                          />
+                        </div>
+                        <div className="admin-item-child">
+                          <h4 className="mb-10">{item.username}</h4>
+                          <p className="mb-20">
+                            X : {item.longitude}
+                            <br />Y : {item.latitude}
+                          </p>
+                          <img
+                            src={`http://localhost:3310/${item.img_src}`}
+                            alt={`${item.username}'s upload`}
+                          />
+                        </div>
+                      </div>
+                      <div className="admin-button-container mt-20">
+                        <Button
+                          className="button"
+                          type="button"
+                          onClick={async () => {
+                            await changePendingImage(
+                              item.id,
+                              "validate",
+                              item.user_id
+                            );
+                          }}
+                        >
+                          Valider
+                        </Button>
+                        <Button
+                          color="red"
+                          className="button"
+                          type="button"
+                          onClick={() =>
+                            changePendingImage(item.id, "refused", item.user_id)
+                          }
+                        >
+                          Refuser
+                        </Button>
+                      </div>
                     </div>
-                    <div className="admin-item-child">
-                      <h4 className="mb-10">{item.username}</h4>
-                      <p className="mb-20">
-                        X : {item.longitude}
-                        <br />Y : {item.latitude}
-                      </p>
-                      <img
-                        src={`http://localhost:3310/${item.img_src}`}
-                        alt={`${item.username}'s upload`}
-                      />
-                    </div>
-                  </div>
-                  <div className="admin-button-container mt-20">
-                    <Button
-                      className="button"
-                      type="button"
-                      onClick={() => changePendingImage(item.id, "validate")}
-                    >
-                      Valider
-                    </Button>
-                    <Button
-                      color="red"
-                      className="button"
-                      type="button"
-                      onClick={() => changePendingImage(item.id, "refused")}
-                    >
-                      Refuser
-                    </Button>
-                  </div>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                <h4 className="t-center mb-20 mt-20">
+                  Aucune validation en attente.
+                </h4>
+              )}
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Utilisateurs */}
-
-          {activeButton ===
-            buttons.find((button) => button.name === "Utilisateurs").id && (
-            <div className="admin-users">
+        {/* Utilisateurs */}
+        {activeButton ===
+          buttons.find((button) => button.name === "Utilisateurs").id && (
+          <div className="allow-scroll pos-r">
+            <div className="admin-users bg-text-block">
               <div className="admin-item-list">
                 {users
                   .filter((user) => !user.is_admin)
@@ -200,13 +208,14 @@ export default function Administration() {
                   ))}
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Street arts */}
-
-          {activeButton ===
-            buttons.find((button) => button.name === "Street-Arts").id && (
-            <div className="admin-streetarts">
+        {/* Street arts */}
+        {activeButton ===
+          buttons.find((button) => button.name === "Street-Arts").id && (
+          <div className="allow-scroll pos-r">
+            <div className="admin-streetarts bg-text-block">
               <div className="admin-item-list">
                 {streetArt.map((art) => (
                   <div key={art.id} className="admin-item">
@@ -240,13 +249,14 @@ export default function Administration() {
                 ))}
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Artistes */}
-
-          {activeButton ===
-            buttons.find((button) => button.name === "Artistes").id && (
-            <div className="admin-artists">
+        {/* Artistes */}
+        {activeButton ===
+          buttons.find((button) => button.name === "Artistes").id && (
+          <div className="allow-scroll pos-r">
+            <div className="admin-artists bg-text-block">
               <div className="admin-item-list">
                 {artists.map((artist) => (
                   <div key={artist.id} className="admin-item">
@@ -266,23 +276,14 @@ export default function Administration() {
                       </p>
                     </div>
                     <div className="admin-button-container">
-                      <Button
-                        color="yellow"
-                        className="button"
-                        type="button"
-                        onClick={() =>
-                          navigate(
-                            `/administration/modifier-artistes/${artist.id}`
-                          )
-                        }
-                      >
+                      <Button color="yellow" className="button" type="button">
                         Modifier
                       </Button>
                       <Button
                         color="red"
                         className="button"
                         type="button"
-                        onClick={() => removeArtist(artist.id)}
+                        onClick={removeArtist}
                       >
                         Supprimer
                       </Button>
@@ -291,8 +292,8 @@ export default function Administration() {
                 ))}
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

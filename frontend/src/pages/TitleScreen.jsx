@@ -43,7 +43,7 @@ export default function TitleScreen() {
               </>
             ) : (
               <div className="d-flex d-flex-column">
-                <div className="login-button d-flex d-flex-center d-flex-wrap mb-40">
+                <div className="login-button d-flex d-flex-center d-flex-wrap mb-40 t-center">
                   <button
                     type="button"
                     onClick={goToLogin}
@@ -63,6 +63,7 @@ export default function TitleScreen() {
                   type="button"
                   onClick={continueAsGuest}
                   onKeyDown={handleKeyPress(continueAsGuest)}
+                  className="t-center"
                 >
                   <h4>CONTINUER EN TANT QUE VISITEUR</h4>
                 </button>

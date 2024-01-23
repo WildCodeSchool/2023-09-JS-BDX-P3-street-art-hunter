@@ -41,11 +41,10 @@ const add = async (req, res, next) => {
 // Met à jour le status pour passer de en attente à valider ou refuser
 
 const updateStatus = async (req, res) => {
-  const imageId = req.params.id;
-  const newStatus = req.body.status;
+  const { userId, id, status } = req.body;
 
   try {
-    const result = await tables.pending_image.updateStatus(imageId, newStatus);
+    const result = await tables.pending_image.updateStatus(id, status, userId);
     res.status(200).json(result[0] ?? {});
   } catch (error) {
     console.error('Erreur lors de la mise à jour du champ "status" :', error);

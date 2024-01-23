@@ -151,6 +151,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/administration",
+        loader: async () => {
+          try {
+            const response = await apiService.get(
+              "http://localhost:3310/api/admin/pendingImages"
+            );
+
+            return { validations: response?.data ?? [] };
+          } catch (error) {
+            return { validations: [] };
+          }
+        },
         element: (
           <AdminUser>
             <Administration />
