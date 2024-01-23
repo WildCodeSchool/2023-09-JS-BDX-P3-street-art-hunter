@@ -18,6 +18,7 @@ import AdminUser from "./components/AdminUser";
 import LoggedUser from "./components/ConnectedUser";
 import LogoutUser from "./components/DisconnectedUser";
 import UpdateUser from "./pages/UpdateUser";
+import UpdateStreetArt from "./pages/UpdateStreetArt";
 
 const apiService = new ApiService();
 
@@ -148,6 +149,14 @@ const router = createBrowserRouter([
         element: (
           <AdminUser>
             <Administration />,
+          </AdminUser>
+        ),
+      },
+      {
+        path: "/administration/modifier/:id",
+        element: (
+          <AdminUser>
+            <UpdateStreetArt />,
           </AdminUser>
         ),
       },

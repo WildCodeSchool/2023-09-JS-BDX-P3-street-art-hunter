@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
@@ -48,7 +49,9 @@ export default function Administration() {
   //   },
   // ];
 
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(buttons[0].id);
+
   const {
     users,
     removeUser,
@@ -57,6 +60,7 @@ export default function Administration() {
     validations,
     streetArt,
     removeStreetArt,
+    setSelectedStreetArt,
   } = useAdminContext();
 
   const formattedDate = (date) => {
@@ -84,6 +88,13 @@ export default function Administration() {
       console.error("Error validating image:", error);
     }
   };
+
+  const handleModifyClick = useCallback(
+    async (art) => {
+      navigate(`/administration/modifier/${art.id}`);
+    },
+    [setSelectedStreetArt]
+  );
 
   useEffect(() => {
     setImages(validations);
@@ -235,7 +246,12 @@ export default function Administration() {
                       </p>
                     </div>
                     <div className="admin-button-container">
-                      <Button color="yellow" className="button" type="button">
+                      <Button
+                        color="yellow"
+                        className="button"
+                        type="button"
+                        onClick={() => handleModifyClick(art)}
+                      >
                         Modifier
                       </Button>
                       <Button

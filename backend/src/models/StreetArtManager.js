@@ -11,6 +11,14 @@ class StreetArtManager extends AbstractManager {
     return rows;
   }
 
+  async readSingle(id) {
+    const [rows] = await this.database.query(
+      `select * from ${this.table} where id = ?`,
+      [id]
+    );
+
+    return rows[0];
+  }
   // First method to update
   // async update(id, streetart) {
   //   const [rows] = await this.database.query(
@@ -29,7 +37,7 @@ class StreetArtManager extends AbstractManager {
   //   return rows;
   // }
 
-  async update1(id, structure) {
+  async updateOne(id, structure) {
     let sql = `UPDATE ${this.table} set`;
     const sqlValues = [];
     for (const [key, value] of Object.entries(structure)) {

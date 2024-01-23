@@ -6,6 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
+
 import PropTypes from "prop-types";
 
 const AdminContext = createContext();
@@ -15,6 +16,7 @@ export default function AdminContextProvider({ children }) {
   const [artists, setArtists] = useState([]);
   const [validations, setValidations] = useState([]);
   const [streetArt, setStreetArt] = useState([]);
+  const [selectedStreetArt, setSelectedStreetArt] = useState({});
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -64,6 +66,39 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
+  const fetchStreetArt = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:3310/api/streetart", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const allStreetArt = await response.json();
+      setStreetArt(allStreetArt);
+    } catch (err) {
+      console.error("erreur de récup", err);
+    }
+  }, []);
+
+  const fetchOneStreetArt = useCallback(async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3310/api/streetart/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const result = await response.json();
+      setSelectedStreetArt(result);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   const removeArtist = useCallback(async (id) => {
     try {
       const response = await fetch(`http://localhost:3310/api/artists/${id}`, {
@@ -100,18 +135,26 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
-  const fetchStreetArt = useCallback(async () => {
+  const updateUser = useCallback(async (id, data) => {
     try {
-      const response = await fetch("http://localhost:3310/api/streetart", {
-        method: "GET",
+      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(data),
       });
-      const allStreetArt = await response.json();
-      setStreetArt(allStreetArt);
+      if (!response.ok) {
+        throw new Error("Échec de la mise à jour de l’utilisateur");
+      }
+      const updatedUser = await response.json();
+      setUsers((currentUsers) =>
+        currentUsers.map((user) =>
+          user.id === id ? { ...user, ...updatedUser } : user
+        )
+      );
     } catch (err) {
-      console.error("erreur de récup", err);
+      console.error(err);
     }
   }, []);
 
@@ -138,34 +181,12 @@ export default function AdminContextProvider({ children }) {
     }
   }, []);
 
-  const updateUser = useCallback(async (id, data) => {
-    try {
-      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        throw new Error("Échec de la mise à jour de l’utilisateur");
-      }
-      const updatedUser = await response.json();
-      setUsers((currentUsers) =>
-        currentUsers.map((user) =>
-          user.id === id ? { ...user, ...updatedUser } : user
-        )
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
   useEffect(() => {
     fetchUsers();
     fetchArtists();
     fetchValidations();
     fetchStreetArt();
+    fetchOneStreetArt();
   }, [fetchUsers, fetchArtists, fetchValidations, fetchStreetArt]);
 
   const context = useMemo(
@@ -179,6 +200,9 @@ export default function AdminContextProvider({ children }) {
       streetArt,
       removeStreetArt,
       updateUser,
+      setSelectedStreetArt,
+      selectedStreetArt,
+      fetchOneStreetArt,
     }),
     [users, streetArt]
   );
