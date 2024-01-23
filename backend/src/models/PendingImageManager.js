@@ -95,13 +95,27 @@ class PendingImageManager extends AbstractManager {
 
   // Patch
 
-  async updateStatus(imageId, newStatus) {
+  async updateStatus(imageId, newStatus, userId) {
     let [result] = await this.database.query(
       `UPDATE ${this.table}
       SET status = ? 
       WHERE id = ?`,
       [newStatus, imageId]
     );
+
+    let pointsMessage = "";
+
+    if (result.affectedRows !== 0 && newStatus === "validate") {
+      await this.database.query(
+        `UPDATE users
+        SET points = points + 100
+        WHERE id = ?;
+        `,
+        [userId]
+      );
+
+      pointsMessage = "Les points de l'utilisateur ont bien été mis à jour !";
+    }
 
     [result] = await this.database.query(
       `SELECT * 
@@ -110,7 +124,7 @@ class PendingImageManager extends AbstractManager {
       [imageId]
     );
 
-    return result;
+    return [result, pointsMessage];
   }
 }
 

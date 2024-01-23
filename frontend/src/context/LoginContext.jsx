@@ -84,10 +84,10 @@ export default function LoginProvider({ children, apiService }) {
       isUserAdmin,
       logout,
       user,
-      ApiService,
+      apiService,
       register,
     }),
-    []
+    [isUserConnected, isUserAdmin, logout, user, apiService, register]
   );
 
   return (

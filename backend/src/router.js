@@ -43,6 +43,7 @@ router.get(
 router.post("/users", validateUser, userControllers.add);
 router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
+router.get("/ranks", userControllers.getRanks);
 
 // Login
 
@@ -67,8 +68,6 @@ router.post(
 );
 router.patch(
   "/pendingImages/status/:id([0-9]+)",
-  authMiddleware,
-  authAdminMiddleware,
   pendingImageControllers.updateStatus
 );
 

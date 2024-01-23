@@ -51,6 +51,9 @@ h1 {
   text-align: center;
   margin-block: 25px;
 }
+h4 {
+  line-height: 24px;
+}
 h5 {
   font-size: 14px;
   line-height: 18px;
@@ -61,6 +64,12 @@ p {
 }
 .tiny-text {
   font-size: 10px;
+}
+
+// Overflows
+
+.of-hidden {
+  overflow: hidden;
 }
 
 //// Spacing / Margins
@@ -159,6 +168,10 @@ p {
 }
 .mb-60 {
   margin-bottom: 60px;
+}
+
+.mr-30 {
+  margin-right: 30px;
 }
 
 //// Displays
@@ -474,6 +487,8 @@ input {
   #react-modal-image-img {
     width: calc(100% - 50px);
     max-width: 860px;
+    object-fit: contain;
+    aspect-ratio: auto;
   }
   .__react_modal_image__header a {
     line-height: 24px;
@@ -625,7 +640,7 @@ input {
     position: absolute;
     height: 32px;
     width: 129px;
-    top: calc(100% - 160px);
+    top: calc(100% - 158px);
     left: 30px;
     background-image: url("/src/assets/bush.png");
     background-size: 100%;
@@ -635,7 +650,7 @@ input {
     text-align: center;
     display: inline-block;
     font-weight: bold;
-    padding: 10px 0 10px 10px;
+    padding: 10px;
     background-color: lightgray;
     text-shadow:
       -1px -1px black,

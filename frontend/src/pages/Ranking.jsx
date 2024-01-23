@@ -1,92 +1,33 @@
-const usersRank = [
-  {
-    id: 1,
-    name: "Leslie",
-    points: "15 000",
-  },
-  {
-    id: 2,
-    name: "Antoine",
-    points: "11 000",
-  },
-  {
-    id: 3,
-    name: "Fréd",
-    points: "8 000",
-  },
-  {
-    id: 4,
-    name: "Claire",
-    points: "8 000",
-  },
-  {
-    id: 5,
-    name: "Marie",
-    points: "7 985",
-  },
-  {
-    id: 6,
-    name: "Lucas",
-    points: "6 000",
-  },
-  {
-    id: 7,
-    name: "Anaelle",
-    points: "5 500",
-  },
-  {
-    id: 8,
-    name: "Raph",
-    points: "5 000",
-  },
-  {
-    id: 9,
-    name: "Aurore",
-    points: "4 500",
-  },
-  {
-    id: 10,
-    name: "Cassiopée",
-    points: "4 000",
-  },
-  {
-    id: 11,
-    name: "David",
-    points: "3 500",
-  },
-  {
-    id: 12,
-    name: "Mathieu",
-    points: "3 500",
-  },
-  {
-    id: 13,
-    name: "Nassime",
-    points: "3 500",
-  },
-  {
-    id: 14,
-    name: "Victor",
-    points: "3 500",
-  },
-  {
-    id: 15,
-    name: "Sylvain",
-    points: "3 500",
-  },
-];
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 export default function Ranking() {
+  const [usersRank, setUsersRank] = useState([]);
+
+  const getRanking = async () => {
+    try {
+      const response = await axios.get("http://localhost:3310/api/ranks/");
+      setUsersRank(response.data[0]);
+    } catch (error) {
+      console.error("Error getting ranking");
+    }
+  };
+
+  useEffect(() => {
+    getRanking();
+  }, []);
+
   return (
     <div className="allow-scroll-container">
       <h1 className="mb-40">Classement</h1>
-      <div className="container ranking-page">
+      <div className="container ranking-page d-flex d-flex-center of-hidden">
         <div className="allow-scroll">
           {usersRank.map((rank) => (
-            <p className="mb-30" key={rank.id}>
+            <p className="mb-30 mr-30" key={rank.id}>
               <span>
                 <img src="/src/assets/coin1.png" alt="coin" /> x {rank.points}
-              </span>
-              - {rank.name}
+              </span>{" "}
+              - {rank.username}
             </p>
           ))}
         </div>
