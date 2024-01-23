@@ -77,6 +77,7 @@ router.patch(
 router.get("/streetart", streetArtControllers.read);
 router.put("/streetart/:id", streetArtControllers.edit);
 router.delete("/streetart/:id", streetArtControllers.destroy);
+router.get("/streetart/:artistId([0-9]+)", streetArtControllers.readStreetArt);
 
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");

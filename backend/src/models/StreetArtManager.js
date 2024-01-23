@@ -51,6 +51,16 @@ class StreetArtManager extends AbstractManager {
 
     return result.affectedRows;
   }
+
+  async getStreetArts(artistId) {
+    const [rows] = await this.database.query(
+      `SELECT street_art.* FROM street_art
+      JOIN artist_street_art ON street_art.id = artist_street_art.street_art_id
+      WHERE artist_street_art.artist_id = ?`,
+      [artistId]
+    );
+    return rows;
+  }
 }
 
 module.exports = StreetArtManager;

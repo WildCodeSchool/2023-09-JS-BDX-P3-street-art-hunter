@@ -19,6 +19,7 @@ import LoggedUser from "./components/ConnectedUser";
 import LogoutUser from "./components/DisconnectedUser";
 import UpdateUser from "./pages/UpdateUser";
 import UpdateArtist from "./pages/UpdateArtist";
+import Art from "./pages/Art";
 
 const apiService = new ApiService();
 
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "/galerie/artistes",
         element: <Gallery />,
+      },
+      {
+        path: "/galerie/artistes/:artistId",
+        element: <Art />,
       },
       {
         path: "/mon-compte",
