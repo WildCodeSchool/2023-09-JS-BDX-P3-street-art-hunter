@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import PropTypes from "prop-types";
 
@@ -17,7 +10,7 @@ export default function AdminContextProvider({ children }) {
   const [streetArt, setStreetArt] = useState([]);
   const [selectedStreetArt, setSelectedStreetArt] = useState({});
 
-  const fetchUsers = useCallback(async () => {
+  const fetchUsers = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/users`,
@@ -33,9 +26,9 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const fetchArtists = useCallback(async () => {
+  const fetchArtists = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/artists`,
@@ -51,9 +44,9 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const fetchStreetArt = useCallback(async () => {
+  const fetchStreetArt = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/streetart`,
@@ -69,27 +62,9 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error("erreur de récup", err);
     }
-  }, []);
+  };
 
-  const fetchOneStreetArt = useCallback(async (id) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/streetart/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const result = await response.json();
-      setSelectedStreetArt(result);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  const removeArtist = useCallback(async (id) => {
+  const removeArtist = async (id) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/artists/${id}`,
@@ -109,9 +84,9 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const removeUser = useCallback(async (id) => {
+  const removeUser = async (id) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`,
@@ -129,9 +104,9 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const removeStreetArt = useCallback(async (id) => {
+  const removeStreetArt = async (id) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/streetart/${id}`,
@@ -152,9 +127,9 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const updateUser = useCallback(async (id, data) => {
+  const updateUser = async (id, data) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`,
@@ -178,9 +153,9 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const updateArtist = useCallback(async (id, data) => {
+  const updateArtist = async (id, data) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/artists/${id}`,
@@ -204,28 +179,26 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchUsers();
     fetchArtists();
     fetchStreetArt();
-    fetchOneStreetArt();
-  }, [fetchUsers, fetchArtists, fetchStreetArt]);
+  }, []);
 
   const context = useMemo(
     () => ({
-      users,
-      removeUser,
       artists,
       removeArtist,
-      streetArt,
       removeStreetArt,
-      updateUser,
-      setSelectedStreetArt,
+      removeUser,
       selectedStreetArt,
-      fetchOneStreetArt,
+      setSelectedStreetArt,
+      streetArt,
       updateArtist,
+      updateUser,
+      users,
     }),
     [users, streetArt]
   );
