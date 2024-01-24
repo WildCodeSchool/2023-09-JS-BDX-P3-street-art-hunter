@@ -80,7 +80,10 @@ router.get("/streetart", streetArtControllers.read);
 router.get("/streetart/:id", streetArtControllers.readOne);
 router.put("/streetart/:id", streetArtControllers.edit);
 router.delete("/streetart/:id", streetArtControllers.destroy);
-router.get("/streetart/:artistId([0-9]+)", streetArtControllers.readStreetArt);
+router.get(
+  "/streetart/artists/:artistId([0-9]+)",
+  streetArtControllers.readStreetArt
+);
 
 // Import streetArtsControllers module for handling item-related operations
 // const streetArtsControllers = require("./controllers/streetArtsControllers");

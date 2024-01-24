@@ -27,7 +27,7 @@ function Art() {
     const fetchStreetArts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3310/api/streetart/${artistId}`
+          `http://localhost:3310/api/streetart/artists/${artistId}`
         );
         const data = await response.json();
         if (data.length === 0) {
