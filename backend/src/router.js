@@ -45,6 +45,9 @@ router.put("/users/:id", validateUser, userControllers.edit);
 router.delete("/users/:id", userControllers.destroy);
 router.get("/ranks", userControllers.getRanks);
 
+router.post("/reset-password", userControllers.resetPassword);
+router.post("/check-user", userControllers.isUserExist);
+
 // Login
 
 router.post("/login", userControllers.postLogin);

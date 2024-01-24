@@ -21,6 +21,7 @@ import UpdateUser from "./pages/UpdateUser";
 import UpdateStreetArt from "./pages/UpdateStreetArt";
 import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
+import ResetPasswordForm from "./pages/ResetPassword";
 
 
 const apiService = new ApiService();
@@ -189,6 +190,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <TitleScreen />,
+      },
+      {
+        path: "/changer-mot-de-passe",
+        element: <ResetPasswordForm />,
       },
     ],
   },
