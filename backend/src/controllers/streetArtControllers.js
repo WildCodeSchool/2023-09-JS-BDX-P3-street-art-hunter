@@ -65,5 +65,4 @@ const readStreetArt = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { read, edit, destroy, readOne , readStreetArt };
-
+module.exports = { read, edit, destroy, readOne, readStreetArt };
