@@ -87,6 +87,28 @@ class UserManager extends AbstractManager {
       [id]
     );
   }
+
+  async findUserByUsername(username) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} WHERE username = ?`,
+      [username]
+    );
+    return rows[0];
+  }
+
+  async updatePassword(id, password) {
+    const hash = await UserManager.hashPassword(password);
+
+    const [result] = await this.database.query(
+      `UPDATE ${this.table} SET password = ? WHERE id = ?`,
+      [hash, id]
+    );
+    return result.affectedRows;
+  }
+
+  static checkPassword(password, hash) {
+    return bcrypt.compare(password, hash);
+  }
 }
 
 module.exports = UserManager;

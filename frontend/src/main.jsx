@@ -20,6 +20,7 @@ import LogoutUser from "./components/DisconnectedUser";
 import UpdateUser from "./pages/UpdateUser";
 import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
+import ResetPasswordForm from "./pages/ResetPassword";
 
 const apiService = new ApiService();
 
@@ -179,6 +180,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <TitleScreen />,
+      },
+      {
+        path: "/changer-mot-de-passe",
+        element: <ResetPasswordForm />,
       },
     ],
   },
