@@ -46,7 +46,7 @@ router.delete("/users/:id", userControllers.destroy);
 router.get("/ranks", userControllers.getRanks);
 
 router.post("/reset-password", userControllers.resetPassword);
-router.post("/check-user", userControllers.isUserExist);
+router.post("/check-user-and-mail", userControllers.isUserAndMailExist);
 
 // Login
 

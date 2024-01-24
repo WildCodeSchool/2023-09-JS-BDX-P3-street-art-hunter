@@ -3,7 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function ResetPasswordForm() {
-  const [formValue, setFormValue] = useState({ username: "", password: "" });
+  const [formValue, setFormValue] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [userExists, setUserExists] = useState(false);
   const navigate = useNavigate();
 
@@ -11,16 +15,19 @@ function ResetPasswordForm() {
     setFormValue({ ...formValue, [event.target.name]: event.target.value });
   };
 
-  const handleUsernameSubmit = async (event) => {
+  const handleUsernameAndEmailSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3310/api/check-user",
+        "http://localhost:3310/api/check-user-and-mail",
         {
           username: formValue.username,
+          email: formValue.email,
         }
       );
-      setUserExists(response.data.exists);
+      if (response.data) {
+        setUserExists(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -31,6 +38,7 @@ function ResetPasswordForm() {
     try {
       await axios.post("http://localhost:3310/api/reset-password", {
         username: formValue.username,
+        email: formValue.email,
         newPassword: formValue.password,
       });
       navigate("/connexion");
@@ -43,7 +51,7 @@ function ResetPasswordForm() {
     <div className="container mt-60">
       <div className="d-flex d-flex-center">
         <div className="allow-scroll">
-          <form className="mb-20" onSubmit={handleUsernameSubmit}>
+          <form className="mb-20" onSubmit={handleUsernameAndEmailSubmit}>
             <label htmlFor="username" className="mb-10">
               Pseudo :{" "}
             </label>
@@ -53,6 +61,19 @@ function ResetPasswordForm() {
                 name="username"
                 onChange={onChange}
                 id="username"
+                required
+                type="text"
+              />
+            </div>
+            <label htmlFor="email" className="mb-10">
+              Email :{" "}
+            </label>
+            <div className="input mb-30">
+              <input
+                value={formValue.email}
+                name="email"
+                onChange={onChange}
+                id="email"
                 required
                 type="text"
               />
