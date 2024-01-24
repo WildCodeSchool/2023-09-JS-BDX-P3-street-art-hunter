@@ -96,11 +96,13 @@ const getProfile = (req, res) => {
 };
 
 const resetPassword = async (req, res, next) => {
-  const { username, newPassword } = req.body;
+  const { username, email, newPassword } = req.body;
   try {
-    const user = await tables.users.findUserByUsername(username);
-    if (user == null) {
-      res.status(404).json({ error: "User not found" });
+    const user = await tables.users.findUserByUsernameAndEmail(username, email);
+    if (!user) {
+      res
+        .status(404)
+        .json({ error: "User not found with provided username and email" });
     }
     await tables.users.updatePassword(user.id, newPassword);
     res.status(200).send("Password updated");
@@ -109,10 +111,10 @@ const resetPassword = async (req, res, next) => {
   }
 };
 
-const isUserExist = async (req, res) => {
-  const { username } = req.body;
+const isUserAndMailExist = async (req, res) => {
+  const { username, email } = req.body;
   try {
-    const user = await tables.users.findUserByUsername(username);
+    const user = await tables.users.findUserByUsernameAndEmail(username, email);
     if (user == null) {
       res.status(200).json({ exists: false });
     } else {
@@ -133,5 +135,5 @@ module.exports = {
   getRanks,
   getProfile,
   resetPassword,
-  isUserExist,
+  isUserAndMailExist,
 };

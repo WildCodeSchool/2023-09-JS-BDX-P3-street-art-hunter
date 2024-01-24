@@ -88,11 +88,12 @@ class UserManager extends AbstractManager {
     );
   }
 
-  async findUserByUsername(username) {
+  async findUserByUsernameAndEmail(username, email) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE username = ?`,
-      [username]
+      `SELECT * FROM ${this.table} WHERE username = ? AND email = ?`,
+      [username, email]
     );
+
     return rows[0];
   }
 
