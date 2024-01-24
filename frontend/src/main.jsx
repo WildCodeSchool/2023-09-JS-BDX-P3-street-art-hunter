@@ -22,7 +22,6 @@ import UpdateStreetArt from "./pages/UpdateStreetArt";
 import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
 
-
 const apiService = new ApiService();
 
 function getLocalisation() {
