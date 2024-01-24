@@ -19,7 +19,7 @@ function ResetPasswordForm() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3310/api/check-user-and-mail",
+        `${import.meta.env.VITE_BACKEND_URL}/api/check-user-and-mail`,
         {
           username: formValue.username,
           email: formValue.email,
@@ -36,11 +36,14 @@ function ResetPasswordForm() {
   const handlePasswordChangeSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3310/api/reset-password", {
-        username: formValue.username,
-        email: formValue.email,
-        newPassword: formValue.password,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/reset-password`,
+        {
+          username: formValue.username,
+          email: formValue.email,
+          newPassword: formValue.password,
+        }
+      );
       navigate("/connexion");
     } catch (error) {
       console.error(error);

@@ -207,16 +207,19 @@ export default function Home() {
   // fonction pour fetch la pendingImage
   const fetchPendingImageData = async (path) => {
     try {
-      await axios.post("http://localhost:3310/api/pendingImages/", {
-        userId: user.id,
-        imgSrc: path,
-        uploadDate: getDate(),
-        uploadTime: getTime(),
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
-        streetArtId: 27,
-        status: "pending",
-      });
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/`,
+        {
+          userId: user.id,
+          imgSrc: path,
+          uploadDate: getDate(),
+          uploadTime: getTime(),
+          latitude: userLocation.lat,
+          longitude: userLocation.lng,
+          streetArtId: 27,
+          status: "pending",
+        }
+      );
     } catch (error) {
       console.error("Erreur lors de la requête Axios:", error);
     }
@@ -307,7 +310,7 @@ export default function Home() {
 
         const response = await axios({
           method: "POST",
-          url: "http://localhost:3310/api/uploads/",
+          url: `${import.meta.env.VITE_BACKEND_URL}/api/uploads/`,
           data: uploadFile,
           headers: { "Content-Type": "multipart/form-data" },
         });

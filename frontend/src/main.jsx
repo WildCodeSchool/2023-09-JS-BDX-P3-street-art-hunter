@@ -47,7 +47,9 @@ function getLocalisation() {
 
 const getStreetArt = async () => {
   try {
-    const data = await apiService.get("http://localhost:3310/api/streetart");
+    const data = await apiService.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/streetart`
+    );
     return { streetArtData: data ?? null };
   } catch (error) {
     console.error(error.message);
@@ -64,7 +66,7 @@ const router = createBrowserRouter([
       }
       try {
         const userData = await apiService.get(
-          "http://localhost:3310/api/users/me"
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/me`
         );
         const streetArtData = await getStreetArt();
 
@@ -156,7 +158,7 @@ const router = createBrowserRouter([
         loader: async () => {
           try {
             const response = await apiService.get(
-              "http://localhost:3310/api/admin/pendingImages"
+              `${import.meta.env.VITE_BACKEND_URL}/api/admin/pendingImages`
             );
 
             return { validations: response?.data ?? [] };

@@ -17,7 +17,7 @@ export default function UpdateArtist() {
       if (token) {
         try {
           const response = await fetch(
-            `http://localhost:3310/api/artists/${artistId}`,
+            `${import.meta.env.VITE_BACKEND_URL}/api/artists/${artistId}`,
             {
               method: "GET",
               headers: {
