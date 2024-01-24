@@ -65,6 +65,9 @@ export default function Login() {
                   Inscrivez vous !
                 </p>
               </Link>
+              <Link to="/changer-mot-de-passe">
+                <p className="mt-30">Mot de passe oublié ?</p>
+              </Link>
             </div>
           </div>
         </div>
