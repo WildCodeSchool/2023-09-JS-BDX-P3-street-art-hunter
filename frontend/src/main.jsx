@@ -23,7 +23,6 @@ import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
 import ResetPasswordForm from "./pages/ResetPassword";
 
-
 const apiService = new ApiService();
 
 function getLocalisation() {
