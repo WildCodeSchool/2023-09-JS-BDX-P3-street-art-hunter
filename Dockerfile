@@ -1,11 +1,11 @@
-# Dockerfile backend
-FROM node:18
+#syntax=docker/dockerfile:1.4
+FROM node:20-alpine
 
 WORKDIR /usr/src/app
-COPY ./package.json ./package-lock.json .
-COPY ./backend/package.json ./backend/package-lock.json ./backend
-COPY ./frontend/package.json ./frontend/package-lock.json ./frontend/mdb-react-ui-kit-pro-advanced.tgz ./frontend
-COPY ./frontend/plugins ./frontend/
+COPY --link ./package.json ./package-lock.json .
+COPY --link ./backend/package.json ./backend/package-lock.json ./backend
+COPY --link ./frontend/package.json ./frontend/package-lock.json ./frontend/mdb-react-ui-kit-pro-advanced.tgz ./frontend
+COPY --link ./frontend/plugins ./frontend/
 
 RUN npm install
 
