@@ -114,7 +114,7 @@ export default function Home() {
         <div className={`camera-popup${step !== "initial" ? " active" : ""}`}>
           <div className="container container-small h-100 d-flex d-flex-center pos-r">
             <button
-              className="camera-popup-close-button text-none"
+              className="camera-popup-close-button"
               onClick={() => {
                 setStep("initial");
                 handleCloseCamera();
