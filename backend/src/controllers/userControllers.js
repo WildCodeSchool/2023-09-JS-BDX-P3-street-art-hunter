@@ -95,6 +95,36 @@ const getProfile = (req, res) => {
   res.send(req.user);
 };
 
+const resetPassword = async (req, res, next) => {
+  const { username, email, newPassword } = req.body;
+  try {
+    const user = await tables.users.findUserByUsernameAndEmail(username, email);
+    if (!user) {
+      res
+        .status(404)
+        .json({ error: "User not found with provided username and email" });
+    }
+    await tables.users.updatePassword(user.id, newPassword);
+    res.status(200).send("Password updated");
+  } catch (err) {
+    next(err);
+  }
+};
+
+const isUserAndMailExist = async (req, res) => {
+  const { username, email } = req.body;
+  try {
+    const user = await tables.users.findUserByUsernameAndEmail(username, email);
+    if (user == null) {
+      res.status(200).json({ exists: false });
+    } else {
+      res.status(200).json({ exists: true });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 module.exports = {
   browse,
   read,
@@ -104,4 +134,6 @@ module.exports = {
   postLogin,
   getRanks,
   getProfile,
+  resetPassword,
+  isUserAndMailExist,
 };

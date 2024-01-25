@@ -1,12 +1,15 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLogin } from "../context/LoginContext";
 
 export default function Ranking() {
   const [usersRank, setUsersRank] = useState([]);
+  const { apiService } = useLogin();
 
   const getRanking = async () => {
     try {
-      const response = await axios.get("http://localhost:3310/api/ranks/");
+      const response = await apiService.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/ranks/`
+      );
       setUsersRank(response.data[0]);
     } catch (error) {
       console.error("Error getting ranking");

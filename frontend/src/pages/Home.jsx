@@ -6,6 +6,7 @@ import Step1 from "../components/captureSteps/SelectArtStep1";
 import Step2 from "../components/captureSteps/OpenCameraStep2";
 import Step3 from "../components/captureSteps/CaptureFormStep3";
 import { useCapture } from "../context/captureContext"; // eslint-disable-line
+import mapOptions from "../constants/map-options.constant";
 
 export default function Home() {
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
@@ -52,137 +53,6 @@ export default function Home() {
     ? userLocation
     : { lat: 44.837789, lng: -0.57918 };
 
-  const mapOptions = {
-    zoom: zoomLevel,
-    mapTypeId: "roadmap",
-    disableDefaultUI: true,
-    styles: [
-      {
-        featureType: "all",
-        elementType: "labels",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "administrative.locality",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "landscape",
-        elementType: "all",
-        stylers: [
-          {
-            color: "#AFFFA0",
-          },
-        ],
-      },
-      {
-        featureType: "poi",
-        elementType: "all",
-        stylers: [
-          {
-            color: "#EAFFE5",
-          },
-        ],
-      },
-      {
-        featureType: "poi.business",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "poi.government",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "poi.park",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#f9f8c7",
-          },
-        ],
-      },
-      {
-        featureType: "poi.park",
-        elementType: "labels",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "road",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#59A499",
-          },
-        ],
-      },
-      {
-        featureType: "road",
-        elementType: "geometry.stroke",
-        stylers: [
-          {
-            color: "#F0FF8D",
-          },
-          {
-            weight: 2.2,
-          },
-        ],
-      },
-      {
-        featureType: "transit.line",
-        elementType: "geometry",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "transit.station.airport",
-        elementType: "geometry.fill",
-        stylers: [
-          {
-            color: "#fdfabf",
-          },
-        ],
-      },
-      {
-        featureType: "water",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "on",
-          },
-          {
-            color: "#1A87D6",
-          },
-        ],
-      },
-    ],
-  };
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo",
   });
@@ -192,6 +62,9 @@ export default function Home() {
     if (!map) return;
     setZoomLevel(map.getZoom());
   };
+
+  if (loadError) return <div>Error loading maps</div>; // Si erreur de chargement, afficher un message d'erreur
+  if (!isLoaded) return <div>Loading Maps...</div>; // Si chargement en cours, afficher un message de chargement
 
   // Simule un flash d'appareil photo lors de la prise de capture
   const handleFlashPopup = () => {
@@ -210,7 +83,7 @@ export default function Home() {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        options={mapOptions}
+        options={{ ...mapOptions(), zoom: zoomLevel }}
         onLoad={(loadMap) => setMap(loadMap)}
         onZoomChanged={handleZoomChange}
       >
@@ -279,7 +152,7 @@ export default function Home() {
         )}
         {step === "getCapture" ? (
           <button
-            className="camera-button"
+            className="camera-button text-none"
             type="button"
             onClick={() => {
               handleFlashPopup();

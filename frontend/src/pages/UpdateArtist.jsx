@@ -3,12 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
+import { useLogin } from "../context/LoginContext";
 
 export default function UpdateArtist() {
   const [artists, setArtists] = useState({});
   const { artistId } = useParams();
   const navigate = useNavigate();
 
+  const { apiService } = useLogin();
   const { updateArtist } = useAdminContext();
 
   useEffect(() => {
@@ -16,22 +18,10 @@ export default function UpdateArtist() {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await fetch(
-            `http://localhost:3310/api/artists/${artistId}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
+          const response = await apiService.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/artists/${artistId}`
           );
-          if (response.ok) {
-            const artist = await response.json();
-            setArtists(artist);
-          } else {
-            console.error("Failed to fetch artist data");
-          }
+          setArtists(response.data);
         } catch (err) {
           console.error(err);
         }

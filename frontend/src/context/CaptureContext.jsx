@@ -231,7 +231,7 @@ function CaptureContextProvider({ children }) {
       streetArtLocation.lat,
       streetArtLocation.lng
     );
-    return distance < 1000; // distance en mètres
+    return distance < 2000; // distance en mètres
   };
 
   // Calcule les street arts proches
