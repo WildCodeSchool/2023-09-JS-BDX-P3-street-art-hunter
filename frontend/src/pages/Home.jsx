@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useLoaderData } from "react-router-dom";
-import axios from "axios";
 import CustomMarker from "../components/Marker";
 import CustomCircle from "../components/CustomCircle";
 import Button from "../components/Button";
@@ -181,32 +180,27 @@ export default function Home() {
         const uploadFile = new FormData();
         uploadFile.append("image", capturedImage);
 
-        const response = await axios({
-          method: "POST",
-          url: `${import.meta.env.VITE_BACKEND_URL}/api/uploads/`,
-          data: uploadFile,
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        const response = await apiService.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/uploads`,
+          uploadFile
+        );
 
-        if (response.status === 200) {
-          const receivedUploadPath = response.data.filePath;
+        const receivedUploadPath = response.data.filePath;
 
-          handleCloseCamera();
-          setCaptureForm(false);
-          setCameraPopup(false);
-          cameraService.fetchPendingImageData(
-            receivedUploadPath,
-            user,
-            userLocation,
-            getDate,
-            getTime
-          );
-          alert("Votre image a bien été envoyée");
-        } else {
-          console.error("Erreur lors de l'envoi de l'image au serveur");
-        }
+        handleCloseCamera();
+        setCaptureForm(false);
+        setCameraPopup(false);
+        cameraService.fetchPendingImageData(
+          receivedUploadPath,
+          user,
+          userLocation,
+          getDate,
+          getTime
+        );
+        alert("Votre image a bien été envoyée");
       } catch (error) {
-        console.error("Erreur lors de la requête fetch :", error);
+        console.error("Erreur lors de l'envoi de l'image au serveur :", error);
+        // Display a more specific error message based on the error details
       }
     }
   };

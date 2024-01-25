@@ -2,13 +2,13 @@ class CameraService {
   #apiService = null;
 
   constructor(apiService) {
-    this.apiService = apiService;
+    this.#apiService = apiService;
   }
 
   async fetchPendingImageData(path, user, userLocation, getDate, getTime) {
     try {
       await this.#apiService.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages`,
         {
           userId: user.id,
           imgSrc: path,

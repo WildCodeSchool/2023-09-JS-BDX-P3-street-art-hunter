@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
-import axios from "axios";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
+import { useLogin } from "../context/LoginContext";
 
 export default function Administration() {
   const buttons = [
@@ -48,6 +48,8 @@ export default function Administration() {
     setSelectedStreetArt,
   } = useAdminContext();
 
+  const { apiService } = useLogin();
+
   const formattedDate = (date) => {
     const dateObject = new Date(date);
     const year = dateObject.getFullYear();
@@ -62,7 +64,7 @@ export default function Administration() {
 
   const changePendingImage = async (id, status, userId) => {
     try {
-      await axios.patch(
+      await apiService.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/status/${id}`,
         { status, userId }
       );
@@ -317,14 +319,23 @@ export default function Administration() {
                       </p>
                     </div>
                     <div className="admin-button-container">
-                      <Button color="yellow" className="button" type="button">
+                      <Button
+                        color="yellow"
+                        className="button"
+                        type="button"
+                        onClick={() =>
+                          navigate(
+                            `/administration/modifier-artistes/${artist.id}`
+                          )
+                        }
+                      >
                         Modifier
                       </Button>
                       <Button
                         color="red"
                         className="button"
                         type="button"
-                        onClick={removeArtist}
+                        onClick={() => removeArtist(artist.id)}
                       >
                         Supprimer
                       </Button>
