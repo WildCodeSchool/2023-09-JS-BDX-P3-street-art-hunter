@@ -21,7 +21,7 @@ import UpdateUser from "./pages/UpdateUser";
 import UpdateStreetArt from "./pages/UpdateStreetArt";
 import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
-
+import CaptureContextProvider from "./context/captureContext";// eslint-disable-line
 
 const apiService = new ApiService();
 
@@ -88,7 +88,11 @@ const router = createBrowserRouter([
       {
         path: "/map",
         loader: () => getLocalisation(),
-        element: <Home />,
+        element: (
+          <CaptureContextProvider>
+            <Home />
+          </CaptureContextProvider>
+        ),
       },
       {
         path: "/galerie/arts",
