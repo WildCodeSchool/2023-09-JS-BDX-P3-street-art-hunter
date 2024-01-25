@@ -64,7 +64,7 @@ export default function Administration() {
 
   const changePendingImage = async (id, status, userId) => {
     try {
-      await apiService.put(
+      await apiService.patch(
         `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/status/${id}`,
         { status, userId }
       );

@@ -65,6 +65,9 @@ p {
 .tiny-text {
   font-size: 10px;
 }
+.text-none {
+  font-size: 0;
+}
 
 // Overflows
 
@@ -223,6 +226,11 @@ p {
 }
 .vw-100 {
   width: 100vw;
+}
+
+.hidden {
+  opacity: 0;
+  z-index: -1000;
 }
 
 // buttons
@@ -514,6 +522,16 @@ input {
       left: -3px;
     }
   }
+
+  &:hover {
+    background-color: $yellow;
+  }
+
+  &.active {
+    background-color: $green;
+  }
+
+  transition: all 0.3s;
 }
 
 ///// Menu
@@ -750,27 +768,27 @@ button {
     z-index: +1;
     color: white;
   }
+}
 
-  .flash-popup {
-    position: absolute;
-    bottom: 38px;
-    left: calc(50% + 5px);
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    z-index: -100;
-    opacity: 0;
+.flash-popup {
+  position: absolute;
+  bottom: 38px;
+  left: calc(50% + 5px);
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  z-index: -100;
+  opacity: 0;
+  transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
+
+  &.active {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: +100;
+    opacity: 1;
     transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
-
-    &.active {
-      width: 100%;
-      height: 100%;
-      left: 0;
-      bottom: 0;
-      z-index: +100;
-      opacity: 1;
-      transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
-    }
   }
 }
 
