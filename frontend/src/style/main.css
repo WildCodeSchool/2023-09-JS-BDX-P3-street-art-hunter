@@ -70,6 +70,10 @@ p {
   font-size: 10px;
 }
 
+.text-none {
+  font-size: 0;
+}
+
 .of-hidden {
   overflow: hidden;
 }
@@ -237,6 +241,11 @@ p {
 
 .vw-100 {
   width: 100vw;
+}
+
+.hidden {
+  opacity: 0;
+  z-index: -1000;
 }
 
 .button,
@@ -492,6 +501,7 @@ input {
   color: black;
   width: 100%;
   max-width: 536px;
+  transition: all 0.3s;
 }
 .item-list.has-img {
   display: flex;
@@ -540,6 +550,12 @@ input {
   border-left-width: 3px;
   border-right-width: 3px;
   left: -3px;
+}
+.select-street-art-list .item-list:hover {
+  background-color: #f7d51d;
+}
+.item-list.active {
+  background-color: #92cd41;
 }
 
 .burger-menu {
@@ -747,7 +763,8 @@ button h4 {
   z-index: 1;
   color: white;
 }
-.camera-popup .flash-popup {
+
+.flash-popup {
   position: absolute;
   bottom: 38px;
   left: calc(50% + 5px);
@@ -758,7 +775,7 @@ button h4 {
   opacity: 0;
   transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
 }
-.camera-popup .flash-popup.active {
+.flash-popup.active {
   width: 100%;
   height: 100%;
   left: 0;

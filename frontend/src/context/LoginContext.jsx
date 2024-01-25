@@ -5,7 +5,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import axios from "axios";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode";
@@ -66,7 +65,7 @@ export default function LoginProvider({ children, apiService }) {
   const register = async (formData) => {
     try {
       setUser(
-        await axios.post(
+        await apiService.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/users/`,
           formData
         )

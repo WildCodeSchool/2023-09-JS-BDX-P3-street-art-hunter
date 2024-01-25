@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../context/LoginContext";
 
 function ResetPasswordForm() {
   const [formValue, setFormValue] = useState({
@@ -10,6 +10,7 @@ function ResetPasswordForm() {
   });
   const [userExists, setUserExists] = useState(false);
   const navigate = useNavigate();
+  const { apiService } = useLogin();
 
   const onChange = (event) => {
     setFormValue({ ...formValue, [event.target.name]: event.target.value });
@@ -18,7 +19,7 @@ function ResetPasswordForm() {
   const handleUsernameAndEmailSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
+      const response = await apiService.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/check-user-and-mail`,
         {
           username: formValue.username,
@@ -36,7 +37,7 @@ function ResetPasswordForm() {
   const handlePasswordChangeSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
+      await apiService.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/reset-password`,
         {
           username: formValue.username,
