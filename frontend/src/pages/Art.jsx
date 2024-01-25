@@ -3,39 +3,39 @@ import ModalImage from "react-modal-image";
 import { useParams } from "react-router-dom";
 import ItemList from "../components/ItemList";
 import Button from "../components/Button";
+import { useLogin } from "../context/LoginContext";
 
 function Art() {
   const { artistId } = useParams();
   const [arts, setArts] = useState([]);
   const [artistName, setArtistName] = useState("");
+  const { apiService } = useLogin();
 
   useEffect(() => {
     const fetchArtistData = async () => {
       try {
-        const response = await fetch(
+        const response = await apiService.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/artists/${artistId}`
         );
-        const data = await response.json();
-        if (data.length === 0) {
+        if (response.data.length === 0) {
           return;
         }
-        setArtistName(data.name);
+        setArtistName(response.data.name);
       } catch (error) {
         console.error(error);
       }
     };
     const fetchStreetArts = async () => {
       try {
-        const response = await fetch(
+        const response = await apiService.get(
           `${
             import.meta.env.VITE_BACKEND_URL
           }/api/streetart/artists/${artistId}`
         );
-        const data = await response.json();
-        if (data.length === 0) {
+        if (response.data.length === 0) {
           return;
         }
-        setArts(data);
+        setArts(response.data);
       } catch (error) {
         console.error(error);
       }
