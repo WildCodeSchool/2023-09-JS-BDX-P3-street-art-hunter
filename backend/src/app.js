@@ -1,8 +1,11 @@
 // Load the express module to create a web application
 
 const express = require("express");
+// const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
+const path = require("path");
 
 // Configure it
 
@@ -25,7 +28,6 @@ const app = express();
 // 4. Be sure to only have URLs in the array with domains from which you want to allow requests.
 // For example: ["http://mysite.com", "http://another-domain.com"]
 
-/*
 const cors = require("cors");
 
 app.use(
@@ -34,10 +36,9 @@ app.use(
       process.env.FRONTEND_URL, // keep this one, after checking the value in `backend/.env`
       "http://mysite.com",
       "http://another-domain.com",
-    ]
+    ],
   })
 );
-*/
 
 /* ************************************************************************* */
 
@@ -53,8 +54,9 @@ app.use(
 // 4. `express.raw()`: Parses requests with raw binary data.
 
 // Uncomment one or more of these options depending on the format of the data sent by your client:
-
-// app.use(express.json());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(express.json());
 // app.use(express.urlencoded());
 // app.use(express.text());
 // app.use(express.raw());
@@ -87,6 +89,8 @@ app.use(
 // Import the API routes from the router module
 const router = require("./router");
 
+app.use(cors());
+
 // Mount the API routes under the "/api" endpoint
 app.use("/api", router);
 
@@ -107,7 +111,6 @@ app.use("/api", router);
 // 1. Uncomment the lines related to serving static files and redirecting unhandled requests.
 // 2. Ensure that the `reactBuildPath` points to the correct directory where your frontend's build artifacts are located.
 
-/*
 const reactBuildPath = `${__dirname}/../../frontend/dist`;
 
 // Serve react resources
@@ -115,11 +118,11 @@ const reactBuildPath = `${__dirname}/../../frontend/dist`;
 app.use(express.static(reactBuildPath));
 
 // Redirect unhandled requests to the react index file
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.get("*", (req, res) => {
   res.sendFile(`${reactBuildPath}/index.html`);
 });
-*/
 
 /* ************************************************************************* */
 
