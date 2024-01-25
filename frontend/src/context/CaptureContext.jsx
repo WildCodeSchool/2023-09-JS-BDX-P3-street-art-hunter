@@ -13,7 +13,7 @@ import { useLogin } from "./LoginContext";
 
 const CaptureContext = createContext();
 
-function CaptureContextProvider({ children }) {
+export default function CaptureContextProvider({ children }) {
   const initialUserLocation = useLoaderData();
   const [userLocation, setUserLocation] = useState(initialUserLocation);
   const { streetArt } = useAdminContext();
@@ -350,5 +350,5 @@ CaptureContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default CaptureContextProvider;
+export { CaptureContext, CaptureContextProvider };
 export const useCapture = () => useContext(CaptureContext);

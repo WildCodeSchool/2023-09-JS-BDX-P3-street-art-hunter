@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useCapture } from "../../context/captureContext";// eslint-disable-line
+import { useCapture } from "../../context/CaptureContext";// eslint-disable-line
 
 export default function Step2() {
   const { videoRef, handleOpenCamera } = useCapture();
