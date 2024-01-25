@@ -14,13 +14,16 @@ export default function UpdateUser() {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await fetch(`http://localhost:3310/api/users/me`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const response = await fetch(
+            `${import.meta.env.VITE_BACKEND_URL}/api/users/me`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           if (response.ok) {
             const user = await response.json();
             setLoggedUser(user);

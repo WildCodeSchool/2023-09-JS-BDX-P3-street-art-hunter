@@ -63,7 +63,7 @@ export default function Administration() {
   const changePendingImage = async (id, status, userId) => {
     try {
       await axios.patch(
-        `http://localhost:3310/api/pendingImages/status/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/status/${id}`,
         { status, userId }
       );
       setCollection([...collection.filter((item) => item.id !== id)]);
@@ -157,7 +157,9 @@ export default function Administration() {
                         <div className="admin-item-child">
                           <h4 className="mb-20">{item.username}</h4>
                           <img
-                            src={`http://localhost:3310/${item.img_src}`}
+                            src={`${import.meta.env.VITE_BACKEND_URL}/${
+                              item.img_src
+                            }`}
                             alt={`${item.username}'s upload`}
                           />
                         </div>

@@ -8,6 +8,8 @@ import CustomCircle from "../components/CustomCircle";
 import Button from "../components/Button";
 import { useLogin } from "../context/LoginContext";
 import { useAdminContext } from "../context/AdminContext";
+import mapOptions from "../constants/map-options.constant";
+import CameraService from "../services/camera.service";
 
 export default function Home() {
   const [cameraPopup, setCameraPopup] = useState(false);
@@ -20,7 +22,9 @@ export default function Home() {
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
   const [map, setMap] = useState(null); // Initialiser la map à null
   const { streetArt } = useAdminContext();
-  const { user } = useLogin();
+  const { user, apiService } = useLogin();
+
+  const cameraService = new CameraService(apiService);
 
   const initialUserLocation = useLoaderData();
   const [userLocation, setUserLocation] = useState(initialUserLocation);
@@ -51,137 +55,6 @@ export default function Home() {
     ? userLocation
     : { lat: 44.837789, lng: -0.57918 };
 
-  const mapOptions = {
-    zoom: zoomLevel,
-    mapTypeId: "roadmap",
-    disableDefaultUI: true,
-    styles: [
-      {
-        featureType: "all",
-        elementType: "labels",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "administrative.locality",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "landscape",
-        elementType: "all",
-        stylers: [
-          {
-            color: "#AFFFA0",
-          },
-        ],
-      },
-      {
-        featureType: "poi",
-        elementType: "all",
-        stylers: [
-          {
-            color: "#EAFFE5",
-          },
-        ],
-      },
-      {
-        featureType: "poi.business",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "poi.government",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "poi.park",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#f9f8c7",
-          },
-        ],
-      },
-      {
-        featureType: "poi.park",
-        elementType: "labels",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "road",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#59A499",
-          },
-        ],
-      },
-      {
-        featureType: "road",
-        elementType: "geometry.stroke",
-        stylers: [
-          {
-            color: "#F0FF8D",
-          },
-          {
-            weight: 2.2,
-          },
-        ],
-      },
-      {
-        featureType: "transit.line",
-        elementType: "geometry",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "transit.station.airport",
-        elementType: "geometry.fill",
-        stylers: [
-          {
-            color: "#fdfabf",
-          },
-        ],
-      },
-      {
-        featureType: "water",
-        elementType: "all",
-        stylers: [
-          {
-            visibility: "on",
-          },
-          {
-            color: "#1A87D6",
-          },
-        ],
-      },
-    ],
-  };
-
   // Fonctions pour récupérer la date et l'heure pour l'envoie de la pendingImage
   const getDate = () => {
     const currentDate = new Date();
@@ -205,22 +78,25 @@ export default function Home() {
   };
 
   // fonction pour fetch la pendingImage
-  const fetchPendingImageData = async (path) => {
-    try {
-      await axios.post("http://localhost:3310/api/pendingImages/", {
-        userId: user.id,
-        imgSrc: path,
-        uploadDate: getDate(),
-        uploadTime: getTime(),
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
-        streetArtId: 27,
-        status: "pending",
-      });
-    } catch (error) {
-      console.error("Erreur lors de la requête Axios:", error);
-    }
-  };
+  // const fetchPendingImageData = async (path) => {
+  //   try {
+  //     await axios.post(
+  //       `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/`,
+  //       {
+  //         userId: user.id,
+  //         imgSrc: path,
+  //         uploadDate: getDate(),
+  //         uploadTime: getTime(),
+  //         latitude: userLocation.lat,
+  //         longitude: userLocation.lng,
+  //         streetArtId: 27,
+  //         status: "pending",
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.error("Erreur lors de la requête Axios:", error);
+  //   }
+  // };
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBvteHlt2nfprfyLXqGWNdTohSw_fsrWUo",
@@ -307,7 +183,7 @@ export default function Home() {
 
         const response = await axios({
           method: "POST",
-          url: "http://localhost:3310/api/uploads/",
+          url: `${import.meta.env.VITE_BACKEND_URL}/api/uploads/`,
           data: uploadFile,
           headers: { "Content-Type": "multipart/form-data" },
         });
@@ -318,7 +194,13 @@ export default function Home() {
           handleCloseCamera();
           setCaptureForm(false);
           setCameraPopup(false);
-          fetchPendingImageData(receivedUploadPath);
+          cameraService.fetchPendingImageData(
+            receivedUploadPath,
+            user,
+            userLocation,
+            getDate,
+            getTime
+          );
           alert("Votre image a bien été envoyée");
         } else {
           console.error("Erreur lors de l'envoi de l'image au serveur");
@@ -388,7 +270,7 @@ export default function Home() {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        options={mapOptions}
+        options={{ ...mapOptions(), zoom: zoomLevel }}
         onLoad={(loadMap) => setMap(loadMap)}
         onZoomChanged={handleZoomChange}
       >

@@ -5,7 +5,6 @@ import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
 
-import "../style/main.css";
 import { useAdminContext } from "../context/AdminContext";
 
 export default function Gallery() {

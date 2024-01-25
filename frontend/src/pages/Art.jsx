@@ -13,7 +13,7 @@ function Art() {
     const fetchArtistData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3310/api/artists/${artistId}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/artists/${artistId}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -27,7 +27,9 @@ function Art() {
     const fetchStreetArts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3310/api/streetart/artists/${artistId}`
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/streetart/artists/${artistId}`
         );
         const data = await response.json();
         if (data.length === 0) {

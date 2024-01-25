@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import PropTypes from "prop-types";
 
@@ -17,55 +10,10 @@ export default function AdminContextProvider({ children }) {
   const [streetArt, setStreetArt] = useState([]);
   const [selectedStreetArt, setSelectedStreetArt] = useState({});
 
-  const fetchUsers = useCallback(async () => {
-    try {
-      const response = await fetch("http://localhost:3310/api/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const allUsers = await response.json();
-      setUsers(allUsers);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  const fetchArtists = useCallback(async () => {
-    try {
-      const response = await fetch("http://localhost:3310/api/artists", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const allArtists = await response.json();
-      setArtists(allArtists);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  const fetchStreetArt = useCallback(async () => {
-    try {
-      const response = await fetch("http://localhost:3310/api/streetart", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const allStreetArt = await response.json();
-      setStreetArt(allStreetArt);
-    } catch (err) {
-      console.error("erreur de récup", err);
-    }
-  }, []);
-
-  const fetchOneStreetArt = useCallback(async (id) => {
+  const fetchUsers = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3310/api/streetart/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/users`,
         {
           method: "GET",
           headers: {
@@ -73,21 +21,60 @@ export default function AdminContextProvider({ children }) {
           },
         }
       );
-      const result = await response.json();
-      setSelectedStreetArt(result);
+      const allUsers = await response.json();
+      setUsers(allUsers);
     } catch (err) {
       console.error(err);
     }
-  });
+  };
 
-  const removeArtist = useCallback(async (id) => {
+  const fetchArtists = async () => {
     try {
-      const response = await fetch(`http://localhost:3310/api/artists/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/artists`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const allArtists = await response.json();
+      setArtists(allArtists);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchStreetArt = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/streetart`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const allStreetArt = await response.json();
+      setStreetArt(allStreetArt);
+    } catch (err) {
+      console.error("erreur de récup", err);
+    }
+  };
+
+  const removeArtist = async (id) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/artists/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Échec de la suppression de l’artiste");
       }
@@ -97,16 +84,19 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const removeUser = useCallback(async (id) => {
+  const removeUser = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Échec de la suppression de l’utilisateur");
       }
@@ -114,12 +104,12 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const removeStreetArt = useCallback(async (id) => {
+  const removeStreetArt = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:3310/api/streetart/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/streetart/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -137,17 +127,20 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const updateUser = useCallback(async (id, data) => {
+  const updateUser = async (id, data) => {
     try {
-      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       if (!response.ok) {
         throw new Error("Échec de la mise à jour de l’utilisateur");
       }
@@ -160,17 +153,20 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
-  const updateArtist = useCallback(async (id, data) => {
+  const updateArtist = async (id, data) => {
     try {
-      const response = await fetch(`http://localhost:3310/api/artists/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/artists/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       if (!response.ok) {
         throw new Error("Échec de la mise à jour de l’artiste");
       }
@@ -183,28 +179,26 @@ export default function AdminContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchUsers();
     fetchArtists();
     fetchStreetArt();
-    fetchOneStreetArt();
-  }, [fetchUsers, fetchArtists, fetchStreetArt]);
+  }, []);
 
   const context = useMemo(
     () => ({
-      users,
-      removeUser,
       artists,
       removeArtist,
-      streetArt,
       removeStreetArt,
-      updateUser,
-      setSelectedStreetArt,
+      removeUser,
       selectedStreetArt,
-      fetchOneStreetArt,
+      setSelectedStreetArt,
+      streetArt,
       updateArtist,
+      updateUser,
+      users,
     }),
     [users, streetArt]
   );

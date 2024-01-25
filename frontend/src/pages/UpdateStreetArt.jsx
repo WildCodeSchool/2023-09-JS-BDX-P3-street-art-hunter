@@ -1,50 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useAdminContext } from "../context/AdminContext";
+import React from "react";
+import { useLoaderData } from "react-router-dom";
 
 function UpdateStreetArt() {
-  const { selectedStreetArt, fetchOneStreetArt } = useAdminContext();
-  const [updateStreetArt, setUpdateStreetArt] = useState({
-    title: "",
-    image: "",
-    latitude: "",
-    longitude: "",
-    address: "",
-    creation_date: "",
-    author: "",
-  });
-
-  const idP = useParams();
-
-  const handleClick = (field, value) => {
-    setUpdateStreetArt({ ...updateStreetArt, [field]: value });
-  };
-
-  // handleSubmit > rappeler handleClick
-
-  useEffect(() => {
-    fetchOneStreetArt(idP.id);
-  }, []);
+  const loaderData = useLoaderData();
 
   return (
     <div className="admin-streetarts">
       <div className="admin-item-list">
-        <div key={selectedStreetArt?.id} className="admin-item">
+        <div key={loaderData?.streetArt?.id} className="admin-item">
           <div className="admin-item-infos">
             <img
-              src={selectedStreetArt?.image}
-              alt={`Button ${selectedStreetArt?.id}`}
+              src={loaderData?.streetArt?.image}
+              alt={`Button ${loaderData?.streetArt?.id}`}
             />
             <p>
-              {selectedStreetArt?.title}
+              {loaderData?.streetArt?.title}
               <br />
-              Par {selectedStreetArt?.author}
+              Par {loaderData?.streetArt?.author}
             </p>
-            <p className="mb-10">Artiste: {selectedStreetArt.author}</p>
+            {/* <p className="mb-10">Artiste: {selectedStreetArt.author}</p>
             <p className="mb-10">Adresse: {selectedStreetArt.address}</p>{" "}
             <p className="mb-10">Créé le: {selectedStreetArt.creation_date}</p>
             <p className="mb-10">Lng: {selectedStreetArt.longitude}</p>
-            <p className="mb-10">Lat: {selectedStreetArt.latitude}</p>
+            <p className="mb-10">Lat: {selectedStreetArt.latitude}</p> */}
           </div>
         </div>
       </div>
@@ -56,7 +34,7 @@ function UpdateStreetArt() {
             name="title"
             id="title"
             value={UpdateStreetArt.title}
-            onChange={(e) => handleClick("title", e.target.value)}
+            // onChange={(e) => handleClick("title", e.target.value)}
           />
           <label htmlFor="image">Image</label>
           {/* <input type="text" name="image" id="image" value="" onChange={}/>

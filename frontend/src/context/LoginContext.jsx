@@ -39,14 +39,16 @@ export default function LoginProvider({ children, apiService }) {
   const login = useCallback(async (credentials) => {
     try {
       const data = await apiService.post(
-        "http://localhost:3310/api/login/",
+        `${import.meta.env.VITE_BACKEND_URL}/api/login/`,
         credentials
       );
       localStorage.setItem("token", data.token);
 
       apiService.setToken(data.token);
 
-      const result = await apiService.get("http://localhost:3310/api/users/me");
+      const result = await apiService.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/me`
+      );
 
       alert(`Coucou ${result.data.email}`);
       setUser(result.data);
@@ -63,7 +65,12 @@ export default function LoginProvider({ children, apiService }) {
 
   const register = async (formData) => {
     try {
-      setUser(await axios.post("http://localhost:3310/api/users/", formData));
+      setUser(
+        await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/`,
+          formData
+        )
+      );
       alert(`Bienvenu ${formData.username}, ton inscription est validée`);
       navigate("/connexion");
     } catch (err) {

@@ -22,61 +22,16 @@ import UpdateStreetArt from "./pages/UpdateStreetArt";
 import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
 import ResetPasswordForm from "./pages/ResetPassword";
+import rootAppLoader from "./loaders/root-app.loader";
+import getLocalisation from "./services/localisation.service";
+import getStreetArtByIdLoader from "./loaders/get-street-art-by-id.loader";
 
 const apiService = new ApiService();
-
-function getLocalisation() {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      resolve({ lat: null, lng: null });
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        resolve({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      (error) => {
-        reject(error);
-      }
-    );
-  });
-}
-
-const getStreetArt = async () => {
-  try {
-    const data = await apiService.get("http://localhost:3310/api/streetart");
-    return { streetArtData: data ?? null };
-  } catch (error) {
-    console.error(error.message);
-    return null;
-  }
-};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    loader: async () => {
-      if (!localStorage.getItem("token")) {
-        return null;
-      }
-      try {
-        const userData = await apiService.get(
-          "http://localhost:3310/api/users/me"
-        );
-        const streetArtData = await getStreetArt();
-
-        return {
-          preloadUser: userData ?? null,
-          preloadStreetArt: streetArtData ?? null,
-        };
-      } catch (err) {
-        console.error(err.message);
-        return null;
-      }
-    },
+    loader: async () => rootAppLoader(apiService),
     element: (
       <LoginProvider apiService={apiService}>
         <AdminContextProvider>
@@ -153,38 +108,34 @@ const router = createBrowserRouter([
       },
       {
         path: "/administration",
-        loader: async () => {
-          try {
-            const response = await apiService.get(
-              "http://localhost:3310/api/admin/pendingImages"
-            );
+        element: <AdminUser />,
+        children: [
+          {
+            path: "/administration",
+            loader: async () => {
+              try {
+                const response = await apiService.get(
+                  `${import.meta.env.VITE_BACKEND_URL}/api/admin/pendingImages`
+                );
 
-            return { validations: response?.data ?? [] };
-          } catch (error) {
-            return { validations: [] };
-          }
-        },
-        element: (
-          <AdminUser>
-            <Administration />
-          </AdminUser>
-        ),
-      },
-      {
-        path: "/administration/modifier-artistes/:artistId",
-        element: (
-          <AdminUser>
-            <UpdateArtist />
-          </AdminUser>
-        ),
-      },
-      {
-        path: "/administration/modifier/:id",
-        element: (
-          <AdminUser>
-            <UpdateStreetArt />,
-          </AdminUser>
-        ),
+                return { validations: response?.data ?? [] };
+              } catch (error) {
+                return { validations: [] };
+              }
+            },
+            element: <Administration />,
+          },
+          {
+            path: "/administration/modifier-artistes/:artistId",
+            element: <UpdateArtist />,
+          },
+          {
+            path: "/administration/modifier/:id",
+            loader: async ({ params }) =>
+              getStreetArtByIdLoader(apiService, params.id),
+            element: <UpdateStreetArt />,
+          },
+        ],
       },
       {
         path: "/",
