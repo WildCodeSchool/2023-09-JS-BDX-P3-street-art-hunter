@@ -74,16 +74,19 @@ export default function CaptureContextProvider({ children }) {
   // fonction pour fetch la pendingImage
   const fetchPendingImageData = async (path) => {
     try {
-      await axios.post("http://localhost:3310/api/pendingImages/", {
-        userId: user.id,
-        imgSrc: path,
-        uploadDate: getDate(),
-        uploadTime: getTime(),
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
-        streetArtId: nearbyArtSelected,
-        status: "pending",
-      });
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/`,
+        {
+          userId: user.id,
+          imgSrc: path,
+          uploadDate: getDate(),
+          uploadTime: getTime(),
+          latitude: userLocation.lat,
+          longitude: userLocation.lng,
+          streetArtId: nearbyArtSelected,
+          status: "pending",
+        }
+      );
     } catch (error) {
       console.error("Erreur lors de la requête Axios:", error);
     }
@@ -176,7 +179,7 @@ export default function CaptureContextProvider({ children }) {
 
         const response = await axios({
           method: "POST",
-          url: "http://localhost:3310/api/uploads/",
+          url: `${import.meta.env.VITE_BACKEND_URL}/api/uploads/`,
           data: uploadFile,
           headers: { "Content-Type": "multipart/form-data" },
         });
@@ -231,7 +234,7 @@ export default function CaptureContextProvider({ children }) {
       streetArtLocation.lat,
       streetArtLocation.lng
     );
-    return distance < 2000; // distance en mètres
+    return distance < 3000; // distance en mètres
   };
 
   // Calcule les street arts proches
