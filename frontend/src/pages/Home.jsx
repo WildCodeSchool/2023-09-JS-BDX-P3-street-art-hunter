@@ -181,7 +181,7 @@ export default function Home() {
         uploadFile.append("image", capturedImage);
 
         const response = await apiService.post(
-          `${import.meta.env.VITE_BACKEND_URL}/api/images`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/uploads`,
           uploadFile
         );
 
