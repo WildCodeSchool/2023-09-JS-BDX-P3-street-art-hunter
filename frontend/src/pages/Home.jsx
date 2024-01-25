@@ -5,7 +5,7 @@ import CustomCircle from "../components/CustomCircle";
 import Step1 from "../components/captureSteps/SelectArtStep1";
 import Step2 from "../components/captureSteps/OpenCameraStep2";
 import Step3 from "../components/captureSteps/CaptureFormStep3";
-import { useCapture } from "../context/captureContext"; // eslint-disable-line
+import { useCapture } from "../context/CaptureContext"; // eslint-disable-line
 import mapOptions from "../constants/map-options.constant";
 
 export default function Home() {

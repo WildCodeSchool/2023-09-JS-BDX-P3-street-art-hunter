@@ -21,7 +21,7 @@ import UpdateUser from "./pages/UpdateUser";
 import UpdateStreetArt from "./pages/UpdateStreetArt";
 import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
-import CaptureContextProvider from "./context/captureContext";// eslint-disable-line
+import { CaptureContextProvider } from "./context/CaptureContext"; // eslint-disable-line
 import ResetPasswordForm from "./pages/ResetPassword";
 import rootAppLoader from "./loaders/root-app.loader";
 import getLocalisation from "./services/localisation.service";

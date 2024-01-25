@@ -1,4 +1,4 @@
-import { useCapture } from "../../context/captureContext";// eslint-disable-line
+import { useCapture } from "../../context/CaptureContext"; // eslint-disable-line
 import Button from "../Button";
 import ItemList from "../ItemList";
 
