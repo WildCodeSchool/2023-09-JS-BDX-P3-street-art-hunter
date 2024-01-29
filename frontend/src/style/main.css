@@ -67,7 +67,7 @@ p {
 }
 
 .tiny-text {
-  font-size: 10px;
+  font-size: 10px !important;
 }
 
 .text-none {
@@ -556,6 +556,44 @@ input {
 }
 .item-list.active {
   background-color: #92cd41;
+}
+.item-list.captures h5 {
+  padding-right: 25px;
+}
+.item-list.captures h5:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 25px;
+  height: 25px;
+  right: 3px;
+  top: 3px;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: #f7d51d;
+}
+.item-list.validate h5:before {
+  background-color: #92cd41;
+}
+.item-list.refused h5:before {
+  background-color: #e76e55;
+}
+
+.pastille {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: #92cd41;
+  vertical-align: bottom;
+  margin-right: 5px;
+}
+.pastille.red {
+  background-color: #e76e55;
+}
+.pastille.yellow {
+  background-color: #f7d51d;
 }
 
 .burger-menu {
