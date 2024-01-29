@@ -63,7 +63,7 @@ p {
   line-height: 1.5rem;
 }
 .tiny-text {
-  font-size: 10px;
+  font-size: 10px !important;
 }
 .text-none {
   font-size: 0;
@@ -532,6 +532,46 @@ input {
   }
 
   transition: all 0.3s;
+
+  &.captures h5 {
+    padding-right: 25px;
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 25px;
+      height: 25px;
+      right: 3px;
+      top: 3px;
+      border: 2px solid black;
+      border-radius: 50%;
+      background-color: $yellow;
+    }
+  }
+  &.validate h5:before {
+    background-color: $green;
+  }
+  &.refused h5:before {
+    background-color: $red;
+  }
+}
+
+.pastille {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: $green;
+  vertical-align: bottom;
+  margin-right: 5px;
+
+  &.red {
+    background-color: $red;
+  }
+  &.yellow {
+    background-color: $yellow;
+  }
 }
 
 ///// Menu

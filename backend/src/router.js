@@ -63,7 +63,7 @@ router.delete("/artists/:id", artistControllers.destroy);
 // Pending Images
 
 router.get("/admin/pendingImages", pendingImageControllers.pendingImage);
-router.get("/pendingImages/:id([0-9]+)", pendingImageControllers.read);
+router.get("/pendingImages", authMiddleware, pendingImageControllers.read);
 router.post(
   "/pendingImages",
   validatePendingImage,

@@ -13,7 +13,9 @@ const pendingImage = async (_, res, next) => {
 
 const read = async (req, res, next) => {
   try {
-    const pendingImages = await tables.pending_image.read(req.params.id);
+    const pendingImages = await tables.pending_image.read(
+      req.user.is_admin ? undefined : req.user.id
+    );
     if (pendingImages == null) {
       res.sendStatus(404);
     } else {
