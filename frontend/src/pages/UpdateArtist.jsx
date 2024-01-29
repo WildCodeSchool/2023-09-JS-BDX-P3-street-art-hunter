@@ -80,7 +80,7 @@ export default function UpdateArtist() {
 
   return (
     <div className="container allow-scroll-container ">
-      <h1 className="mb-20">Modifier le compte</h1>
+      <h1 className="mb-20">Modifier l'artiste</h1>
       <div className="allow-scroll">
         <div>
           <form className="mb-20">
