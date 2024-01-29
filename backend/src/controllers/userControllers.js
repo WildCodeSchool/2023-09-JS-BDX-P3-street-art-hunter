@@ -18,7 +18,7 @@ const read = async (req, res, next) => {
   try {
     const user = await tables.users.read(req.params.id);
     if (user == null) {
-      res.sendStatus(404);
+      res.status(404).json({ error: "User not found" });
     } else {
       res.json(user);
     }
