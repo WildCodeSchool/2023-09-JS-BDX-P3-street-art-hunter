@@ -8,22 +8,32 @@ class PendingImageManager extends AbstractManager {
   // Get
 
   async read(id) {
-    const [rows] = await this.database.query(
-      `SELECT ${this.table}.id, 
-              ${this.table}.user_id,
-              ${this.table}.status,
-              ${this.table}.img_src, 
-              ${this.table}.upload_date, 
-              ${this.table}.upload_time, 
-              ${this.table}.street_art_id, 
-              street_art.title as street_art_title, 
-              street_art.author as street_art_author
-      FROM ${this.table}
-      LEFT JOIN street_art
+    let sql = `SELECT 
+      ${this.table}.id, 
+      ${this.table}.user_id AS userId,
+      ${this.table}.status,
+      ${this.table}.img_src AS imgSrc, 
+      DATE_FORMAT(${this.table}.upload_date, '%d/%m/%Y') AS formattedUploadDate,
+      TIME_FORMAT(${this.table}.upload_time, '%Hh%i') AS formattedUploadTime,
+      ${this.table}.street_art_id, 
+      street_art.title as streetArtTitle, 
+      street_art.author as streetArtAuthor,
+      users.points
+    FROM ${this.table}
+    LEFT JOIN street_art
       ON ${this.table}.street_art_id = street_art.id
-      WHERE ${this.table}.user_id = ?`,
-      [id]
-    );
+      LEFT JOIN users
+      ON ${this.table}.user_id = users.id
+    ORDER BY ${this.table}.upload_date DESC
+    `;
+    const sqlValues = [];
+
+    if (id) {
+      sql += ` WHERE ${this.table}.user_id = ?`;
+      sqlValues.push(id);
+    }
+
+    const [rows] = await this.database.query(sql, sqlValues);
     return rows;
   }
 
