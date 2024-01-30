@@ -4,12 +4,12 @@ import ChangeStreetArt from "../components/ChangeStreetArt";
 
 function UpdateStreetArt() {
   return (
-    <div className="admin-split ">
+    <div className="admin-split  ">
       <div className="admin-split-child">
         <DisplayStreetArt />
       </div>
 
-      <div className="admin-split-child">
+      <div className="mt-20 ml-20 admin-split-child">
         <ChangeStreetArt />
       </div>
     </div>

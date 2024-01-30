@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useAdminContext } from "../context/AdminContext";
 import Button from "./Button";
 
 function ChangeStreetArt() {
   const loaderData = useLoaderData();
+  const navigate = useNavigate();
 
   const { updateStreetArt } = useAdminContext();
 
@@ -12,18 +13,15 @@ function ChangeStreetArt() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!changeArt?.id) {
       return;
     }
-
     try {
       await updateStreetArt(changeArt.id, changeArt);
-      // redirect ou mettre a jour le state
+      navigate(`/administration`);
     } catch (error) {
       console.warn(error.message);
     }
-    // (changeArt.id, changeArt);
   };
 
   return (
@@ -69,16 +67,7 @@ function ChangeStreetArt() {
             setChangeArt({ ...changeArt, address: e.target.value })
           }
         />
-        {/* <label htmlFor="creation_date">Creation_date : </label>
-        <input
-          type="text"
-          name="creation_date"
-          id="creation_date"
-          value={changeArt.creation_date || ""}
-          onChange={(e) =>
-            setChangeArt({ ...changeArt, creation_date: e.target.value })
-          }
-        /> */}
+
         <label htmlFor="longitude">longitude: </label>
         <input
           type="text"
@@ -99,7 +88,7 @@ function ChangeStreetArt() {
             setChangeArt({ ...changeArt, latitude: e.target.value })
           }
         />
-        <Button type="submit" className="button mb-20">
+        <Button type="submit" className="mt-20 button mb-20">
           Modifier
         </Button>
       </form>
