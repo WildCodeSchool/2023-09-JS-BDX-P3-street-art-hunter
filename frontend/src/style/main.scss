@@ -135,6 +135,10 @@ p {
   margin-left: 10px;
 }
 
+.ml-20 {
+  margin-left: 20px;
+}
+
 .mt-10 {
   margin-top: 10px;
 }
@@ -814,6 +818,21 @@ button {
 }
 
 // Administration
+
+.container-extra-small {
+  max-width: 400px;
+}
+.admin-split {
+  display: flex;
+
+  .admin-split-child {
+    flex-direction: row;
+  }
+}
+
+input {
+  width: 100%;
+}
 
 .admin-page.allow-scroll-container {
   padding-inline: 12px;
