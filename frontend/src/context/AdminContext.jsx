@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import PropTypes from "prop-types";
+import ApiService from "../services/api.services";
 
 const AdminContext = createContext();
 
@@ -8,7 +9,8 @@ export default function AdminContextProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [artists, setArtists] = useState([]);
   const [streetArt, setStreetArt] = useState([]);
-  const [selectedStreetArt, setSelectedStreetArt] = useState({});
+  const [updateArt, setUpdateArt] = useState({});
+  const apiService = new ApiService();
 
   const fetchUsers = async () => {
     try {
@@ -181,6 +183,21 @@ export default function AdminContextProvider({ children }) {
     }
   };
 
+  const updateStreetArt = async (id, data) => {
+    const loader = { art: null };
+    try {
+      const response = await apiService.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/streetart/${id}`,
+        data ?? updateArt
+      );
+
+      loader.art = response.data;
+    } catch (err) {
+      console.error(err);
+    }
+    return loader;
+  };
+
   useEffect(() => {
     fetchUsers();
     fetchArtists();
@@ -193,12 +210,13 @@ export default function AdminContextProvider({ children }) {
       removeArtist,
       removeStreetArt,
       removeUser,
-      selectedStreetArt,
-      setSelectedStreetArt,
       streetArt,
       updateArtist,
       updateUser,
       users,
+      updateStreetArt,
+      updateArt,
+      setUpdateArt,
     }),
     [users, streetArt]
   );
