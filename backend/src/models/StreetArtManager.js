@@ -6,7 +6,17 @@ class StreetArtManager extends AbstractManager {
   }
 
   async readAll() {
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+    const [rows] = await this.database.query(`select
+    ${this.table}.id,
+    ${this.table}.user_id,
+    ${this.table}.title,
+    ${this.table}.author,
+    DATE_FORMAT(${this.table}.creation_date, '%d/%m/%Y') AS formattedDate,
+    ${this.table}.image,
+    ${this.table}.address,
+    ${this.table}.latitude,
+    ${this.table}.longitude
+    from ${this.table}`);
 
     return rows;
   }
