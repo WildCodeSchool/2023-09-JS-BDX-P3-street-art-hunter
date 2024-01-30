@@ -30,15 +30,7 @@ const path = require("path");
 
 const cors = require("cors");
 
-app.use(
-  cors({
-    origin: [
-      process.env.FRONTEND_URL, // keep this one, after checking the value in `backend/.env`
-      "http://mysite.com",
-      "http://another-domain.com",
-    ],
-  })
-);
+app.use(cors());
 
 /* ************************************************************************* */
 
@@ -88,8 +80,6 @@ app.use(express.json());
 
 // Import the API routes from the router module
 const router = require("./router");
-
-app.use(cors());
 
 // Mount the API routes under the "/api" endpoint
 app.use("/api", router);

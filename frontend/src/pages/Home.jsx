@@ -7,6 +7,8 @@ import Step2 from "../components/captureSteps/OpenCameraStep2";
 import Step3 from "../components/captureSteps/CaptureFormStep3";
 import { useCapture } from "../context/CaptureContext"; // eslint-disable-line
 import mapOptions from "../constants/map-options.constant";
+import camera from "../assets/camera.png";
+import flashMp3 from "../assets/audio/flash-retro.wav";
 
 export default function Home() {
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
@@ -142,11 +144,7 @@ export default function Home() {
               getNearbyStreetArts();
             }}
           >
-            <img
-              className="w-100"
-              src="./src/assets/camera.png"
-              alt="Ouvre la capture"
-            />
+            <img className="w-100" src={camera} alt="Ouvre la capture" />
             Ouvre
           </button>
         )}
@@ -164,11 +162,7 @@ export default function Home() {
               }, flashTimer);
             }}
           >
-            <img
-              className="w-100"
-              src="./src/assets/camera.png"
-              alt="Faire une capture"
-            />
+            <img className="w-100" src={camera} alt="Faire une capture" />
             prendre
           </button>
         ) : (
@@ -176,7 +170,7 @@ export default function Home() {
         )}
       </div>
       <div className={`flash-popup${flashPopup ? " active" : ""}`} />
-      <audio id="flashSound" src="/src/assets/audio/flash-retro.wav">
+      <audio id="flashSound" src={flashMp3}>
         <track kind="captions" />
       </audio>
     </div>

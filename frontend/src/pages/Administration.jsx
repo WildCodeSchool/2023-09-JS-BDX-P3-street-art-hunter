@@ -3,31 +3,32 @@ import { useNavigate, useLoaderData } from "react-router-dom";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 import { useLogin } from "../context/LoginContext";
+import questionBlock from "../assets/question-block.png";
 
 export default function Administration() {
   const buttons = [
     {
       id: 1,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Validations",
     },
     {
       id: 2,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Utilisateurs",
     },
     {
       id: 3,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Street-Arts",
     },
     {
       id: 4,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Artistes",
     },
   ];
