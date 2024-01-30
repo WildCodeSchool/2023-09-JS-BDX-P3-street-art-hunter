@@ -35,8 +35,8 @@ router.use(
 router.get("/users/me", authMiddleware, userControllers.getProfile);
 router.get(
   "/users",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   userControllers.browse
 );
 router.get(
@@ -66,20 +66,20 @@ router.get("/artists", artistControllers.browse);
 router.get("/artists/:id", artistControllers.read);
 router.post(
   "/artists",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   artistControllers.add
 );
 router.put(
   "/artists/:id",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   artistControllers.edit
 );
 router.delete(
   "/artists/:id",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   artistControllers.destroy
 );
 
@@ -87,8 +87,8 @@ router.delete(
 
 router.get(
   "/admin/pendingImages",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   pendingImageControllers.pendingImage
 );
 router.get("/pendingImages", authMiddleware, pendingImageControllers.read);
@@ -100,8 +100,8 @@ router.post(
 );
 router.patch(
   "/pendingImages/status/:id([0-9]+)",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   pendingImageControllers.updateStatus
 );
 
@@ -110,20 +110,20 @@ router.patch(
 router.get("/streetart", streetArtControllers.read);
 router.get(
   "/streetart/:id",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   streetArtControllers.readOne
 );
 router.put(
   "/streetart/:id",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   streetArtControllers.edit
 );
 router.delete(
   "/streetart/:id",
-  authAdminMiddleware,
   authMiddleware,
+  authAdminMiddleware,
   streetArtControllers.destroy
 );
 router.get(
