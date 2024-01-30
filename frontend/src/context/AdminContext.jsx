@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import PropTypes from "prop-types";
-import ApiService from "../services/api.services";
+import { useLogin } from "./LoginContext";
 
 const AdminContext = createContext();
 
@@ -10,21 +10,14 @@ export default function AdminContextProvider({ children }) {
   const [artists, setArtists] = useState([]);
   const [streetArt, setStreetArt] = useState([]);
   const [updateArt, setUpdateArt] = useState({});
-  const apiService = new ApiService();
+  const { apiService } = useLogin();
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await apiService.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users`
       );
-      const allUsers = await response.json();
-      setUsers(allUsers);
+      setUsers(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -32,17 +25,10 @@ export default function AdminContextProvider({ children }) {
 
   const fetchArtists = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/artists`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await apiService.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/artists`
       );
-      const allArtists = await response.json();
-      setArtists(allArtists);
+      setArtists(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -50,17 +36,10 @@ export default function AdminContextProvider({ children }) {
 
   const fetchStreetArt = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/streetart`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await apiService.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/streetart`
       );
-      const allStreetArt = await response.json();
-      setStreetArt(allStreetArt);
+      setStreetArt(response.data);
     } catch (err) {
       console.error("erreur de récup", err);
     }
@@ -68,18 +47,9 @@ export default function AdminContextProvider({ children }) {
 
   const removeArtist = async (id) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/artists/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      await apiService.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/artists/${id}`
       );
-      if (!response.ok) {
-        throw new Error("Échec de la suppression de l’artiste");
-      }
       setArtists((currentArtists) =>
         currentArtists.filter((artist) => artist.id !== id)
       );
@@ -90,18 +60,10 @@ export default function AdminContextProvider({ children }) {
 
   const removeUser = async (id) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      await apiService.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`
       );
-      if (!response.ok) {
-        throw new Error("Échec de la suppression de l’utilisateur");
-      }
+
       setUsers((currentUsers) => currentUsers.filter((user) => user.id !== id));
     } catch (err) {
       console.error(err);
@@ -110,14 +72,8 @@ export default function AdminContextProvider({ children }) {
 
   const removeStreetArt = async (id) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/streetart/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await apiService.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/streetart/${id}`
       );
       if (!response.ok) {
         throw new Error("Échec de la suppression du street art");
@@ -133,23 +89,13 @@ export default function AdminContextProvider({ children }) {
 
   const updateUser = async (id, data) => {
     try {
-      const response = await fetch(
+      const response = await apiService.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
+        data
       );
-      if (!response.ok) {
-        throw new Error("Échec de la mise à jour de l’utilisateur");
-      }
-      const updatedUser = await response.json();
       setUsers((currentUsers) =>
         currentUsers.map((user) =>
-          user.id === id ? { ...user, ...updatedUser } : user
+          user.id === id ? { ...user, ...response.data } : user
         )
       );
     } catch (err) {
@@ -159,23 +105,13 @@ export default function AdminContextProvider({ children }) {
 
   const updateArtist = async (id, data) => {
     try {
-      const response = await fetch(
+      const response = await apiService.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/artists/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
+        data
       );
-      if (!response.ok) {
-        throw new Error("Échec de la mise à jour de l’artiste");
-      }
-      const updatedArtist = await response.json();
       setArtists((currentArtists) =>
         currentArtists.map((artist) =>
-          artist.id === id ? { ...artist, ...updatedArtist } : artist
+          artist.id === id ? { ...artist, ...response.data } : artist
         )
       );
     } catch (err) {

@@ -21,10 +21,12 @@ import UpdateUser from "./pages/UpdateUser";
 import UpdateStreetArt from "./pages/UpdateStreetArt";
 import UpdateArtist from "./pages/UpdateArtist";
 import Art from "./pages/Art";
+import { CaptureContextProvider } from "./context/CaptureContext"; // eslint-disable-line
 import ResetPasswordForm from "./pages/ResetPassword";
 import rootAppLoader from "./loaders/root-app.loader";
 import getLocalisation from "./services/localisation.service";
 import getStreetArtByIdLoader from "./loaders/get-street-art-by-id.loader";
+import accountLoader from "./loaders/account.loader";
 
 const apiService = new ApiService();
 
@@ -43,7 +45,11 @@ const router = createBrowserRouter([
       {
         path: "/map",
         loader: () => getLocalisation(),
-        element: <Home />,
+        element: (
+          <CaptureContextProvider>
+            <Home />
+          </CaptureContextProvider>
+        ),
       },
       {
         path: "/galerie/arts",
@@ -59,30 +65,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/mon-compte",
+        element: <LogoutUser />,
+        loader: async () => accountLoader(apiService),
         children: [
           {
             path: "/mon-compte/informations",
-            element: (
-              <LogoutUser>
-                <Account />
-              </LogoutUser>
-            ),
+            element: <Account />,
           },
           {
             path: "/mon-compte/arts",
-            element: (
-              <LogoutUser>
-                <Account />
-              </LogoutUser>
-            ),
+            element: <Account />,
           },
           {
             path: "/mon-compte/modifier",
-            element: (
-              <LogoutUser>
-                <UpdateUser />
-              </LogoutUser>
-            ),
+            element: <UpdateUser />,
           },
         ],
       },

@@ -33,7 +33,12 @@ router.use(
 // Users
 
 router.get("/users/me", authMiddleware, userControllers.getProfile);
-router.get("/users", userControllers.browse);
+router.get(
+  "/users",
+  authMiddleware,
+  authAdminMiddleware,
+  userControllers.browse
+);
 router.get(
   "/users/:id",
   authMiddleware,
@@ -41,12 +46,15 @@ router.get(
   userControllers.read
 );
 router.post("/users", validateUser, userControllers.add);
-router.put("/users/:id", validateUser, userControllers.edit);
-router.delete("/users/:id", userControllers.destroy);
+router.put("/users/:id", authMiddleware, validateUser, userControllers.edit);
+router.delete("/users/:id", authMiddleware, userControllers.destroy);
 router.get("/ranks", userControllers.getRanks);
 
 router.post("/reset-password", userControllers.resetPassword);
 router.post("/check-user-and-mail", userControllers.isUserAndMailExist);
+
+router.get("/check-username", userControllers.checkUsername);
+router.get("/check-email", userControllers.checkEmail);
 
 // Login
 
@@ -56,30 +64,68 @@ router.post("/login", userControllers.postLogin);
 
 router.get("/artists", artistControllers.browse);
 router.get("/artists/:id", artistControllers.read);
-router.post("/artists", artistControllers.add);
-router.put("/artists/:id", artistControllers.edit);
-router.delete("/artists/:id", artistControllers.destroy);
+router.post(
+  "/artists",
+  authMiddleware,
+  authAdminMiddleware,
+  artistControllers.add
+);
+router.put(
+  "/artists/:id",
+  authMiddleware,
+  authAdminMiddleware,
+  artistControllers.edit
+);
+router.delete(
+  "/artists/:id",
+  authMiddleware,
+  authAdminMiddleware,
+  artistControllers.destroy
+);
 
 // Pending Images
 
-router.get("/admin/pendingImages", pendingImageControllers.pendingImage);
-router.get("/pendingImages/:id([0-9]+)", pendingImageControllers.read);
+router.get(
+  "/admin/pendingImages",
+  authMiddleware,
+  authAdminMiddleware,
+  pendingImageControllers.pendingImage
+);
+router.get("/pendingImages", authMiddleware, pendingImageControllers.read);
 router.post(
   "/pendingImages",
+  authMiddleware,
   validatePendingImage,
   pendingImageControllers.add
 );
 router.patch(
   "/pendingImages/status/:id([0-9]+)",
+  authMiddleware,
+  authAdminMiddleware,
   pendingImageControllers.updateStatus
 );
 
 // Street Art
 
 router.get("/streetart", streetArtControllers.read);
-router.get("/streetart/:id", streetArtControllers.readOne);
-router.put("/streetart/:id", streetArtControllers.edit);
-router.delete("/streetart/:id", streetArtControllers.destroy);
+router.get(
+  "/streetart/:id",
+  authMiddleware,
+  authAdminMiddleware,
+  streetArtControllers.readOne
+);
+router.put(
+  "/streetart/:id",
+  authMiddleware,
+  authAdminMiddleware,
+  streetArtControllers.edit
+);
+router.delete(
+  "/streetart/:id",
+  authMiddleware,
+  authAdminMiddleware,
+  streetArtControllers.destroy
+);
 router.get(
   "/streetart/artists/:artistId([0-9]+)",
   streetArtControllers.readStreetArt
@@ -104,7 +150,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/uploads", upload.single("image"), (req, res) => {
+router.post("/uploads", authMiddleware, upload.single("image"), (req, res) => {
   try {
     if (!req.file) {
       throw new Error("Aucun fichier téléchargé.");

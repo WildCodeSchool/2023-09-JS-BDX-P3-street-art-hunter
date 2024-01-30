@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 export default function TitleScreen() {
   const [showOptions, setShowOptions] = useState(false);
@@ -31,7 +32,7 @@ export default function TitleScreen() {
           <div className="d-flex d-flex-center">
             <div className="cloud cloud-1" />
             <div className="cloud cloud-2" />
-            <img className="logo mt-60" src="src/assets/logo.png" alt="logo" />
+            <img className="logo mt-60" src={logo} alt="logo" />
           </div>
           <div className="d-flex d-flex-center d-flex-column">
             {!showOptions ? (

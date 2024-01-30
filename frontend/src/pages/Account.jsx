@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
 import { useLogin } from "../context/LoginContext";
 import { useAdminContext } from "../context/AdminContext";
+import coin from "../assets/coin.gif";
 
 export default function Account() {
   const { logout } = useLogin();
@@ -16,43 +17,14 @@ export default function Account() {
     logout();
   };
 
-  const items = [
-    {
-      id: 1,
-      img_url:
-        "https://www.street-artwork.com/uploads/document/63f74a685c6b9775130667.JPG",
-      name: "Le pigeon",
-      artist: "A-Mo",
-    },
-    {
-      id: 2,
-      img_url:
-        "https://www.street-artwork.com/uploads/document/5c7d3ce59cdbb387150263.jpg",
-      name: "Inconnu",
-      artist: "Inconnu",
-    },
-    {
-      id: 3,
-      img_url:
-        "https://www.street-artwork.com/uploads/document/5ba7cef2f23c3139271885.jpg",
-      name: "Inconnu",
-      artist: "Inconnu",
-    },
-    {
-      id: 4,
-      img_url:
-        "https://www.street-artwork.com/uploads/document/6427faa8f220f202972888.jpeg",
-      name: "Monsieur Poulet",
-      artist: "Inconnu",
-    },
-  ];
+  const { userCaptures } = useOutletContext();
 
   return (
     <div className="allow-scroll-container">
       <div>
         <h1>Mon compte</h1>
         <h3 className="score t-center">
-          <img src="/src/assets/coin.gif" alt="coin" /> x {user.points}
+          <img src={coin} alt="coin" /> x {user.points}
         </h3>
       </div>
       <Slider
@@ -100,17 +72,32 @@ export default function Account() {
         </div>
         <div className="slider-item">
           <div className="container">
+            <p className="t-center tiny-text mb-20">
+              <span className="pastille" />
+              Validée <span className="pastille yellow" />
+              En attente <span className="pastille red" />
+              Refusée
+            </p>
             <div className="allow-scroll">
               <div className="container list-container">
-                {items.map((item) => (
-                  <ItemList key={item.id} className="has-img mb-20">
-                    <img src={item.img_url} alt={item.name} />
+                {userCaptures?.map((item) => (
+                  <ItemList
+                    key={item.id}
+                    className={`has-img ${item.status ?? ""} captures mb-20`}
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_BACKEND_URL}/${item.imgSrc}`}
+                      alt={item.name}
+                    />
                     <div className="item-infos">
-                      <h5>{item.name}</h5>
-                      <p>
-                        Par <a href="google.fr">{item.artist}</a>
+                      <h5 className="mb-10">
+                        #{item.id} - {item.streetArtTitle}
+                      </h5>
+                      <p className="mb-10">Par {item.streetArtAuthor}</p>
+                      <p className="tiny-text">
+                        Capturé le {item.formattedUploadDate} à{" "}
+                        {item.formattedUploadTime}
                       </p>
-                      <p>Le 13/12/2023</p>
                     </div>
                   </ItemList>
                 ))}

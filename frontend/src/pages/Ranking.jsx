@@ -1,12 +1,14 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLogin } from "../context/LoginContext";
+import miniCoin from "../assets/coin1.png";
 
 export default function Ranking() {
   const [usersRank, setUsersRank] = useState([]);
+  const { apiService } = useLogin();
 
   const getRanking = async () => {
     try {
-      const response = await axios.get(
+      const response = await apiService.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/ranks/`
       );
       setUsersRank(response.data[0]);
@@ -27,7 +29,7 @@ export default function Ranking() {
           {usersRank.map((rank) => (
             <p className="mb-30 mr-30" key={rank.id}>
               <span>
-                <img src="/src/assets/coin1.png" alt="coin" /> x {rank.points}
+                <img src={miniCoin} alt="coin" /> x {rank.points}
               </span>{" "}
               - {rank.username}
             </p>

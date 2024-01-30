@@ -48,6 +48,24 @@ export default function Register() {
     }
   };
 
+  const checkUsernameExists = async (username) => {
+    const response = await fetch(
+      `${
+        import.meta.env.VITE_BACKEND_URL
+      }/api/check-username?username=${username}`
+    );
+    const data = await response.json();
+    return data.exists;
+  };
+
+  const checkEmailExists = async (email) => {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/check-email?email=${email}`
+    );
+    const data = await response.json();
+    return data.exists;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedAlerts = {};
@@ -57,6 +75,24 @@ export default function Register() {
     }
     if (formData.password !== formData.confirmation) {
       updatedAlerts.confirmation = ["Les mots de passe ne correspondent pas"];
+    }
+    const usernameExists = await checkUsernameExists(formData.username);
+    const emailExists = await checkEmailExists(formData.email);
+
+    if (usernameExists) {
+      setAlertMessage((prevState) => ({
+        ...prevState,
+        username: ["Ce pseudo est déjà utilisé"],
+      }));
+      return;
+    }
+
+    if (emailExists) {
+      setAlertMessage((prevState) => ({
+        ...prevState,
+        email: ["Cette adresse email est déjà utilisée"],
+      }));
+      return;
     }
     setAlertMessage(updatedAlerts);
     updateRegisterForm();

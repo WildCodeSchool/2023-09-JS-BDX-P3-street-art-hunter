@@ -13,9 +13,11 @@ const pendingImage = async (_, res, next) => {
 
 const read = async (req, res, next) => {
   try {
-    const pendingImages = await tables.pending_image.read(req.params.id);
+    const pendingImages = await tables.pending_image.read(
+      req.user.is_admin ? undefined : req.user.id
+    );
     if (pendingImages == null) {
-      res.sendStatus(404);
+      res.status(404).json({ error: "Pending image not found" });
     } else {
       res.json(pendingImages);
     }
@@ -41,7 +43,8 @@ const add = async (req, res, next) => {
 // Met à jour le status pour passer de en attente à valider ou refuser
 
 const updateStatus = async (req, res) => {
-  const { userId, id, status } = req.body;
+  const { id } = req.params;
+  const { userId, status } = req.body;
 
   try {
     const result = await tables.pending_image.updateStatus(id, status, userId);
