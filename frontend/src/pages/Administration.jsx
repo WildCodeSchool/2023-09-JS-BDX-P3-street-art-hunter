@@ -220,31 +220,26 @@ export default function Administration() {
           <div className="allow-scroll pos-r">
             <div className="admin-users bg-text-block">
               <div className="admin-item-list">
-                {users
-                  .filter((user) => !user.is_admin)
-                  .map((user) => (
-                    <div key={user.id} className="admin-item">
-                      <div className="admin-user admin-item-infos">
-                        <p>Pseudo : {user.username}</p>
-                        <p>Email : {user.email}</p>
-                        <p>Code Postal : {user.postcode}</p>
-                        <p>Ville : {user.city}</p>
-                      </div>
-                      <div className="admin-button-container">
-                        <Button color="yellow" className="button" type="button">
-                          Modifier
-                        </Button>
-                        <Button
-                          color="red"
-                          className="button"
-                          type="button"
-                          onClick={() => removeUser(user.id)}
-                        >
-                          Exclure
-                        </Button>
-                      </div>
+                {users.map((user) => (
+                  <div key={user.id} className="admin-item">
+                    <div className="admin-user admin-item-infos">
+                      <p>Pseudo : {user.username}</p>
+                      <p>Email : {user.email}</p>
+                      <p>Code Postal : {user.postcode}</p>
+                      <p>Ville : {user.city}</p>
                     </div>
-                  ))}
+                    <div className="admin-button-container">
+                      <Button
+                        color="red"
+                        className="button"
+                        type="button"
+                        onClick={() => removeUser(user.id)}
+                      >
+                        Exclure
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
