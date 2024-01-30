@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
@@ -39,17 +39,50 @@ export default function Administration() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
+  const [streetsArts, setStreetsArts] = useState([]);
+  const [offset, setOffset] = useState(1);
+  const limit = 10;
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const ref = useRef(null);
+
   const {
     users,
     removeUser,
     artists,
     removeArtist,
-    streetArt,
+    // streetArt,
     removeStreetArt,
     setSelectedStreetArt,
   } = useAdminContext();
 
   const { apiService } = useLogin();
+
+  const fetchMoreData = async () => {
+    if (loading || !hasMore) return;
+    try {
+      setLoading(true);
+      const res = await apiService.get(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/streetart/data?offset=${offset}&limit=${limit}`
+      );
+
+      setStreetsArts([...streetsArts, ...res.data]);
+      setHasMore(res.data.length > 0);
+      setOffset(offset + 1);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2572);
+    }
+  };
+
+  useEffect(() => {
+    fetchMoreData();
+  }, []);
 
   const formattedDate = (date) => {
     const dateObject = new Date(date);
@@ -103,6 +136,15 @@ export default function Administration() {
     const distanceInM = distanceInKm * 1000; // Convertir en mètres
     return distanceInM.toFixed(2);
   }
+
+  const handleScroll = (event) => {
+    if (
+      event.currentTarget.scrollTop >= ref.current.offsetHeight * 0.85 &&
+      !loading
+    ) {
+      fetchMoreData();
+    }
+  };
 
   return (
     <div className="admin-page allow-scroll-container">
@@ -248,10 +290,13 @@ export default function Administration() {
         {/* Street arts */}
         {activeButton ===
           buttons.find((button) => button.name === "Street-Arts").id && (
-          <div className="allow-scroll pos-r">
+          <div
+            className="allow-scroll pos-r"
+            onScroll={(event) => handleScroll(event)}
+          >
             <div className="admin-streetarts bg-text-block">
-              <div className="admin-item-list">
-                {streetArt.map((art) => (
+              <div className="admin-item-list" ref={ref}>
+                {streetsArts.map((art) => (
                   <div key={art.id} className="admin-item">
                     <div className="admin-item-infos d-flex d-flex-center d-flex-column">
                       <img src={art.image} alt={`Button ${art.id}`} />
