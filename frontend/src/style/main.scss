@@ -815,6 +815,17 @@ button {
 
 // Administration
 
+.container-extra-small {
+  max-width: 300px;
+}
+.admin-split {
+  display: flex;
+
+  .admin-split-child {
+    flex-direction: row;
+  }
+}
+
 .admin-page.allow-scroll-container {
   padding-inline: 12px;
 
