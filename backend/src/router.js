@@ -53,6 +53,9 @@ router.get("/ranks", userControllers.getRanks);
 router.post("/reset-password", userControllers.resetPassword);
 router.post("/check-user-and-mail", userControllers.isUserAndMailExist);
 
+router.get("/check-username", userControllers.checkUsername);
+router.get("/check-email", userControllers.checkEmail);
+
 // Login
 
 router.post("/login", userControllers.postLogin);

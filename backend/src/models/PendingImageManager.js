@@ -24,14 +24,16 @@ class PendingImageManager extends AbstractManager {
       ON ${this.table}.street_art_id = street_art.id
       LEFT JOIN users
       ON ${this.table}.user_id = users.id
-    ORDER BY ${this.table}.upload_date DESC
     `;
+
     const sqlValues = [];
 
     if (id) {
       sql += ` WHERE ${this.table}.user_id = ?`;
       sqlValues.push(id);
     }
+
+    sql += ` ORDER BY ${this.table}.upload_date DESC`;
 
     const [rows] = await this.database.query(sql, sqlValues);
     return rows;

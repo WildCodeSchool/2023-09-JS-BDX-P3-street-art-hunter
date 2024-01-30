@@ -110,6 +110,24 @@ class UserManager extends AbstractManager {
   static checkPassword(password, hash) {
     return bcrypt.compare(password, hash);
   }
+
+  async isEmailExist(email) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} WHERE email = ?`,
+      [email]
+    );
+
+    return rows.length > 0;
+  }
+
+  async isUsernameExist(username) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} WHERE username = ?`,
+      [username]
+    );
+
+    return rows.length > 0;
+  }
 }
 
 module.exports = UserManager;
