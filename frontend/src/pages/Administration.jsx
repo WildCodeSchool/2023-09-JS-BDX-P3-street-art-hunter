@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 import { useLogin } from "../context/LoginContext";
 import questionBlock from "../assets/question-block.png";
+import InfiniteScrollComponent from "../components/InfiniteScrollComponent";
 
 export default function Administration() {
   const buttons = [
@@ -39,19 +40,6 @@ export default function Administration() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
-  const [streetsArts, setStreetsArts] = useState([]);
-  const [artists, setArtists] = useState([]);
-
-  const [offsetStreetArts, setOffsetStreetArts] = useState(1);
-  const [offsetArtists, setOffsetArtists] = useState(1);
-
-  const [hasMoreStreetArts, setHasMoreStreetArts] = useState(true);
-  const [hasMoreArtists, setHasMoreArtists] = useState(true);
-
-  const [loading, setLoading] = useState(false);
-  const limit = 10;
-  const ref = useRef(null);
-
   const {
     users,
     removeUser,
@@ -61,54 +49,6 @@ export default function Administration() {
   } = useAdminContext();
 
   const { apiService } = useLogin();
-
-  const fetchMoreDataStreetArts = async () => {
-    if (loading || !hasMoreStreetArts) return;
-    try {
-      setLoading(true);
-      const res = await apiService.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/streetart/data?offset=${offsetStreetArts}&limit=${limit}`
-      );
-
-      setStreetsArts([...streetsArts, ...res.data]);
-      setHasMoreStreetArts(res.data.length > 0);
-      setOffsetStreetArts(offsetStreetArts + 1);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2572);
-    }
-  };
-
-  const fetchMoreDataArtists = async () => {
-    if (loading || !hasMoreArtists) return;
-    try {
-      setLoading(true);
-      const res = await apiService.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/artists/data?offset=${offsetArtists}&limit=${limit}`
-      );
-      setArtists([...artists, ...res.data]);
-      setHasMoreArtists(res.data.length > 0);
-      setOffsetArtists(offsetArtists + 1);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2572);
-    }
-  };
-
-  useEffect(() => {
-    fetchMoreDataStreetArts();
-    fetchMoreDataArtists();
-  }, []);
 
   const formattedDate = (date) => {
     const dateObject = new Date(date);
@@ -162,23 +102,6 @@ export default function Administration() {
     const distanceInM = distanceInKm * 1000; // Convertir en mètres
     return distanceInM.toFixed(2);
   }
-  const handleScroll = (event) => {
-    if (
-      event.currentTarget.scrollTop >= ref.current.offsetHeight * 0.85 &&
-      !loading
-    ) {
-      if (
-        activeButton ===
-        buttons.find((button) => button.name === "Street-Arts").id
-      ) {
-        fetchMoreDataStreetArts();
-      } else if (
-        activeButton === buttons.find((button) => button.name === "Artistes").id
-      ) {
-        fetchMoreDataArtists();
-      }
-    }
-  };
 
   return (
     <div className="admin-page allow-scroll-container">
@@ -324,105 +247,95 @@ export default function Administration() {
         {/* Street arts */}
         {activeButton ===
           buttons.find((button) => button.name === "Street-Arts").id && (
-          <div
-            className="allow-scroll pos-r"
-            onScroll={(event) => handleScroll(event)}
+          <InfiniteScrollComponent
+            scrollClass="allow-scroll pos-r"
+            boxClass="admin-streetarts bg-text-block"
+            listClass="admin-item-list"
+            apiEndpoint={`${import.meta.env.VITE_BACKEND_URL}/api/streetart/data`}
           >
-            <div className="admin-streetarts bg-text-block">
-              <div className="admin-item-list" ref={ref}>
-                {streetsArts.map((art) => (
-                  <div key={art.id} className="admin-item">
-                    <div className="admin-item-infos d-flex d-flex-center d-flex-column">
-                      <img src={art.image} alt={`Button ${art.id}`} />
-                      <div>
-                        <p className="mb-10">
-                          #{art.id} - {art.title}
-                        </p>
-                        <p className="mb-10">Artiste: {art.author}</p>
-                        <p className="mb-10">Adresse: {art.address}</p>
-                        <p className="mb-10">Créé le: {art.creation_date}</p>
-                        <p className="mb-10">Lng: {art.longitude}</p>
-                        <p className="mb-10">Lat: {art.latitude}</p>
-                      </div>
-                    </div>
-                    <div className="admin-button-container">
-                      <Button
-                        color="yellow"
-                        className="button"
-                        type="button"
-                        onClick={() => handleModifyClick(art)}
-                      >
-                        Modifier
-                      </Button>
-                      <Button
-                        color="red"
-                        className="button"
-                        type="button"
-                        onClick={() => removeStreetArt(art.id)}
-                      >
-                        Supprimer
-                      </Button>
-                    </div>
+            {(art) => (
+              <div key={art.id} className="admin-item">
+                <div className="admin-item-infos d-flex d-flex-center d-flex-column">
+                  <img src={art.image} alt={`Button ${art.id}`} />
+                  <div>
+                    <p className="mb-10">
+                      #{art.id} - {art.title}
+                    </p>
+                    <p className="mb-10">Artiste: {art.author}</p>
+                    <p className="mb-10">Adresse: {art.address}</p>
+                    <p className="mb-10">Créé le: {art.creation_date}</p>
+                    <p className="mb-10">Lng: {art.longitude}</p>
+                    <p className="mb-10">Lat: {art.latitude}</p>
                   </div>
-                ))}
+                </div>
+                <div className="admin-button-container">
+                  <Button
+                    color="yellow"
+                    className="button"
+                    type="button"
+                    onClick={() => handleModifyClick(art)}
+                  >
+                    Modifier
+                  </Button>
+                  <Button
+                    color="red"
+                    className="button"
+                    type="button"
+                    onClick={() => removeStreetArt(art.id)}
+                  >
+                    Supprimer
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </InfiniteScrollComponent>
         )}
 
         {/* Artistes */}
         {activeButton ===
           buttons.find((button) => button.name === "Artistes").id && (
-          <div
-            className="allow-scroll pos-r"
-            onScroll={(event) => handleScroll(event)}
+          <InfiniteScrollComponent
+            scrollClass="allow-scroll pos-r"
+            boxClass="admin-streetarts bg-text-block"
+            listClass="admin-item-list"
+            apiEndpoint={`${import.meta.env.VITE_BACKEND_URL}/api/artists/data`}
           >
-            <div className="admin-artists bg-text-block">
-              <div className="admin-item-list" ref={ref}>
-                {artists.map((artist) => (
-                  <div key={artist.id} className="admin-item">
-                    <div className="admin-item-infos">
-                      <p className="mb-10">
-                        Artiste {artist.id} : {artist.name}
-                      </p>
-                      <p className="mb-10">Biographie : {artist.biography}</p>
-                      <p className="mb-10">
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href={artist.website}
-                        >
-                          Site web
-                        </a>
-                      </p>
-                    </div>
-                    <div className="admin-button-container">
-                      <Button
-                        color="yellow"
-                        className="button"
-                        type="button"
-                        onClick={() =>
-                          navigate(
-                            `/administration/modifier-artistes/${artist.id}`
-                          )
-                        }
-                      >
-                        Modifier
-                      </Button>
-                      <Button
-                        color="red"
-                        className="button"
-                        type="button"
-                        onClick={() => removeArtist(artist.id)}
-                      >
-                        Supprimer
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+            {(artist) => (
+              <div key={artist.id} className="admin-item">
+                <div className="admin-item-infos">
+                  <p className="mb-10">
+                    Artiste {artist.id} : {artist.name}
+                  </p>
+                  <p className="mb-10">Biographie : {artist.biography}</p>
+                  <p className="mb-10">
+                    <a target="_blank" rel="noreferrer" href={artist.website}>
+                      Site web
+                    </a>
+                  </p>
+                </div>
+                <div className="admin-button-container">
+                  <Button
+                    color="yellow"
+                    className="button"
+                    type="button"
+                    onClick={() =>
+                      navigate(`/administration/modifier-artistes/${artist.id}`)
+                    }
+                  >
+                    Modifier
+                  </Button>
+                  <Button
+                    color="red"
+                    className="button"
+                    type="button"
+                    onClick={() => removeArtist(artist.id)}
+                  >
+                    Supprimer
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </InfiniteScrollComponent>
         )}
       </div>
     </div>
