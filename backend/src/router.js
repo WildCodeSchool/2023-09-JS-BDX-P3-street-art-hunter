@@ -108,6 +108,7 @@ router.patch(
 // Street Art
 
 router.get("/streetart", streetArtControllers.read);
+router.get("/streetart/data", streetArtControllers.readData);
 router.get(
   "/streetart/:id",
   authMiddleware,
