@@ -267,8 +267,6 @@ export default function CaptureContextProvider({ children }) {
   const handleStreetArtClick = (streetArtId) => {
     // Définissez l'ID de l'œuvre d'art de rue cliquée comme active
     setActiveStreetArtId(streetArtId);
-
-    // console.log("Street Art Clicked:", streetArtId);
   };
 
   const contextCaptureValue = useMemo(
