@@ -3,31 +3,32 @@ import { useNavigate, useLoaderData } from "react-router-dom";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 import { useLogin } from "../context/LoginContext";
+import questionBlock from "../assets/question-block.png";
 
 export default function Administration() {
   const buttons = [
     {
       id: 1,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Validations",
     },
     {
       id: 2,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Utilisateurs",
     },
     {
       id: 3,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Street-Arts",
     },
     {
       id: 4,
       image: "src/assets/block.png",
-      activeImage: "src/assets/question-block.png",
+      activeImage: questionBlock,
       name: "Artistes",
     },
   ];
@@ -219,31 +220,26 @@ export default function Administration() {
           <div className="allow-scroll pos-r">
             <div className="admin-users bg-text-block">
               <div className="admin-item-list">
-                {users
-                  .filter((user) => !user.is_admin)
-                  .map((user) => (
-                    <div key={user.id} className="admin-item">
-                      <div className="admin-user admin-item-infos">
-                        <p>Pseudo : {user.username}</p>
-                        <p>Email : {user.email}</p>
-                        <p>Code Postal : {user.postcode}</p>
-                        <p>Ville : {user.city}</p>
-                      </div>
-                      <div className="admin-button-container">
-                        <Button color="yellow" className="button" type="button">
-                          Modifier
-                        </Button>
-                        <Button
-                          color="red"
-                          className="button"
-                          type="button"
-                          onClick={() => removeUser(user.id)}
-                        >
-                          Exclure
-                        </Button>
-                      </div>
+                {users.map((user) => (
+                  <div key={user.id} className="admin-item">
+                    <div className="admin-user admin-item-infos">
+                      <p>Pseudo : {user.username}</p>
+                      <p>Email : {user.email}</p>
+                      <p>Code Postal : {user.postcode}</p>
+                      <p>Ville : {user.city}</p>
                     </div>
-                  ))}
+                    <div className="admin-button-container">
+                      <Button
+                        color="red"
+                        className="button"
+                        type="button"
+                        onClick={() => removeUser(user.id)}
+                      >
+                        Exclure
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

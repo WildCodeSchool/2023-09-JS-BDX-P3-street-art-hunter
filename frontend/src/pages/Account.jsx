@@ -4,6 +4,7 @@ import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
 import { useLogin } from "../context/LoginContext";
 import { useAdminContext } from "../context/AdminContext";
+import coin from "../assets/coin.gif";
 
 export default function Account() {
   const { logout } = useLogin();
@@ -23,7 +24,7 @@ export default function Account() {
       <div>
         <h1>Mon compte</h1>
         <h3 className="score t-center">
-          <img src="/src/assets/coin.gif" alt="coin" /> x {user.points}
+          <img src={coin} alt="coin" /> x {user.points}
         </h3>
       </div>
       <Slider

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLogin } from "../context/LoginContext";
+import miniCoin from "../assets/coin1.png";
 
 export default function Ranking() {
   const [usersRank, setUsersRank] = useState([]);
@@ -28,7 +29,7 @@ export default function Ranking() {
           {usersRank.map((rank) => (
             <p className="mb-30 mr-30" key={rank.id}>
               <span>
-                <img src="/src/assets/coin1.png" alt="coin" /> x {rank.points}
+                <img src={miniCoin} alt="coin" /> x {rank.points}
               </span>{" "}
               - {rank.username}
             </p>
