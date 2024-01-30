@@ -749,24 +749,6 @@ button h4 {
   color: white;
 }
 
-.exclamation-button {
-  position: fixed;
-  right: 16px;
-  bottom: 25px;
-  width: 57px;
-  height: 58px;
-  background-image: url("/src/assets/exclamation-block.png");
-  background-size: contain;
-}
-.exclamation-button:after {
-  content: "Signaler";
-  display: block;
-  position: absolute;
-  top: calc(100% + 5px);
-  right: 2px;
-  color: white;
-}
-
 .info-window-text {
   color: black;
 }

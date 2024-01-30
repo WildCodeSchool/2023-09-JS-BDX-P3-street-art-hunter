@@ -17,7 +17,7 @@ const read = async (req, res, next) => {
       req.user.is_admin ? undefined : req.user.id
     );
     if (pendingImages == null) {
-      res.sendStatus(404);
+      res.status(404).json({ error: "Pending image not found" });
     } else {
       res.json(pendingImages);
     }
