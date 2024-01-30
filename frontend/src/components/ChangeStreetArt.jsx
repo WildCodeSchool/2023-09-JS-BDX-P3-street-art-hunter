@@ -25,7 +25,7 @@ function ChangeStreetArt() {
   };
 
   return (
-    <div className="container-extra-small allow-scroll-container">
+    <div className="allow-scroll-container">
       <form onSubmit={handleSubmit} className="admin-item-infos ">
         <label className="mb-10" htmlFor="image">
           Image
@@ -106,7 +106,7 @@ function ChangeStreetArt() {
             setChangeArt({ ...changeArt, latitude: e.target.value })
           }
         />
-        <Button type="submit" className=" button mb-20">
+        <Button type="submit" className=" button mt-20">
           Modifier
         </Button>
       </form>
