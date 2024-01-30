@@ -4,13 +4,20 @@ import ChangeStreetArt from "../components/ChangeStreetArt";
 
 function UpdateStreetArt() {
   return (
-    <div className="admin-split  ">
-      <div className="admin-split-child">
-        <DisplayStreetArt />
-      </div>
+    <div className="admin-page ">
+      <h1>Administration</h1>
+      <div className="container ">
+        <div className="admin-buttons ">
+          <div className="admin-split ">
+            <div className="admin-split-child allow-scroll pos-r">
+              <DisplayStreetArt />
+            </div>
 
-      <div className="mt-20 ml-20 admin-split-child">
-        <ChangeStreetArt />
+            <div className="mt-20 ml-20 admin-split-child allow-scroll pos-r">
+              <ChangeStreetArt />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
