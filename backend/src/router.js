@@ -63,6 +63,7 @@ router.post("/login", userControllers.postLogin);
 // Artists
 
 router.get("/artists", artistControllers.browse);
+router.get("/artists/data", artistControllers.browseData);
 router.get("/artists/:id", artistControllers.read);
 router.post(
   "/artists",

@@ -40,37 +40,62 @@ export default function Administration() {
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
   const [streetsArts, setStreetsArts] = useState([]);
-  const [offset, setOffset] = useState(1);
-  const limit = 10;
-  const [hasMore, setHasMore] = useState(true);
+  const [artists, setArtists] = useState([]);
+
+  const [offsetStreetArts, setOffsetStreetArts] = useState(1);
+  const [offsetArtists, setOffsetArtists] = useState(1);
+
+  const [hasMoreStreetArts, setHasMoreStreetArts] = useState(true);
+  const [hasMoreArtists, setHasMoreArtists] = useState(true);
+
   const [loading, setLoading] = useState(false);
+  const limit = 10;
   const ref = useRef(null);
 
   const {
     users,
     removeUser,
-    artists,
     removeArtist,
-    // streetArt,
     removeStreetArt,
     setSelectedStreetArt,
   } = useAdminContext();
 
   const { apiService } = useLogin();
 
-  const fetchMoreData = async () => {
-    if (loading || !hasMore) return;
+  const fetchMoreDataStreetArts = async () => {
+    if (loading || !hasMoreStreetArts) return;
     try {
       setLoading(true);
       const res = await apiService.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/api/streetart/data?offset=${offset}&limit=${limit}`
+        }/api/streetart/data?offset=${offsetStreetArts}&limit=${limit}`
       );
 
       setStreetsArts([...streetsArts, ...res.data]);
-      setHasMore(res.data.length > 0);
-      setOffset(offset + 1);
+      setHasMoreStreetArts(res.data.length > 0);
+      setOffsetStreetArts(offsetStreetArts + 1);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2572);
+    }
+  };
+
+  const fetchMoreDataArtists = async () => {
+    if (loading || !hasMoreArtists) return;
+    try {
+      setLoading(true);
+      const res = await apiService.get(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/artists/data?offset=${offsetArtists}&limit=${limit}`
+      );
+      setArtists([...artists, ...res.data]);
+      setHasMoreArtists(res.data.length > 0);
+      setOffsetArtists(offsetArtists + 1);
     } catch (error) {
       console.error(error);
     } finally {
@@ -81,7 +106,8 @@ export default function Administration() {
   };
 
   useEffect(() => {
-    fetchMoreData();
+    fetchMoreDataStreetArts();
+    fetchMoreDataArtists();
   }, []);
 
   const formattedDate = (date) => {
@@ -136,13 +162,21 @@ export default function Administration() {
     const distanceInM = distanceInKm * 1000; // Convertir en mètres
     return distanceInM.toFixed(2);
   }
-
   const handleScroll = (event) => {
     if (
       event.currentTarget.scrollTop >= ref.current.offsetHeight * 0.85 &&
       !loading
     ) {
-      fetchMoreData();
+      if (
+        activeButton ===
+        buttons.find((button) => button.name === "Street-Arts").id
+      ) {
+        fetchMoreDataStreetArts();
+      } else if (
+        activeButton === buttons.find((button) => button.name === "Artistes").id
+      ) {
+        fetchMoreDataArtists();
+      }
     }
   };
 
@@ -339,9 +373,12 @@ export default function Administration() {
         {/* Artistes */}
         {activeButton ===
           buttons.find((button) => button.name === "Artistes").id && (
-          <div className="allow-scroll pos-r">
+          <div
+            className="allow-scroll pos-r"
+            onScroll={(event) => handleScroll(event)}
+          >
             <div className="admin-artists bg-text-block">
-              <div className="admin-item-list">
+              <div className="admin-item-list" ref={ref}>
                 {artists.map((artist) => (
                   <div key={artist.id} className="admin-item">
                     <div className="admin-item-infos">
