@@ -32,7 +32,7 @@ const edit = async (req, res, next) => {
     if (affectedRows === 0) {
       res.status(404).json({ message: "error in edit route" });
     } else {
-      res.sendStatus(200);
+      res.status(200).json({ affectedRows });
     }
   } catch (err) {
     next(err);
@@ -45,7 +45,7 @@ const destroy = async (req, res, next) => {
     if (affectedRows === 0) {
       res.status(404).json({ error: "Aucun street art trouvé avec cet ID." });
     } else {
-      res.sendStatus(200);
+      res.status(200).json({ affectedRows });
     }
   } catch (err) {
     console.error("Erreur dans la fonction destroy:", err);

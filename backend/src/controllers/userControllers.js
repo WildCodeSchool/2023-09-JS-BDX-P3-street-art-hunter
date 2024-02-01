@@ -18,7 +18,7 @@ const read = async (req, res, next) => {
   try {
     const user = await tables.users.read(req.params.id);
     if (user == null) {
-      res.sendStatus(404);
+      res.status(404).json({ error: "User not found" });
     } else {
       res.json(user);
     }
@@ -125,6 +125,26 @@ const isUserAndMailExist = async (req, res) => {
   }
 };
 
+const checkUsername = async (req, res) => {
+  const { username } = req.query;
+  try {
+    const exists = await tables.users.isUsernameExist(username);
+    res.status(200).json({ exists });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+const checkEmail = async (req, res) => {
+  const { email } = req.query;
+  try {
+    const exists = await tables.users.isEmailExist(email);
+    res.status(200).json({ exists });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
 module.exports = {
   browse,
   read,
@@ -136,4 +156,6 @@ module.exports = {
   getProfile,
   resetPassword,
   isUserAndMailExist,
+  checkUsername,
+  checkEmail,
 };

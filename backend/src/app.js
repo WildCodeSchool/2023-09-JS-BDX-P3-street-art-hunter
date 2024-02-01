@@ -28,6 +28,7 @@ const path = require("path");
 // 4. Be sure to only have URLs in the array with domains from which you want to allow requests.
 // For example: ["http://mysite.com", "http://another-domain.com"]
 
+// eslint-disable-next-line import/newline-after-import
 const cors = require("cors");
 app.use(cors());
 
