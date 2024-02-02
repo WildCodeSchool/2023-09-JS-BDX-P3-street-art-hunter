@@ -128,6 +128,14 @@ class UserManager extends AbstractManager {
 
     return rows.length > 0;
   }
+
+  async readData(limit, offset) {
+    const [rows] = await this.database.query(
+      `select * from ${this.table} limit ? offset ?`,
+      [+limit, +limit * +offset - +limit]
+    );
+    return rows;
+  }
 }
 
 module.exports = UserManager;

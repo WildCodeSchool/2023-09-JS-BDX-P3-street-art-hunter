@@ -40,13 +40,8 @@ export default function Administration() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
-  const {
-    users,
-    removeUser,
-    removeArtist,
-    removeStreetArt,
-    setSelectedStreetArt,
-  } = useAdminContext();
+  const { removeUser, removeArtist, removeStreetArt, setSelectedStreetArt } =
+    useAdminContext();
 
   const { apiService } = useLogin();
 
@@ -216,32 +211,33 @@ export default function Administration() {
         {/* Utilisateurs */}
         {activeButton ===
           buttons.find((button) => button.name === "Utilisateurs").id && (
-          <div className="allow-scroll pos-r">
-            <div className="admin-users bg-text-block">
-              <div className="admin-item-list">
-                {users.map((user) => (
-                  <div key={user.id} className="admin-item">
-                    <div className="admin-user admin-item-infos">
-                      <p>Pseudo : {user.username}</p>
-                      <p>Email : {user.email}</p>
-                      <p>Code Postal : {user.postcode}</p>
-                      <p>Ville : {user.city}</p>
-                    </div>
-                    <div className="admin-button-container">
-                      <Button
-                        color="red"
-                        className="button"
-                        type="button"
-                        onClick={() => removeUser(user.id)}
-                      >
-                        Exclure
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+          <InfiniteScrollComponent
+            scrollClass="allow-scroll pos-r"
+            boxClass="admin-users bg-text-block"
+            listClass="admin-item-list"
+            apiEndpoint={`${import.meta.env.VITE_BACKEND_URL}/api/users/data`}
+          >
+            {(user) => (
+              <div key={user.id} className="admin-item">
+                <div className="admin-user admin-item-infos">
+                  <p>Pseudo : {user.username}</p>
+                  <p>Email : {user.email}</p>
+                  <p>Code Postal : {user.postcode}</p>
+                  <p>Ville : {user.city}</p>
+                </div>
+                <div className="admin-button-container">
+                  <Button
+                    color="red"
+                    className="button"
+                    type="button"
+                    onClick={() => removeUser(user.id)}
+                  >
+                    Exclure
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </InfiniteScrollComponent>
         )}
 
         {/* Street arts */}
