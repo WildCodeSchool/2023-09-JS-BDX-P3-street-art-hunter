@@ -9,6 +9,17 @@ const browse = async (_, res, next) => {
   }
 };
 
+const browseData = async (req, res, next) => {
+  const limit = +req.query.limit || 10;
+  const offset = +req.query.offset || 1;
+  try {
+    const artists = await tables.artist.readData(limit, offset);
+    res.json(artists);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const read = async (req, res, next) => {
   try {
     const artist = await tables.artist.read(req.params.id);
@@ -62,6 +73,7 @@ const destroy = async (req, res, next) => {
 
 module.exports = {
   browse,
+  browseData,
   read,
   edit,
   add,

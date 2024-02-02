@@ -9,6 +9,17 @@ const read = async (req, res, next) => {
   }
 };
 
+const readData = async (req, res, next) => {
+  const limit = +req.query.limit || 10;
+  const offset = +req.query.offset || 1;
+  try {
+    const result = await tables.street_art.readData(limit, offset);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const readOne = async (req, res, next) => {
   try {
     const result = await tables.street_art.readSingle(req.params.id);
@@ -65,4 +76,4 @@ const readStreetArt = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { read, edit, destroy, readOne, readStreetArt };
+module.exports = { read, readData, edit, destroy, readOne, readStreetArt };
