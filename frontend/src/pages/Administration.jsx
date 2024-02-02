@@ -4,31 +4,32 @@ import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 import { useLogin } from "../context/LoginContext";
 import questionBlock from "../assets/question-block.png";
+import block from "../assets/block.png";
 import InfiniteScrollComponent from "../components/InfiniteScrollComponent";
 
 export default function Administration() {
   const buttons = [
     {
       id: 1,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Validations",
     },
     {
       id: 2,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Utilisateurs",
     },
     {
       id: 3,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Street-Arts",
     },
     {
       id: 4,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Artistes",
     },
