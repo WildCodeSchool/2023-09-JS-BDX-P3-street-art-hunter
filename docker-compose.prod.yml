@@ -5,7 +5,7 @@ services:
     build: .
     container_name: ${PROJECT_NAME:-project}-web
     volumes:
-      - .:/usr/src/app
+      - .:/var/www
       - ./docker-entry.sh:/etc/entrypoint.sh
     entrypoint: [ "sh", "/etc/entrypoint.sh" ]
     env_file:

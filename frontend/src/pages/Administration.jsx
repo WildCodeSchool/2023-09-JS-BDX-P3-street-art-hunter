@@ -262,6 +262,26 @@ export default function Administration() {
                     <p className="mb-10">Créé le: {art.creation_date}</p>
                     <p className="mb-10">Lng: {art.longitude}</p>
                     <p className="mb-10">Lat: {art.latitude}</p>
+                      </div>
+                    </div>
+                    <div className="admin-button-container">
+                      <Button
+                        color="yellow"
+                        className="button"
+                        type="button"
+                        onClick={() => handleModifyClick(art)}
+                      >
+                        Modifier
+                      </Button>
+                      <Button
+                        color="red"
+                        className="button"
+                        type="button"
+                        onClick={() => removeStreetArt(art.id)}
+                      >
+                        Supprimer
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 <div className="admin-button-container">
