@@ -655,6 +655,16 @@ input {
   }
 }
 
+// Toastify
+
+.Toastify {
+  font-size: 14px;
+  line-height: 24px;
+}
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: $green !important;
+}
+
 //// Pages
 
 // intro

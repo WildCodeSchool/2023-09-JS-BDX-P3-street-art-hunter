@@ -8,6 +8,7 @@ import {
 import { useLoaderData, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 import ApiService from "../services/api.services";
 
 const loginContext = createContext();
@@ -35,6 +36,18 @@ export default function LoginProvider({ children, apiService }) {
     return false;
   };
 
+  const notify = (message) =>
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
   const login = useCallback(async (credentials) => {
     try {
       const data = await apiService.post(
@@ -48,12 +61,11 @@ export default function LoginProvider({ children, apiService }) {
       const result = await apiService.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/me`
       );
-
-      alert(`Coucou ${result.data.email}`);
       setUser(result.data);
       if (result.data.is_admin === 1) {
         return navigate("/administration");
       }
+      notify(`Bonjour ${result.data.username} !`);
       return navigate("/map");
     } catch (err) {
       console.error(err);
@@ -70,7 +82,7 @@ export default function LoginProvider({ children, apiService }) {
           formData
         )
       );
-      alert(`Bienvenu ${formData.username}, ton inscription est validée`);
+      notify(`Inscription validée !`);
       navigate("/connexion");
     } catch (err) {
       alert(err.message);
@@ -80,6 +92,7 @@ export default function LoginProvider({ children, apiService }) {
   const logout = () => {
     setUser(undefined);
     localStorage.clear();
+    notify("Vous avez bien été déconnecté !");
     return navigate("/");
   };
 

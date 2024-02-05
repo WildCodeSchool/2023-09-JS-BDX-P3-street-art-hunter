@@ -665,6 +665,15 @@ input {
   content: "Fermer";
 }
 
+.Toastify {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: #92cd41 !important;
+}
+
 .intro-container {
   padding-bottom: 126px;
 }

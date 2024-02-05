@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import { useLogin } from "../context/LoginContext";
 // import { useUserContext } from "../context/userContext";
 

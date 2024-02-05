@@ -33,12 +33,7 @@ router.use(
 // Users
 
 router.get("/users/me", authMiddleware, userControllers.getProfile);
-router.get(
-  "/users",
-  authMiddleware,
-  authAdminMiddleware,
-  userControllers.browse
-);
+router.get("/users", authAdminMiddleware, userControllers.browse);
 router.get(
   "/users/:id",
   authMiddleware,
@@ -150,7 +145,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/uploads", authMiddleware, upload.single("image"), (req, res) => {
+router.post("/uploads", upload.single("image"), (req, res) => {
   try {
     if (!req.file) {
       throw new Error("Aucun fichier téléchargé.");

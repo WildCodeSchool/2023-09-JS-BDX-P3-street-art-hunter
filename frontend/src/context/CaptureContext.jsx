@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
@@ -17,7 +18,7 @@ export default function CaptureContextProvider({ children }) {
   const initialUserLocation = useLoaderData();
   const [userLocation, setUserLocation] = useState(initialUserLocation);
   const { streetArt } = useAdminContext();
-  const { user } = useLogin();
+  const { user, apiService } = useLogin();
   const videoRef = useRef(null);
   const [step, setStep] = useState("initial");
   const [cameraPopup, setCameraPopup] = useState(false);
@@ -38,6 +39,18 @@ export default function CaptureContextProvider({ children }) {
       return prevStep;
     });
   };
+
+  const notify = (message) =>
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
 
   const moveToPreviousStep = () => {
     setStep((prevStep) => {
@@ -74,7 +87,7 @@ export default function CaptureContextProvider({ children }) {
   // fonction pour fetch la pendingImage
   const fetchPendingImageData = async (path) => {
     try {
-      await axios.post(
+      await apiService.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/`,
         {
           userId: user.id,
@@ -191,6 +204,7 @@ export default function CaptureContextProvider({ children }) {
           setCaptureForm(false);
           setCameraPopup(false);
           fetchPendingImageData(receivedUploadPath);
+          notify("Votre image a bien été envoyée.");
         } else {
           console.error("Erreur lors de l'envoi de l'image au serveur");
         }

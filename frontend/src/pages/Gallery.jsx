@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useAdminContext } from "../context/AdminContext";
 
