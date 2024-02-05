@@ -38,8 +38,8 @@ export default function Register() {
       case "email":
         return !value || !isEmailValid(value) ? ["Adresse email invalide"] : [];
       case "password":
-        return !value
-          ? ["Le mot de passe doit contenir minimum 6 caractères."]
+        return !value || value.length < 6
+          ? ["Le mot de passe doit contenir au moins 6 caractères."]
           : [];
       case "confirmation":
         return !value ? ["Les mots de passes ne sont pas identiques."] : [];
@@ -69,15 +69,18 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedAlerts = {};
+
     for (const fieldName of Object.keys(formData)) {
       const fieldErrors = validateField(fieldName, formData[fieldName]);
       updatedAlerts[fieldName] = fieldErrors;
     }
+
     if (formData.password !== formData.confirmation) {
       updatedAlerts.confirmation = ["Les mots de passe ne correspondent pas"];
       setAlertMessage(updatedAlerts);
       return;
     }
+
     const usernameExists = await checkUsernameExists(formData.username);
     const emailExists = await checkEmailExists(formData.email);
 
@@ -96,6 +99,7 @@ export default function Register() {
       }));
       return;
     }
+
     setAlertMessage(updatedAlerts);
     setFormData(formData);
     register(formData);
