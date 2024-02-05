@@ -153,7 +153,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/uploads", upload.single("image"), (req, res) => {
+router.post("/uploads", authMiddleware, upload.single("image"), (req, res) => {
   try {
     if (!req.file) {
       throw new Error("Aucun fichier téléchargé.");
