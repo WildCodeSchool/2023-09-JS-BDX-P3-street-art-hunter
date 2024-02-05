@@ -22,7 +22,7 @@ export default function Ranking() {
   }, []);
 
   return (
-    <div className="allow-scroll-container">
+    <div className="allow-scroll-container pos-r">
       <h1 className="mb-40">Classement</h1>
       <div className="container ranking-page d-flex d-flex-center of-hidden">
         <div className="allow-scroll">

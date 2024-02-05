@@ -62,10 +62,10 @@ export default function LoginProvider({ children, apiService }) {
         `${import.meta.env.VITE_BACKEND_URL}/api/users/me`
       );
       setUser(result.data);
+      notify(`Bonjour ${result.data.username} !`);
       if (result.data.is_admin === 1) {
         return navigate("/administration");
       }
-      notify(`Bonjour ${result.data.username} !`);
       return navigate("/map");
     } catch (err) {
       console.error(err);
