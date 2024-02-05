@@ -75,6 +75,8 @@ export default function Register() {
     }
     if (formData.password !== formData.confirmation) {
       updatedAlerts.confirmation = ["Les mots de passe ne correspondent pas"];
+      setAlertMessage(updatedAlerts);
+      return;
     }
     const usernameExists = await checkUsernameExists(formData.username);
     const emailExists = await checkEmailExists(formData.email);
@@ -95,7 +97,7 @@ export default function Register() {
       return;
     }
     setAlertMessage(updatedAlerts);
-    updateRegisterForm();
+    setFormData(formData);
     register(formData);
   };
 

@@ -38,7 +38,5 @@ services:
       # Password for root access
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - target: 3306
-        published: 3306
-        protocol: tcp
+      - "3306"
 

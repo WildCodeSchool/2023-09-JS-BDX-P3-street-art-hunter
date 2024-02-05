@@ -248,7 +248,9 @@ export default function Administration() {
             scrollClass="allow-scroll pos-r"
             boxClass="admin-streetarts bg-text-block"
             listClass="admin-item-list"
-            apiEndpoint={`${import.meta.env.VITE_BACKEND_URL}/api/streetart/data`}
+            apiEndpoint={`${
+              import.meta.env.VITE_BACKEND_URL
+            }/api/streetart/data`}
           >
             {(art) => (
               <div key={art.id} className="admin-item">

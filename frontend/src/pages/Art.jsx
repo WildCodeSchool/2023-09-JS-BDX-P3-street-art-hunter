@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ModalImage from "react-modal-image";
 import { useParams } from "react-router-dom";
 import ItemList from "../components/ItemList";
-import Button from "../components/Button";
+
 import { useLogin } from "../context/LoginContext";
 
 function Art() {
@@ -55,7 +55,6 @@ function Art() {
               <ModalImage small={art.image} large={art.image} alt={art.title} />
               <div className="item-infos">
                 <h5>{art.title}</h5>
-                <Button className="button tiny-button">S'Y RENDRE!</Button>
               </div>
             </ItemList>
           ))}
