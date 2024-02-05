@@ -454,11 +454,19 @@ p {
 label {
   display: block;
 }
-input {
+input,
+textarea {
   background-color: $grey;
   padding: 10px 15px;
   font-size: 16px;
   max-width: 400px;
+  width: 100%;
+}
+textarea {
+  line-height: 20px;
+  min-width: 400px;
+  min-height: 200px;
+  max-height: 600px;
 }
 
 // item-list

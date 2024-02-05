@@ -130,6 +130,10 @@ p {
   margin-left: 10px;
 }
 
+.ml-20 {
+  margin-left: 20px;
+}
+
 .mt-10 {
   margin-top: 10px;
 }
@@ -481,11 +485,20 @@ label {
   display: block;
 }
 
-input {
+input,
+textarea {
   background-color: #d9d9d9;
   padding: 10px 15px;
   font-size: 16px;
   max-width: 400px;
+  width: 100%;
+}
+
+textarea {
+  line-height: 20px;
+  min-width: 400px;
+  min-height: 200px;
+  max-height: 600px;
 }
 
 .list-container {
@@ -848,6 +861,21 @@ button h4 {
   z-index: 100;
   opacity: 1;
   transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.container-extra-small {
+  max-width: 400px;
+}
+
+.admin-split {
+  display: flex;
+}
+.admin-split .admin-split-child {
+  flex-direction: row;
+}
+
+input {
+  width: 100%;
 }
 
 .admin-page.allow-scroll-container {

@@ -31,9 +31,9 @@ export default function UpdateArtist() {
   }, [artistId]);
 
   const [formData, setFormData] = useState({
-    name: "",
-    biography: "",
-    website: "",
+    name: artists?.name ?? "",
+    biography: artists?.biography ?? "",
+    website: artists?.website ?? "",
   });
 
   const updateArtistForm = (field, value) => {
@@ -79,10 +79,10 @@ export default function UpdateArtist() {
   };
 
   return (
-    <div className="container allow-scroll-container ">
-      <h1 className="mb-20">Modifier l'artiste</h1>
+    <div className="container allow-scroll-container">
+      <h1 className="mb-30">Modifier l'artiste : {artists.name}</h1>
       <div className="allow-scroll">
-        <div>
+        <div className="container d-flex d-flex-center">
           <form className="mb-20">
             <label htmlFor="name" className="mb-10 ">
               Nom
@@ -106,7 +106,7 @@ export default function UpdateArtist() {
               Biographie
             </label>
             <div className="input mb-10">
-              <input
+              <textarea
                 type="text"
                 name="biography"
                 id="biography"
@@ -132,10 +132,14 @@ export default function UpdateArtist() {
                 onChange={(e) => updateArtistForm("website", e.target.value)}
               />
             </div>
+            <Button
+              type="submit"
+              className="button mt-30"
+              onClick={handleSubmit}
+            >
+              Valider
+            </Button>
           </form>
-          <Button type="submit" className="button mb-20" onClick={handleSubmit}>
-            Valider
-          </Button>
         </div>
       </div>
     </div>
