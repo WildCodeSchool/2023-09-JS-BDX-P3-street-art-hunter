@@ -33,12 +33,7 @@ export default function Gallery() {
                     />
                     <div className="item-infos">
                       <h5>{art.title}</h5>
-                      <p>
-                        Par <a href="google.fr">{art.author}</a>
-                      </p>
-                      <Button className="button tiny-button">
-                        S'Y RENDRE!
-                      </Button>
+                      <p>Par {art.author}</p>
                     </div>
                   </ItemList>
                 ))}
