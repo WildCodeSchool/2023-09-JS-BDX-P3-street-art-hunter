@@ -14,6 +14,17 @@ const browse = async (_, res, next) => {
   }
 };
 
+const browseData = async (req, res, next) => {
+  const limit = +req.query.limit || 10;
+  const offset = +req.query.offset || 1;
+  try {
+    const artists = await tables.users.readData(limit, offset);
+    res.json(artists);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const read = async (req, res, next) => {
   try {
     const user = await tables.users.read(req.params.id);
@@ -159,4 +170,5 @@ module.exports = {
   isUserAndMailExist,
   checkUsername,
   checkEmail,
+  browseData,
 };

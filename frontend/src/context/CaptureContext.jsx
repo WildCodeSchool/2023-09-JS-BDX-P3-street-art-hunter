@@ -17,7 +17,7 @@ export default function CaptureContextProvider({ children }) {
   const initialUserLocation = useLoaderData();
   const [userLocation, setUserLocation] = useState(initialUserLocation);
   const { streetArt } = useAdminContext();
-  const { user } = useLogin();
+  const { user, apiService } = useLogin();
   const videoRef = useRef(null);
   const [step, setStep] = useState("initial");
   const [cameraPopup, setCameraPopup] = useState(false);
@@ -74,7 +74,7 @@ export default function CaptureContextProvider({ children }) {
   // fonction pour fetch la pendingImage
   const fetchPendingImageData = async (path) => {
     try {
-      await axios.post(
+      await apiService.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/pendingImages/`,
         {
           userId: user.id,

@@ -21,6 +21,14 @@ class StreetArtManager extends AbstractManager {
     return rows;
   }
 
+  async readData(limit, offset) {
+    const [rows] = await this.database.query(
+      `select * from ${this.table} limit ? offset ?`,
+      [+limit, +limit * +offset - +limit]
+    );
+    return rows;
+  }
+
   async readSingle(id) {
     const [rows] = await this.database.query(
       `SELECT id, title, image, latitude, longitude, address, author FROM ${this.table} WHERE id = ?`,

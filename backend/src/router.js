@@ -39,6 +39,7 @@ router.get(
   authAdminMiddleware,
   userControllers.browse
 );
+router.get("/users/data", userControllers.browseData);
 router.get(
   "/users/:id",
   authMiddleware,
@@ -63,6 +64,7 @@ router.post("/login", userControllers.postLogin);
 // Artists
 
 router.get("/artists", artistControllers.browse);
+router.get("/artists/data", artistControllers.browseData);
 router.get("/artists/:id", artistControllers.read);
 router.post(
   "/artists",
@@ -108,6 +110,7 @@ router.patch(
 // Street Art
 
 router.get("/streetart", streetArtControllers.read);
+router.get("/streetart/data", streetArtControllers.readData);
 router.get(
   "/streetart/:id",
   authMiddleware,
@@ -150,7 +153,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/uploads", authMiddleware, upload.single("image"), (req, res) => {
+router.post("/uploads", upload.single("image"), (req, res) => {
   try {
     if (!req.file) {
       throw new Error("Aucun fichier téléchargé.");
