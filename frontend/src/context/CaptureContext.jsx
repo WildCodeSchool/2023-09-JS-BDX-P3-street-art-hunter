@@ -189,12 +189,16 @@ export default function CaptureContextProvider({ children }) {
       try {
         const uploadFile = new FormData();
         uploadFile.append("image", capturedImage);
+        const userToken = localStorage.getItem("token");
 
         const response = await axios({
           method: "POST",
           url: `${import.meta.env.VITE_BACKEND_URL}/api/uploads/`,
           data: uploadFile,
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userToken}`,
+          },
         });
 
         if (response.status === 200) {

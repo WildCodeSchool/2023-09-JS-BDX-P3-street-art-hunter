@@ -1,23 +1,23 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import DisplayStreetArt from "../components/DisplayStreetArt";
+import ChangeStreetArt from "../components/ChangeStreetArt";
 
 function UpdateStreetArt() {
-  const loaderData = useLoaderData();
-
   return (
-    <div className="admin-streetarts">
-      <div className="admin-item-list">
-        <div key={loaderData?.streetArt?.id} className="admin-item">
-          <div className="admin-item-infos">
-            <img
-              src={loaderData?.streetArt?.image}
-              alt={`Button ${loaderData?.streetArt?.id}`}
-            />
-            <p>
-              {loaderData?.streetArt?.title}
-              <br />
-              Par {loaderData?.streetArt?.author}
-            </p>
+    <div className="admin-page allow-scroll-container ">
+      <h1>Administration</h1>
+      <div className="container d-flex d-flex-center of-hidden">
+        <div className="admin-buttons allow-scroll">
+          <div className="container">
+            <div className="admin-split  ">
+              <div className="admin-split-child ">
+                <DisplayStreetArt />
+              </div>
+
+              <div className="mt-20 ml-20 admin-split-child ">
+                <ChangeStreetArt />
+              </div>
+            </div>
           </div>
         </div>
       </div>

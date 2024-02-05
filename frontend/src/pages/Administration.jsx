@@ -4,30 +4,32 @@ import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 import { useLogin } from "../context/LoginContext";
 import questionBlock from "../assets/question-block.png";
+import block from "../assets/block.png";
+import InfiniteScrollComponent from "../components/InfiniteScrollComponent";
 
 export default function Administration() {
   const buttons = [
     {
       id: 1,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Validations",
     },
     {
       id: 2,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Utilisateurs",
     },
     {
       id: 3,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Street-Arts",
     },
     {
       id: 4,
-      image: "src/assets/block.png",
+      image: block,
       activeImage: questionBlock,
       name: "Artistes",
     },
@@ -39,15 +41,8 @@ export default function Administration() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(buttons[0].id);
 
-  const {
-    users,
-    removeUser,
-    artists,
-    removeArtist,
-    streetArt,
-    removeStreetArt,
-    setSelectedStreetArt,
-  } = useAdminContext();
+  const { removeUser, removeArtist, removeStreetArt, setSelectedStreetArt } =
+    useAdminContext();
 
   const { apiService } = useLogin();
 
@@ -217,130 +212,129 @@ export default function Administration() {
         {/* Utilisateurs */}
         {activeButton ===
           buttons.find((button) => button.name === "Utilisateurs").id && (
-          <div className="allow-scroll pos-r">
-            <div className="admin-users bg-text-block">
-              <div className="admin-item-list">
-                {users.map((user) => (
-                  <div key={user.id} className="admin-item">
-                    <div className="admin-user admin-item-infos">
-                      <p>Pseudo : {user.username}</p>
-                      <p>Email : {user.email}</p>
-                      <p>Code Postal : {user.postcode}</p>
-                      <p>Ville : {user.city}</p>
-                    </div>
-                    <div className="admin-button-container">
-                      <Button
-                        color="red"
-                        className="button"
-                        type="button"
-                        onClick={() => removeUser(user.id)}
-                      >
-                        Exclure
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+          <InfiniteScrollComponent
+            scrollClass="allow-scroll pos-r"
+            boxClass="admin-users bg-text-block"
+            listClass="admin-item-list"
+            apiEndpoint={`${import.meta.env.VITE_BACKEND_URL}/api/users/data`}
+          >
+            {(user) => (
+              <div key={user.id} className="admin-item">
+                <div className="admin-user admin-item-infos">
+                  <p>Pseudo : {user.username}</p>
+                  <p>Email : {user.email}</p>
+                  <p>Code Postal : {user.postcode}</p>
+                  <p>Ville : {user.city}</p>
+                </div>
+                <div className="admin-button-container">
+                  <Button
+                    color="red"
+                    className="button"
+                    type="button"
+                    onClick={() => removeUser(user.id)}
+                  >
+                    Exclure
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </InfiniteScrollComponent>
         )}
 
         {/* Street arts */}
         {activeButton ===
           buttons.find((button) => button.name === "Street-Arts").id && (
-          <div className="allow-scroll pos-r">
-            <div className="admin-streetarts bg-text-block">
-              <div className="admin-item-list">
-                {streetArt.map((art) => (
-                  <div key={art.id} className="admin-item">
-                    <div className="admin-item-infos d-flex d-flex-center d-flex-column">
-                      <img src={art.image} alt={`Button ${art.id}`} />
-                      <div>
-                        <p className="mb-10">
-                          #{art.id} - {art.title}
-                        </p>
-                        <p className="mb-10">Artiste: {art.author}</p>
-                        <p className="mb-10">Adresse: {art.address}</p>
-                        <p className="mb-10">Créé le: {art.creation_date}</p>
-                        <p className="mb-10">Lng: {art.longitude}</p>
-                        <p className="mb-10">Lat: {art.latitude}</p>
-                      </div>
-                    </div>
-                    <div className="admin-button-container">
-                      <Button
-                        color="yellow"
-                        className="button"
-                        type="button"
-                        onClick={() => handleModifyClick(art)}
-                      >
-                        Modifier
-                      </Button>
-                      <Button
-                        color="red"
-                        className="button"
-                        type="button"
-                        onClick={() => removeStreetArt(art.id)}
-                      >
-                        Supprimer
-                      </Button>
-                    </div>
+          <InfiniteScrollComponent
+            scrollClass="allow-scroll pos-r"
+            boxClass="admin-streetarts bg-text-block"
+            listClass="admin-item-list"
+            apiEndpoint={`${
+              import.meta.env.VITE_BACKEND_URL
+            }/api/streetart/data`}
+          >
+            {(art) => (
+              <div key={art.id} className="admin-item">
+                <div className="admin-item-infos d-flex d-flex-center d-flex-column">
+                  <img src={art.image} alt={`Button ${art.id}`} />
+                  <div>
+                    <p className="mb-10">
+                      #{art.id} - {art.title}
+                    </p>
+                    <p className="mb-10">Artiste: {art.author}</p>
+                    <p className="mb-10">Adresse: {art.address}</p>
+                    <p className="mb-10">Créé le: {art.creation_date}</p>
+                    <p className="mb-10">Lng: {art.longitude}</p>
+                    <p className="mb-10">Lat: {art.latitude}</p>
                   </div>
-                ))}
+                </div>
+                <div className="admin-button-container">
+                  <Button
+                    color="yellow"
+                    className="button"
+                    type="button"
+                    onClick={() => handleModifyClick(art)}
+                  >
+                    Modifier
+                  </Button>
+                  <Button
+                    color="red"
+                    className="button"
+                    type="button"
+                    onClick={() => removeStreetArt(art.id)}
+                  >
+                    Supprimer
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </InfiniteScrollComponent>
         )}
 
         {/* Artistes */}
         {activeButton ===
           buttons.find((button) => button.name === "Artistes").id && (
-          <div className="allow-scroll pos-r">
-            <div className="admin-artists bg-text-block">
-              <div className="admin-item-list">
-                {artists.map((artist) => (
-                  <div key={artist.id} className="admin-item">
-                    <div className="admin-item-infos">
-                      <p className="mb-10">
-                        Artiste {artist.id} : {artist.name}
-                      </p>
-                      <p className="mb-10">Biographie : {artist.biography}</p>
-                      <p className="mb-10">
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href={artist.website}
-                        >
-                          Site web
-                        </a>
-                      </p>
-                    </div>
-                    <div className="admin-button-container">
-                      <Button
-                        color="yellow"
-                        className="button"
-                        type="button"
-                        onClick={() =>
-                          navigate(
-                            `/administration/modifier-artistes/${artist.id}`
-                          )
-                        }
-                      >
-                        Modifier
-                      </Button>
-                      <Button
-                        color="red"
-                        className="button"
-                        type="button"
-                        onClick={() => removeArtist(artist.id)}
-                      >
-                        Supprimer
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+          <InfiniteScrollComponent
+            scrollClass="allow-scroll pos-r"
+            boxClass="admin-streetarts bg-text-block"
+            listClass="admin-item-list"
+            apiEndpoint={`${import.meta.env.VITE_BACKEND_URL}/api/artists/data`}
+          >
+            {(artist) => (
+              <div key={artist.id} className="admin-item">
+                <div className="admin-item-infos">
+                  <p className="mb-10">
+                    Artiste {artist.id} : {artist.name}
+                  </p>
+                  <p className="mb-10">Biographie : {artist.biography}</p>
+                  <p className="mb-10">
+                    <a target="_blank" rel="noreferrer" href={artist.website}>
+                      Site web
+                    </a>
+                  </p>
+                </div>
+                <div className="admin-button-container">
+                  <Button
+                    color="yellow"
+                    className="button"
+                    type="button"
+                    onClick={() =>
+                      navigate(`/administration/modifier-artistes/${artist.id}`)
+                    }
+                  >
+                    Modifier
+                  </Button>
+                  <Button
+                    color="red"
+                    className="button"
+                    type="button"
+                    onClick={() => removeArtist(artist.id)}
+                  >
+                    Supprimer
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </InfiniteScrollComponent>
         )}
       </div>
     </div>

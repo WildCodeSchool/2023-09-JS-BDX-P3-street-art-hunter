@@ -27,7 +27,7 @@ export default class ApiService {
     return config;
   }
 
-  get(url) {
+  async get(url) {
     return axios.get(url, this.getConfig());
   }
 

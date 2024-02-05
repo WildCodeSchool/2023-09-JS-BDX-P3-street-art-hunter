@@ -14,6 +14,17 @@ const browse = async (_, res, next) => {
   }
 };
 
+const browseData = async (req, res, next) => {
+  const limit = +req.query.limit || 10;
+  const offset = +req.query.offset || 1;
+  try {
+    const artists = await tables.users.readData(limit, offset);
+    res.json(artists);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const read = async (req, res, next) => {
   try {
     const user = await tables.users.read(req.params.id);
@@ -40,6 +51,7 @@ const add = async (req, res, next) => {
 const edit = async (req, res, next) => {
   const user = req.body;
   const { id } = req.params;
+
   try {
     const affectedRows = await tables.users.update(id, user);
     if (affectedRows === 0) {
@@ -158,4 +170,5 @@ module.exports = {
   isUserAndMailExist,
   checkUsername,
   checkEmail,
+  browseData,
 };

@@ -33,7 +33,13 @@ router.use(
 // Users
 
 router.get("/users/me", authMiddleware, userControllers.getProfile);
-router.get("/users", authAdminMiddleware, userControllers.browse);
+router.get(
+  "/users",
+  authMiddleware,
+  authAdminMiddleware,
+  userControllers.browse
+);
+router.get("/users/data", userControllers.browseData);
 router.get(
   "/users/:id",
   authMiddleware,
@@ -58,6 +64,7 @@ router.post("/login", userControllers.postLogin);
 // Artists
 
 router.get("/artists", artistControllers.browse);
+router.get("/artists/data", artistControllers.browseData);
 router.get("/artists/:id", artistControllers.read);
 router.post(
   "/artists",
@@ -103,6 +110,7 @@ router.patch(
 // Street Art
 
 router.get("/streetart", streetArtControllers.read);
+router.get("/streetart/data", streetArtControllers.readData);
 router.get(
   "/streetart/:id",
   authMiddleware,
