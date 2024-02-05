@@ -9,6 +9,7 @@ import { useCapture } from "../context/CaptureContext"; // eslint-disable-line
 import mapOptions from "../constants/map-options.constant";
 import camera from "../assets/camera.png";
 import flashMp3 from "../assets/audio/flash-retro.wav";
+import { useLogin } from "../context/LoginContext";
 
 export default function Home() {
   const [zoomLevel, setZoomLevel] = useState(13); // Initaliser le zoom à 13
@@ -28,6 +29,9 @@ export default function Home() {
     streetArt,
     userLocation,
   } = useCapture();
+
+  const { isUserConnected } = useLogin();
+  const isConnected = isUserConnected();
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
@@ -112,67 +116,74 @@ export default function Home() {
           />
         )}
       </GoogleMap>
-      <div style={{ height: "calc(100vh - 83px)" }}>
-        <div className={`camera-popup${step !== "initial" ? " active" : ""}`}>
-          <div className="container container-small h-100 d-flex d-flex-center pos-r">
-            <button
-              className="camera-popup-close-button"
-              onClick={() => {
-                setStep("initial");
-                handleCloseCamera();
-                setNearbyArtSelected(null);
-                setActiveStreetArtId(null);
-              }}
-              type="button"
+
+      {isConnected && (
+        <>
+          <div style={{ height: "calc(100vh - 83px)" }}>
+            <div
+              className={`camera-popup${step !== "initial" ? " active" : ""}`}
             >
-              Fermer
-            </button>
-            {step === "selectArt" ? <Step1 /> : null}
-            {step === "getCapture" ? <Step2 /> : null}
-            {step === "captureForm" ? <Step3 /> : null}
+              <div className="container container-small h-100 d-flex d-flex-center pos-r">
+                <button
+                  className="camera-popup-close-button"
+                  onClick={() => {
+                    setStep("initial");
+                    handleCloseCamera();
+                    setNearbyArtSelected(null);
+                    setActiveStreetArtId(null);
+                  }}
+                  type="button"
+                >
+                  Fermer
+                </button>
+                {step === "selectArt" ? <Step1 /> : null}
+                {step === "getCapture" ? <Step2 /> : null}
+                {step === "captureForm" ? <Step3 /> : null}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div className="camera-button-container">
-        {step === "initial" && (
-          <button
-            className="camera-button text-none"
-            type="button"
-            onClick={() => {
-              moveToNextStep();
-              getNearbyStreetArts();
-            }}
-          >
-            <img className="w-100" src={camera} alt="Ouvre la capture" />
-            Ouvre
-          </button>
-        )}
-        {step === "getCapture" ? (
-          <button
-            className="camera-button text-none"
-            type="button"
-            onClick={() => {
-              handleFlashPopup();
-              captureImage();
-              handleCloseCamera();
+          <div className="camera-button-container">
+            {step === "initial" && (
+              <button
+                className="camera-button text-none"
+                type="button"
+                onClick={() => {
+                  moveToNextStep();
+                  getNearbyStreetArts();
+                }}
+              >
+                <img className="w-100" src={camera} alt="Ouvre la capture" />
+                Ouvre
+              </button>
+            )}
+            {step === "getCapture" ? (
+              <button
+                className="camera-button text-none"
+                type="button"
+                onClick={() => {
+                  handleFlashPopup();
+                  captureImage();
+                  handleCloseCamera();
 
-              setTimeout(() => {
-                moveToNextStep();
-              }, flashTimer);
-            }}
-          >
-            <img className="w-100" src={camera} alt="Faire une capture" />
-            prendre
-          </button>
-        ) : (
-          ""
-        )}
-      </div>
-      <div className={`flash-popup${flashPopup ? " active" : ""}`} />
-      <audio id="flashSound" src={flashMp3}>
-        <track kind="captions" />
-      </audio>
+                  setTimeout(() => {
+                    moveToNextStep();
+                  }, flashTimer);
+                }}
+              >
+                <img className="w-100" src={camera} alt="Faire une capture" />
+                prendre
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className={`flash-popup${flashPopup ? " active" : ""}`} />
+          <audio id="flashSound" src={flashMp3}>
+            <track kind="captions" />
+          </audio>
+        </>
+      )}
     </div>
   );
 }

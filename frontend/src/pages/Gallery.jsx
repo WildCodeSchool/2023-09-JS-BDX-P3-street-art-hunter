@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
 import Slider from "../components/Slider";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useAdminContext } from "../context/AdminContext";
 
@@ -34,6 +35,13 @@ export default function Gallery() {
                     <div className="item-infos">
                       <h5>{art.title}</h5>
                       <p>Par {art.author}</p>
+                      <a
+                        className="button tiny-button"
+                        target="blank"
+                        href={`https://www.google.com/maps/place/${art.address}`}
+                      >
+                        S'Y RENDRE!
+                      </a>
                     </div>
                   </ItemList>
                 ))}
