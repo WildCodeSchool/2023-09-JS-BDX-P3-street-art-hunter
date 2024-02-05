@@ -40,6 +40,7 @@ const add = async (req, res, next) => {
 const edit = async (req, res, next) => {
   const user = req.body;
   const { id } = req.params;
+
   try {
     const affectedRows = await tables.users.update(id, user);
     if (affectedRows === 0) {
