@@ -5,7 +5,7 @@ function DisplayStreetArt() {
   const loaderData = useLoaderData();
 
   return (
-    <div className="container-extra-small allow-scroll-container admin-streetarts">
+    <div className="container-extra-small admin-streetarts">
       <div className="admin-item-list">
         <div key={loaderData?.streetArt?.id} className="admin-item">
           <div className="admin-item-infos">
