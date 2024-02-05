@@ -350,9 +350,6 @@ LOCK TABLES `users` WRITE;
 INSERT IGNORE INTO
     `users`
 VALUES (
-        1, 'kevin', 'kevin@jean.com', '33000', 'Bordeaux', 'kevin', 200, 1
-    ),
-    (
         2, 'raph', 'raph@raph.fr', '33400', 'talence', '$2b$05$SnWuUiI7h/Rz2aMv2eYR0uvFzs6YAZEZMpYO8uh2IbhBsqCwZJjSS', 2800, 1
     );
 /*!40000 ALTER TABLE `users` ENABLE KEYS */
