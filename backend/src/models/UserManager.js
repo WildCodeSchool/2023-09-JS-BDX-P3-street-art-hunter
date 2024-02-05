@@ -64,8 +64,11 @@ class UserManager extends AbstractManager {
   }
 
   async delete(id) {
+    await this.database.query(`DELETE FROM pending_image WHERE user_id = ?`, [
+      id,
+    ]);
     const [result] = await this.database.query(
-      `delete from ${this.table} where id = ?`,
+      `DELETE FROM ${this.table} WHERE id = ?`,
       [id]
     );
 
