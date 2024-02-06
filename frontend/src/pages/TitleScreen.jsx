@@ -34,7 +34,7 @@ export default function TitleScreen() {
             <div className="cloud cloud-2" />
             <img className="logo mt-60" src={logo} alt="logo" />
           </div>
-          <div className="d-flex d-flex-center d-flex-column">
+          <div className="d-flex d-flex-center d-flex-end d-flex-column pb-60">
             {!showOptions ? (
               <>
                 <h4 className="blink">Cliquez pour commencer</h4>

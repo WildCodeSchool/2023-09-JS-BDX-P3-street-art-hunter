@@ -177,6 +177,9 @@ p {
   margin-bottom: 60px;
 }
 
+.pb-60 {
+  padding-bottom: 60px;
+}
 .pl-0 {
   padding-left: 0;
 }
@@ -215,7 +218,9 @@ p {
 .d-flex-space-between {
   justify-content: space-between;
 }
-
+.d-flex-end {
+  justify-content: flex-end;
+}
 .d-flex-wrap {
   flex-wrap: wrap;
 }
