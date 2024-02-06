@@ -26,7 +26,7 @@ function ChangeStreetArt() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="admin-item-infos ">
+      <form onSubmit={handleSubmit} className="admin-item-infos">
         <label className="mb-10" htmlFor="image">
           Image
         </label>
@@ -72,7 +72,7 @@ function ChangeStreetArt() {
         <label className="mb-10" htmlFor="address">
           Adresse :
         </label>
-        <div className="input">
+        <div className="input mb-20">
           <input
             type="text"
             name="address"

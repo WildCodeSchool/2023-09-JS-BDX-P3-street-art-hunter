@@ -58,7 +58,7 @@ h4 {
 
 h5 {
   font-size: 14px;
-  line-height: 18px;
+  line-height: 25px;
 }
 
 p {
@@ -180,6 +180,10 @@ p {
 
 .mb-60 {
   margin-bottom: 60px;
+}
+
+.pl-0 {
+  padding-left: 0;
 }
 
 .mr-30 {
@@ -516,24 +520,20 @@ textarea {
   max-width: 536px;
   transition: all 0.3s;
 }
+.item-list:last-child {
+  margin-bottom: 0 !important;
+}
 .item-list.has-img {
   display: flex;
-}
-.item-list .item-infos {
-  display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  flex: auto;
 }
 .item-list img {
-  width: 140px;
-  aspect-ratio: 4/3;
+  width: 100%;
   -o-object-fit: cover;
   object-fit: cover;
   -o-object-position: center;
   object-position: center;
-  float: left;
-  margin-right: 16px;
+  margin-bottom: 12px;
 }
 .item-list #react-modal-image-img {
   width: calc(100% - 50px);
@@ -571,7 +571,7 @@ textarea {
   background-color: #f7d51d;
 }
 .item-list.active {
-  background-color: #92cd41;
+  background-color: #92cd41 !important;
 }
 .item-list.captures h5 {
   padding-right: 25px;
@@ -863,21 +863,6 @@ button h4 {
   transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
 }
 
-.container-extra-small {
-  max-width: 400px;
-}
-
-.admin-split {
-  display: flex;
-}
-.admin-split .admin-split-child {
-  flex-direction: row;
-}
-
-input {
-  width: 100%;
-}
-
 .admin-page.allow-scroll-container {
   padding-inline: 12px;
 }
@@ -924,7 +909,6 @@ input {
   width: 100%;
   max-width: 430px;
   height: auto;
-  margin-bottom: 15px;
 }
 .admin-item-list .admin-item .has-two-items {
   display: flex;
@@ -933,7 +917,7 @@ input {
 .admin-item-list .admin-item .has-two-items .admin-item-child {
   text-align: center;
   max-width: 50%;
-  padding: 25px 12px 0;
+  padding: 16px 12px 0;
 }
 .admin-item-list .admin-item.d-flex-column .admin-button-container {
   width: 100%;
@@ -946,7 +930,7 @@ input {
   margin-top: 30px;
   display: flex;
   justify-content: center;
-  gap: 0 70px;
+  gap: 0 10%;
 }
 .admin-item-list .admin-button-container button {
   max-width: 150px;
@@ -1027,11 +1011,11 @@ label {
   }
   12% {
     opacity: 1;
-    transform: translateX(10vw);
+    transform: translateX(calc(10vw + 125px));
   }
   13% {
     opacity: 0;
-    transform: translateX(11vw);
+    transform: translateX(calc(11vw + 125px));
   }
   14% {
     opacity: 0;

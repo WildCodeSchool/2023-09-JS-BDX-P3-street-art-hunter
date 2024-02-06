@@ -36,6 +36,14 @@ export default function UpdateArtist() {
     website: artists?.website ?? "",
   });
 
+  useEffect(() => {
+    setFormData({
+      name: artists?.name ?? "",
+      biography: artists?.biography ?? "",
+      website: artists?.website ?? "",
+    });
+  }, [artists]);
+
   const updateArtistForm = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };

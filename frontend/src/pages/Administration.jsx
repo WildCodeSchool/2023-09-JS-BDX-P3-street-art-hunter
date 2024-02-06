@@ -140,13 +140,13 @@ export default function Administration() {
                 <div className="admin-item-list">
                   {collection.map((item) => (
                     <div key={item.id} className="admin-item">
-                      <h5 className="t-center mb-10">
+                      <h5 className="t-center">
                         #{item.id} - Le {formattedDate(item.upload_date)} à{" "}
                         {item.upload_time}
                       </h5>
                       <div className="has-two-items">
                         <div className="admin-item-child">
-                          <h4 className="mb-20">{item.street_art_name}</h4>
+                          <h4 className="mb-20">Modèle</h4>
                           <img
                             src={item.street_art_image}
                             alt={item.street_art_image}
@@ -255,7 +255,11 @@ export default function Administration() {
             {(art) => (
               <div key={art.id} className="admin-item">
                 <div className="admin-item-infos d-flex d-flex-center d-flex-column">
-                  <img src={art.image} alt={`Button ${art.id}`} />
+                  <img
+                    className="mb-20"
+                    src={art.image}
+                    alt={`Button ${art.id}`}
+                  />
                   <div>
                     <p className="mb-10">
                       #{art.id} - {art.title}
