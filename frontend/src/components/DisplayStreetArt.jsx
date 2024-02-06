@@ -10,22 +10,17 @@ function DisplayStreetArt() {
         <div key={loaderData?.streetArt?.id} className="admin-item">
           <div className="admin-item-infos">
             <img
+              className="mb-20"
               src={loaderData?.streetArt?.image}
               alt={`Button ${loaderData?.streetArt?.id}`}
             />
-            <p>
-              {loaderData?.streetArt?.title}
-              <br />
-              Par : {loaderData?.streetArt?.author}
-            </p>
+            <p className="mb-10">Titre: {loaderData?.streetArt?.title}</p>
+            <p className="mb-10">Par: {loaderData?.streetArt?.author}</p>
             <p className="mb-10">Adresse : {loaderData?.streetArt?.address}</p>
-
             <p className="mb-10">
-              Longitude : {loaderData?.streetArt?.longitude}
+              Longitude: {loaderData?.streetArt?.longitude}
             </p>
-            <p className="mb-10">
-              Latitude : {loaderData?.streetArt?.latitude}
-            </p>
+            <p className="mb-10">Latitude: {loaderData?.streetArt?.latitude}</p>
           </div>
         </div>
       </div>

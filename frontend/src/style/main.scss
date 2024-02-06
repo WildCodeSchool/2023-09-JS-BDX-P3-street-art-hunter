@@ -56,7 +56,7 @@ h4 {
 }
 h5 {
   font-size: 14px;
-  line-height: 18px;
+  line-height: 25px;
 }
 p {
   font-size: 1rem;
@@ -175,6 +175,10 @@ p {
 }
 .mb-60 {
   margin-bottom: 60px;
+}
+
+.pl-0 {
+  padding-left: 0;
 }
 
 .mr-30 {
@@ -485,24 +489,21 @@ textarea {
   width: 100%;
   max-width: 536px;
 
-  &.has-img {
-    display: flex;
+  &:last-child {
+    margin-bottom: 0 !important;
   }
 
-  .item-infos {
+  &.has-img {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    flex: auto;
   }
 
   img {
-    width: 140px;
-    aspect-ratio: 4 / 3;
+    width: 100%;
+    // aspect-ratio: 4 / 3;
     object-fit: cover;
     object-position: center;
-    float: left;
-    margin-right: 16px;
+    margin-bottom: 12px;
   }
   #react-modal-image-img {
     width: calc(100% - 50px);
@@ -541,7 +542,7 @@ textarea {
   }
 
   &.active {
-    background-color: $green;
+    background-color: $green !important;
   }
 
   transition: all 0.3s;
@@ -876,21 +877,6 @@ button {
 
 // Administration
 
-.container-extra-small {
-  max-width: 400px;
-}
-.admin-split {
-  display: flex;
-
-  .admin-split-child {
-    flex-direction: row;
-  }
-}
-
-input {
-  width: 100%;
-}
-
 .admin-page.allow-scroll-container {
   padding-inline: 12px;
 
@@ -941,7 +927,6 @@ input {
       width: 100%;
       max-width: 430px;
       height: auto;
-      margin-bottom: 15px;
     }
     .has-two-items {
       display: flex;
@@ -949,7 +934,7 @@ input {
       .admin-item-child {
         text-align: center;
         max-width: 50%;
-        padding: 25px 12px 0;
+        padding: 16px 12px 0;
       }
     }
     //responsive à mettre
@@ -968,7 +953,7 @@ input {
     margin-top: 30px;
     display: flex;
     justify-content: center;
-    gap: 0 70px;
+    gap: 0 10%;
 
     button {
       max-width: 150px;
@@ -1064,11 +1049,11 @@ label {
   }
   12% {
     opacity: 1;
-    transform: translateX(10vw);
+    transform: translateX(calc(10vw + 125px));
   }
   13% {
     opacity: 0;
-    transform: translateX(11vw);
+    transform: translateX(calc(11vw + 125px));
   }
   14% {
     opacity: 0;
