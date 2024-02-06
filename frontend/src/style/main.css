@@ -466,7 +466,7 @@ p {
 .allow-scroll-container {
   display: grid;
   grid-template-rows: auto 1fr;
-  height: calc(100vh - 108px);
+  height: calc(100vh - 168px);
 }
 
 .allow-scroll {

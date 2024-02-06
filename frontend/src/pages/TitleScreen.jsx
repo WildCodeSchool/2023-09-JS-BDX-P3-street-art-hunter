@@ -37,7 +37,7 @@ export default function TitleScreen() {
           <div className="d-flex d-flex-center d-flex-end d-flex-column pb-60">
             {!showOptions ? (
               <>
-                <h4 className="blink">Cliquez pour commencer</h4>
+                <h4 className="blink t-center">Cliquez pour commencer</h4>
                 <button onClick={handleStartClick} type="button">
                   <div className="start-btn mt-30">START</div>
                 </button>
