@@ -48,6 +48,18 @@ export default function LoginProvider({ children, apiService }) {
       theme: "colored",
     });
 
+  const notifyError = (message) =>
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
   const login = useCallback(async (credentials) => {
     try {
       const data = await apiService.post(
@@ -84,7 +96,11 @@ export default function LoginProvider({ children, apiService }) {
       notify(`Inscription validée !`);
       navigate("/connexion");
     } catch (err) {
-      console.error(err);
+      if (err.response && err.response.status === 422) {
+        notifyError("Erreur : champs incomplet");
+      } else {
+        console.error(err);
+      }
     }
   };
 
