@@ -33,7 +33,7 @@ class PendingImageManager extends AbstractManager {
       sqlValues.push(id);
     }
 
-    sql += ` ORDER BY ${this.table}.upload_date DESC`;
+    sql += ` ORDER BY ${this.table}.upload_date DESC, TIME_FORMAT(${this.table}.upload_time, '%H:%i') DESC`;
 
     const [rows] = await this.database.query(sql, sqlValues);
     return rows;

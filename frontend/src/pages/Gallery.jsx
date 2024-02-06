@@ -24,7 +24,7 @@ export default function Gallery() {
         <div className="slider-item">
           <div className="container">
             <div className="allow-scroll">
-              <div className="container list-container">
+              <div className="container list-container pl-0">
                 {streetArt.map((art) => (
                   <ItemList key={art.id} className="has-img mb-20">
                     <ModalImage
@@ -33,10 +33,10 @@ export default function Gallery() {
                       alt={art.title}
                     />
                     <div className="item-infos">
-                      <h5>{art.title}</h5>
-                      <p>Par {art.author}</p>
+                      <h5 className="mb-10">{art.title}</h5>
+                      <p className="mb-10">Par {art.author}</p>
                       <a
-                        className="button tiny-button"
+                        className="button tiny-button mb-10 d-block"
                         target="blank"
                         href={`https://www.google.com/maps/place/${art.address}`}
                       >
