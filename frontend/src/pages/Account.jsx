@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Button from "../components/Button";
 import ItemList from "../components/ItemList";
@@ -9,13 +10,23 @@ import coin from "../assets/coin.gif";
 export default function Account() {
   const { logout } = useLogin();
   const { removeUser } = useAdminContext();
-  const { user } = useLogin();
+  const { user, setUser, apiService } = useLogin();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
     removeUser(user.id);
     logout();
   };
+
+  useEffect(() => {
+    const updatePoints = async () => {
+      const response = await apiService.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/me`
+      );
+      setUser(response.data);
+    };
+    updatePoints();
+  }, [user.points]);
 
   const { userCaptures } = useOutletContext();
 

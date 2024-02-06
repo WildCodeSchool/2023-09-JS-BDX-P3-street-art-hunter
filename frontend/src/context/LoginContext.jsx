@@ -69,7 +69,6 @@ export default function LoginProvider({ children, apiService }) {
       return navigate("/map");
     } catch (err) {
       console.error(err);
-      alert(err.message);
     }
     return null;
   }, []);
@@ -85,7 +84,7 @@ export default function LoginProvider({ children, apiService }) {
       notify(`Inscription validée !`);
       navigate("/connexion");
     } catch (err) {
-      alert(err.message);
+      console.error(err);
     }
   };
 
@@ -105,6 +104,7 @@ export default function LoginProvider({ children, apiService }) {
       user,
       apiService,
       register,
+      setUser,
     }),
     [isUserConnected, isUserAdmin, logout, user, apiService, register]
   );
