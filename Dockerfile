@@ -24,8 +24,8 @@ RUN cd backend && \
 COPY ./frontend ./frontend
 
 RUN cd frontend && \
-
     pnpm run build
+
 
 COPY ./backend ./backend
 COPY docker-entry.sh .
