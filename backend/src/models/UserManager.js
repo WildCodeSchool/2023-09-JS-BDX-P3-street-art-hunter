@@ -59,13 +59,15 @@ class UserManager extends AbstractManager {
       `update ${this.table} set username = ?, email = ?, postcode = ?, city = ?, password = ? where id = ?`,
       [user.username, user.email, user.postcode, user.city, hash, id]
     );
-
     return result.affectedRows;
   }
 
   async delete(id) {
+    await this.database.query(`DELETE FROM pending_image WHERE user_id = ?`, [
+      id,
+    ]);
     const [result] = await this.database.query(
-      `delete from ${this.table} where id = ?`,
+      `DELETE FROM ${this.table} WHERE id = ?`,
       [id]
     );
 

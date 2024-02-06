@@ -130,6 +130,10 @@ p {
   margin-left: 10px;
 }
 
+.ml-20 {
+  margin-left: 20px;
+}
+
 .mt-10 {
   margin-top: 10px;
 }
@@ -481,11 +485,20 @@ label {
   display: block;
 }
 
-input {
+input,
+textarea {
   background-color: #d9d9d9;
   padding: 10px 15px;
   font-size: 16px;
   max-width: 400px;
+  width: 100%;
+}
+
+textarea {
+  line-height: 20px;
+  min-width: 400px;
+  min-height: 200px;
+  max-height: 600px;
 }
 
 .list-container {
@@ -536,6 +549,9 @@ input {
 .item-list p {
   font-size: 13px;
   text-shadow: none;
+}
+.item-list .button {
+  text-decoration: none;
 }
 .item-list .button:after,
 .item-list .button:before {
@@ -665,26 +681,56 @@ input {
   content: "Fermer";
 }
 
+.Toastify {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: #92cd41 !important;
+}
+
+.has-plants {
+  height: calc(100vh - 83px);
+}
+.has-plants:before {
+  content: "";
+  position: absolute;
+  width: 58px;
+  height: 100%;
+  bottom: 0;
+  left: 16px;
+  background-image: url("/src/assets/liana.png");
+  background-size: contain;
+  background-position: bottom;
+}
+
 .intro-container {
   padding-bottom: 126px;
+}
+.intro-container .blink {
+  animation: blink 1.5s infinite;
 }
 .intro-container .cloud {
   background-image: url("/src/assets/cloud.png");
   background-size: 100%;
   background-repeat: no-repeat;
   position: absolute;
+  z-index: -1;
 }
 .intro-container .cloud-1 {
   height: 49px;
   width: 97px;
   top: 30px;
   left: 20px;
+  animation: moving-cloud1 100s linear infinite;
 }
 .intro-container .cloud-2 {
   height: 63px;
   width: 125px;
   right: 40px;
   top: 380px;
+  animation: moving-cloud2 100s linear infinite;
 }
 .intro-container .hill {
   position: absolute;
@@ -734,6 +780,18 @@ input {
   left: 0;
   background-image: url("/src/assets/ground.png");
   background-size: 63px;
+}
+.ground:before {
+  content: "";
+  display: block;
+  background-image: url("/src/assets/mario-run.gif");
+  background-size: contain;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  animation: mario-running 4s linear 1s;
 }
 
 .logo {
@@ -803,6 +861,21 @@ button h4 {
   z-index: 100;
   opacity: 1;
   transition: all 0.1s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.container-extra-small {
+  max-width: 400px;
+}
+
+.admin-split {
+  display: flex;
+}
+.admin-split .admin-split-child {
+  flex-direction: row;
+}
+
+input {
+  width: 100%;
 }
 
 .admin-page.allow-scroll-container {
@@ -908,6 +981,86 @@ label {
   width: 22px;
 }
 
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes moving-cloud1 {
+  0% {
+    transform: translateX(10vw);
+    opacity: 1;
+  }
+  68% {
+    opacity: 1;
+    transform: translateX(100vw);
+  }
+  69% {
+    opacity: 0;
+    transform: translateX(109vw);
+  }
+  70% {
+    opacity: 0;
+    transform: translateX(110vw);
+  }
+  71% {
+    opacity: 0;
+    transform: translateX(-20vw);
+  }
+  72% {
+    transform: translate(-19vw);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(10vw);
+    opacity: 1;
+  }
+}
+@keyframes moving-cloud2 {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  12% {
+    opacity: 1;
+    transform: translateX(10vw);
+  }
+  13% {
+    opacity: 0;
+    transform: translateX(11vw);
+  }
+  14% {
+    opacity: 0;
+    transform: translateX(-120vw);
+  }
+  15% {
+    opacity: 0;
+    transform: translateX(-129vw);
+  }
+  16% {
+    transform: translateX(-128vw);
+    opacity: 1;
+  }
+  17% {
+    transform: translateX(-127vw);
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes mario-running {
+  0% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 100px));
+  }
+}
 @media screen and (min-width: 767px) {
   .burger-menu.active {
     height: 174px;

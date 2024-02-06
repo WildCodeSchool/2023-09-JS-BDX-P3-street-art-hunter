@@ -41,4 +41,3 @@ services:
       - target: 3306
         published: 3306
         protocol: tcp
-

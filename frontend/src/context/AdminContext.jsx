@@ -10,10 +10,13 @@ export default function AdminContextProvider({ children }) {
   const [artists, setArtists] = useState([]);
   const [streetArt, setStreetArt] = useState([]);
   const [updateArt, setUpdateArt] = useState({});
-  const { apiService } = useLogin();
+  const { apiService, user } = useLogin();
 
   const fetchUsers = async () => {
     try {
+      if (!user?.is_admin) {
+        return;
+      }
       const response = await apiService.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/users`
       );
@@ -64,7 +67,9 @@ export default function AdminContextProvider({ children }) {
         `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`
       );
 
-      setUsers((currentUsers) => currentUsers.filter((user) => user.id !== id));
+      setUsers((currentUsers) =>
+        currentUsers.filter((currentUser) => currentUser.id !== id)
+      );
     } catch (err) {
       console.error(err);
     }
@@ -94,8 +99,10 @@ export default function AdminContextProvider({ children }) {
         data
       );
       setUsers((currentUsers) =>
-        currentUsers.map((user) =>
-          user.id === id ? { ...user, ...response.data } : user
+        currentUsers.map((currentUser) =>
+          currentUser.id === id
+            ? { ...currentUser, ...response.data }
+            : currentUser
         )
       );
     } catch (err) {
@@ -135,7 +142,12 @@ export default function AdminContextProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchUsers();
+    if (user?.is_admin) {
+      fetchUsers();
+    }
+  }, [user]);
+
+  useEffect(() => {
     fetchArtists();
     fetchStreetArt();
   }, []);

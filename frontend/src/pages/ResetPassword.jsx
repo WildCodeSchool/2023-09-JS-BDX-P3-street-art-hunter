@@ -26,7 +26,7 @@ function ResetPasswordForm() {
           email: formValue.email,
         }
       );
-      if (response.data) {
+      if (response.exists) {
         setUserExists(true);
       }
     } catch (error) {

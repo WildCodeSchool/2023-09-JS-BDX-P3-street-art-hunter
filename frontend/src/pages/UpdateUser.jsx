@@ -1,42 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../components/Button";
 import { useAdminContext } from "../context/AdminContext";
 import { useLogin } from "../context/LoginContext";
 
 export default function UpdateUser() {
   const { logout } = useLogin();
-  const [loggedUser, setLoggedUser] = useState({});
 
   const { updateUser } = useAdminContext();
-  const { apiService } = useLogin();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const response = await apiService.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/users/${loggedUser.id}`
-          );
-          if (response.ok) {
-            setLoggedUser(response.data);
-          } else {
-            console.error("Failed to fetch user data");
-          }
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const { user } = useLogin();
 
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    postcode: "",
-    city: "",
+    username: user?.username ?? "",
+    email: user?.email ?? "",
+    postcode: user?.postcode ?? "",
+    city: user?.city ?? "",
     password: "",
     confirmation: "",
   });
@@ -86,7 +63,7 @@ export default function UpdateUser() {
     }
     setAlertMessage(updatedAlerts);
     updateRegisterForm();
-    updateUser(loggedUser.id, formData);
+    updateUser(user.id, formData);
     logout();
   };
 

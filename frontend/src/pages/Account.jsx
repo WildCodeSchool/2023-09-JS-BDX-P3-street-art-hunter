@@ -72,14 +72,14 @@ export default function Account() {
         </div>
         <div className="slider-item">
           <div className="container">
-            <p className="t-center tiny-text mb-20">
-              <span className="pastille" />
-              Validée <span className="pastille yellow" />
-              En attente <span className="pastille red" />
-              Refusée
-            </p>
             <div className="allow-scroll">
               <div className="container list-container">
+                <p className="t-center tiny-text mb-20">
+                  <span className="pastille" />
+                  Validée <span className="pastille yellow" />
+                  En attente <span className="pastille red" />
+                  Refusée
+                </p>
                 {userCaptures?.map((item) => (
                   <ItemList
                     key={item.id}
