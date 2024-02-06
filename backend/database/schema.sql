@@ -146,7 +146,7 @@ LOCK TABLES `artist_street_art` WRITE;
 /*!40000 ALTER TABLE `artist_street_art` DISABLE KEYS */
 ;
 
-INSERT INTO
+INSERT IGNORE INTO
     artist_street_art (artist_id, street_art_id)
 VALUES (2, 1),
     (16, 4),
