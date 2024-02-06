@@ -48,7 +48,7 @@ export default function Step1() {
               >
                 <img src={item.image} alt={item.title} />
                 <div className="item-infos">
-                  <h5 className="mt-10 mb-30">
+                  <h5 className="mt-10 mb-10">
                     #{item.id} - {item.title}
                   </h5>
                   <h5>

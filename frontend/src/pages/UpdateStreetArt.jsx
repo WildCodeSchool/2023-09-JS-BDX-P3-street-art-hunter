@@ -8,13 +8,12 @@ function UpdateStreetArt() {
       <h1>Administration</h1>
       <div className="container d-flex d-flex-center of-hidden">
         <div className="admin-buttons allow-scroll">
-          <div className="container">
-            <div className="admin-split  ">
-              <div className="admin-split-child ">
+          <div className="container pl-0">
+            <div className="admin-split">
+              <div className="admin-split-child">
                 <DisplayStreetArt />
               </div>
-
-              <div className="mt-20 ml-20 admin-split-child ">
+              <div className="admin-split-child">
                 <ChangeStreetArt />
               </div>
             </div>

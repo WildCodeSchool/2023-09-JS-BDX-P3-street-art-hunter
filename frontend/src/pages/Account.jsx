@@ -101,9 +101,7 @@ export default function Account() {
                       alt={item.name}
                     />
                     <div className="item-infos">
-                      <h5 className="mb-10">
-                        #{item.id} - {item.streetArtTitle}
-                      </h5>
+                      <h5 className="mb-10">{item.streetArtTitle}</h5>
                       <p className="mb-10">Par {item.streetArtAuthor}</p>
                       <p className="tiny-text">
                         Capturé le {item.formattedUploadDate} à{" "}
