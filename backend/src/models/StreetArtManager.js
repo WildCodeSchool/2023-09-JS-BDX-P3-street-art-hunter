@@ -23,7 +23,7 @@ class StreetArtManager extends AbstractManager {
 
   async readData(limit, offset) {
     const [rows] = await this.database.query(
-      `select * from ${this.table} limit ? offset ?`,
+      `select *, DATE_FORMAT(creation_date, '%d/%m/%Y') AS formattedDate from ${this.table} limit ? offset ?`,
       [+limit, +limit * +offset - +limit]
     );
     return rows;

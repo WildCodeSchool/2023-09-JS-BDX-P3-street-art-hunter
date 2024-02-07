@@ -71,7 +71,7 @@ export default function UpdateUser() {
     <div className="container allow-scroll-container ">
       <h1 className="mb-20">Modifier le compte</h1>
       <div className="allow-scroll">
-        <div>
+        <div className="d-flex d-flex-center">
           <form className="mb-20">
             <label htmlFor="username" className="mb-10 ">
               Pseudo

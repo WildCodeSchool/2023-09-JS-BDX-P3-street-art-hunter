@@ -46,18 +46,24 @@ function Art() {
   }, [artistId]);
 
   return (
-    <div className="allow-scroll-container">
-      <h1>Galerie - {artistName}</h1>
-      <div className="allow-scroll">
-        <div className="container list-container">
-          {arts.map((art) => (
-            <ItemList key={art.id} className="has-img mb-20">
-              <ModalImage small={art.image} large={art.image} alt={art.title} />
-              <div className="item-infos">
-                <h5>{art.title}</h5>
-              </div>
-            </ItemList>
-          ))}
+    <div className="container">
+      <div className="allow-scroll-container">
+        <h1>Galerie - {artistName}</h1>
+        <div className="allow-scroll">
+          <div className="container list-container">
+            {arts.map((art) => (
+              <ItemList key={art.id} className="has-img mb-20">
+                <ModalImage
+                  small={art.image}
+                  large={art.image}
+                  alt={art.title}
+                />
+                <div className="item-infos">
+                  <h5>{art.title}</h5>
+                </div>
+              </ItemList>
+            ))}
+          </div>
         </div>
       </div>
     </div>
