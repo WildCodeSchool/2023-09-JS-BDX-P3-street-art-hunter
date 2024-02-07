@@ -52,7 +52,7 @@ export default function Home() {
 
   const containerStyle = {
     width: "100%",
-    height: "calc(100vh - 83px)",
+    height: "calc(100dvh - 83px)",
   };
 
   const center = userLocation.lat

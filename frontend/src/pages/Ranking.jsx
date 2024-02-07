@@ -27,7 +27,7 @@ export default function Ranking() {
       <div className="container ranking-page d-flex d-flex-center of-hidden">
         <div className="allow-scroll">
           {usersRank.map((rank) => (
-            <p className="mb-30 mr-30" key={rank.id}>
+            <p className="mb-30" key={rank.id}>
               <span>
                 <img src={miniCoin} alt="coin" /> x {rank.points}
               </span>{" "}

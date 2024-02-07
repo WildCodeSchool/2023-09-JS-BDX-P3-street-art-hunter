@@ -78,7 +78,8 @@ class UserManager extends AbstractManager {
     const result = await this.database.query(
       `SELECT id, username, points
       FROM ${this.table}
-      ORDER BY points DESC;;`
+      WHERE points > 0
+      ORDER BY points DESC;`
     );
     return result;
   }
