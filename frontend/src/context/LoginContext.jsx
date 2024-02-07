@@ -51,7 +51,7 @@ export default function LoginProvider({ children, apiService }) {
   const notifyError = (message) =>
     toast.error(message, {
       position: "top-center",
-      autoClose: 4000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -80,6 +80,7 @@ export default function LoginProvider({ children, apiService }) {
       }
       return navigate("/map");
     } catch (err) {
+      notifyError("Identifiants incorrects");
       console.error(err);
     }
     return null;
