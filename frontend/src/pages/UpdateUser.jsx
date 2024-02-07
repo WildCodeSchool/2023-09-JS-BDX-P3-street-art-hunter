@@ -72,7 +72,7 @@ export default function UpdateUser() {
       <h1 className="mb-20">Modifier le compte</h1>
       <div className="allow-scroll">
         <div className="d-flex d-flex-center">
-          <form className="mb-20">
+          <form className="mb-20" onSubmit={handleSubmit}>
             <label htmlFor="username" className="mb-10 ">
               Pseudo
             </label>
@@ -172,10 +172,10 @@ export default function UpdateUser() {
                 {alertMessage.confirmation}
               </div>
             )}
+            <Button type="submit" className="button mb-20">
+              Valider
+            </Button>
           </form>
-          <Button type="submit" className="button mb-20" onClick={handleSubmit}>
-            Valider
-          </Button>
         </div>
       </div>
     </div>
