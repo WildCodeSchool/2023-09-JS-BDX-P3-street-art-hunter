@@ -50,6 +50,7 @@ h1 {
   font-size: 24px;
   text-align: center;
   margin-block: 25px;
+  line-height: 32px;
 }
 
 h4 {
@@ -64,6 +65,7 @@ h5 {
 p {
   font-size: 1rem;
   line-height: 1.5rem;
+  overflow-wrap: break-word;
 }
 
 .tiny-text {
@@ -493,6 +495,12 @@ p {
   height: 50%;
 }
 
+form {
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 450px;
+}
+
 label {
   display: block;
 }
@@ -508,9 +516,9 @@ textarea {
 
 textarea {
   line-height: 20px;
-  min-width: 400px;
   min-height: 200px;
   max-height: 600px;
+  max-width: 100%;
 }
 
 .list-container {

@@ -266,7 +266,7 @@ export default function Administration() {
                     </p>
                     <p className="mb-10">Artiste: {art.author}</p>
                     <p className="mb-10">Adresse: {art.address}</p>
-                    <p className="mb-10">Créé le: {art.creation_date}</p>
+                    <p className="mb-10">Créé le: {art.formattedDate}</p>
                     <p className="mb-10">Lng: {art.longitude}</p>
                     <p className="mb-10">Lat: {art.latitude}</p>
                   </div>
