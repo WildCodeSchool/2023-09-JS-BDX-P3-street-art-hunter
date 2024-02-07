@@ -35,6 +35,9 @@ input {
     outline: none;
   }
 }
+// video, .capture-preview {
+//   transform: scaleX(-1);
+// }
 
 //// General
 
@@ -724,7 +727,7 @@ textarea {
   .cloud-1 {
     height: 49px;
     width: 97px;
-    top: 30px;
+    top: 5%;
     left: 20px;
     animation: moving-cloud1 100s linear infinite;
   }
@@ -733,7 +736,7 @@ textarea {
     height: 63px;
     width: 125px;
     right: 40px;
-    top: 380px;
+    bottom: -20%;
     animation: moving-cloud2 100s linear infinite;
   }
 

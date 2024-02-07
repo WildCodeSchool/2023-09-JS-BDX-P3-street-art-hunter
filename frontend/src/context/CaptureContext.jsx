@@ -126,7 +126,9 @@ export default function CaptureContextProvider({ children }) {
     if (step === "getCapture" && (!cameraPopup || !stream)) {
       try {
         const newStream = await navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: {
+            facingMode: "environment", // sert à ouvrir la camera environnement.
+          },
         });
 
         setStream(newStream);
