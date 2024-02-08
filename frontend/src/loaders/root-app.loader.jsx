@@ -16,6 +16,8 @@ const rootAppLoader = async (apiService) => {
     };
   } catch (err) {
     console.error(err.message);
+    localStorage.clear();
+    apiService.setToken(null);
     return null;
   }
 };
