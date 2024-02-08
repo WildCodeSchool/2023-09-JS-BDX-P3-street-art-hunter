@@ -71,8 +71,8 @@ export default function UpdateUser() {
     <div className="container allow-scroll-container ">
       <h1 className="mb-20">Modifier le compte</h1>
       <div className="allow-scroll">
-        <div className="d-flex d-flex-center">
-          <form className="mb-20" onSubmit={handleSubmit}>
+        <div className="container d-flex d-flex-center">
+          <form onSubmit={handleSubmit}>
             <label htmlFor="username" className="mb-10 ">
               Pseudo
             </label>
@@ -156,7 +156,7 @@ export default function UpdateUser() {
             <label htmlFor="confirmation" className="mb-10">
               Confirmer le mot de passe
             </label>
-            <div className="input mb-10">
+            <div className="input mb-20">
               <input
                 type="password"
                 name="confirmation"
@@ -167,14 +167,14 @@ export default function UpdateUser() {
                 }
               />
             </div>
+            <Button type="submit" className="button">
+              Valider
+            </Button>
             {alertMessage.confirmation.length > 0 && (
               <div className="error-message mb-10 tiny-text">
                 {alertMessage.confirmation}
               </div>
             )}
-            <Button type="submit" className="button mb-20">
-              Valider
-            </Button>
           </form>
         </div>
       </div>
